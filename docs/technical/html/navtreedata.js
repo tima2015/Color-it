@@ -24,12 +24,26 @@
 */
 var NAVTREE =
 [
-  [ "Color-it", "index.html", ]
+  [ "Color-it", "index.html", [
+    [ "Пакеты", "namespaces.html", [
+      [ "Пакеты", "namespaces.html", "namespaces_dup" ]
+    ] ],
+    [ "Классы", "annotated.html", [
+      [ "Классы", "annotated.html", "annotated_dup" ],
+      [ "Алфавитный указатель классов", "classes.html", null ],
+      [ "Иерархия классов", "hierarchy.html", "hierarchy" ],
+      [ "Члены классов", "functions.html", [
+        [ "Указатель", "functions.html", null ],
+        [ "Функции", "functions_func.html", null ],
+        [ "Свойства", "functions_prop.html", null ]
+      ] ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
