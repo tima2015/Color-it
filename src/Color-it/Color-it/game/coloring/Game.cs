@@ -49,6 +49,26 @@ namespace Color_it.game.coloring
             {
                 throw new NotImplementedException();
             }
+
+            public void OnBegin()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnResume()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnPause()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnEnd()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
