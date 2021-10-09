@@ -11,7 +11,7 @@ namespace Color_it.game.coloring
     /// </summary>
     public class Game : ModelViewController
     {
-        public Game(Type type) : base(new GameModel(), new GameView(), new GameController())
+        public Game(Type type, string levelJson) : base(new GameModel(levelJson), new GameView(), new GameController())
         {
             SubGame subGame;
             if (type == typeof(SnakeSubGame))
@@ -23,7 +23,7 @@ namespace Color_it.game.coloring
             else
                 throw new ArgumentException("type must be SnakeSubGame, MatchThreeSubGame or LinesSubGame!\n" +
                                             "Was taken " + type.Name);
-            ((GameModel) Model).SubG = subGame;
+            ((GameModel) Model).SubGame = subGame;
         }
 
         /// <summary>
@@ -41,27 +41,21 @@ namespace Color_it.game.coloring
         /// </summary>
         private class GameModel : IModel
         {
-            
-            private enum State
+            internal enum GameState
             {
                 BEGIN, RUN, PAUSE, WIN, LOSE, END
             }
 
-            private State _state = State.BEGIN;
-
-            private SubGame _subGame;
-
-            public SubGame SubG
+            public GameModel(String levelJson)
             {
-                get => _subGame;
-                set => _subGame = value;
+                FillingMap = new FillingMap(levelJson);
             }
 
-            public SubGame SubGame1
-            {
-                get => _subGame;
-                set => _subGame = value;
-            }
+            public GameState State { get; set; } = GameState.BEGIN;
+
+            public SubGame SubGame { get; set; }
+
+            public FillingMap FillingMap { get; }
         }
 
         /// <summary>
