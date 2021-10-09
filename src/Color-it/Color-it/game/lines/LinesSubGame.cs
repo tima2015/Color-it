@@ -31,6 +31,8 @@ namespace Color_it.game.lines
                 cells = new LinesCell[FieldSize, FieldSize];
                 NextCells = new LinesCell[3];
             }
+            //Удаление закрашенных линии
+            //Возвращает кол-во освободившихся клеток
             public int DeleteLines()
             {
                 int del = 0;
@@ -48,9 +50,11 @@ namespace Color_it.game.lines
                 }
                 return del;
             }
+            //Выбор 3-х случайных клеток для вставки шаров
             public void InsertOrbs()
             {
                 var rand = new Random();
+                //Ищем 3 пустые клетки
                 while (true)
                 {
                     for (int i = 0; i < 3; i++)
@@ -78,6 +82,7 @@ namespace Color_it.game.lines
                         }
                     }
                 }
+                //Выбор 3-х следующих шаров для вставки
                 for (int i = 0; i < 3; i++)
                 {
                     NextCells[i].Texture = textures[rand.Next(0, 4)];
