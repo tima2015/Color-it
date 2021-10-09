@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['notify_0',['Notify',['../class_color__it_1_1game_1_1coloring_1_1_game_event_listener.html#a00e083948736f13eed9ec44a7ab23375',1,'Color_it.game.coloring.GameEventListener.Notify()'],['../interface_color__it_1_1game_1_1_i_event_listener.html#a55855efc8cf421655d0e882fb2e2b62f',1,'Color_it.game.IEventListener.Notify()']]]
+  ['main_0',['Main',['../class_color__it_1_1_app.html#a8b2e7d66522d9be1ed24f883a88c08f0',1,'Color_it::App']]],
+  ['modelviewcontroller_1',['ModelViewController',['../class_color__it_1_1game_1_1_model_view_controller.html#a9fcd5a862f6de5c54fe7ee7cb8ebf8e5',1,'Color_it::game::ModelViewController']]]
 ];

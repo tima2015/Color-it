@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['game_0',['Game',['../class_color__it_1_1game_1_1coloring_1_1_game.html',1,'Color_it::game::coloring']]],
-  ['gameeventlistener_1',['GameEventListener',['../class_color__it_1_1game_1_1coloring_1_1_game_event_listener.html',1,'Color_it.game.coloring.GameEventListener'],['../class_color__it_1_1game_1_1coloring_1_1_game.html#a5efeaa11c94b0f1120f1c1e50408e02f',1,'Color_it.game.coloring.Game.GameEventListener()']]]
+  ['fillingmap_0',['FillingMap',['../class_color__it_1_1game_1_1coloring_1_1_filling_map.html',1,'Color_it.game.coloring.FillingMap'],['../class_color__it_1_1game_1_1coloring_1_1_filling_map.html#a341f38e81e90483f0644d8831f3cc884',1,'Color_it.game.coloring.FillingMap.FillingMap(string fillingMapJsonString)']]],
+  ['fillingmapdata_1',['FillingMapData',['../struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data.html',1,'Color_it::game::coloring::FillingMap']]]
 ];
