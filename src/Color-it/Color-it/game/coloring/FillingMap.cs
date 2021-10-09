@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct3D11;
-using SharpDX.X3DAudio;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace Color_it.game.coloring
 {
@@ -37,8 +37,10 @@ namespace Color_it.game.coloring
         {
             _fillingMapData = JsonSerializer.Deserialize<FillingMapData>(fillingMapJsonString);
             Texture2D rowImage = GameCore.Core.ResourceManager.GetObject(_fillingMapData.RowImage) as Texture2D;
-            width = rowImage.Description.Width;
-            height = rowImage.Description.Height;
+            width = rowImage.Width;
+            height = rowImage.Height;
+            _rowData = new Color[width * height];
+            rowImage.GetData(_rowData);
             fragmentCount = 0;
             foreach (FillingMapData.ColorPoints сPoint in _fillingMapData.СPoints)
             {
