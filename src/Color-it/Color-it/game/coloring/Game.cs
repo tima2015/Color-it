@@ -1,8 +1,10 @@
 using System;
+using System.Windows.Controls;
 using Color_it.game.lines;
 using Color_it.game.match_three;
 using Color_it.game.snake;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Color_it.game.coloring
 {
@@ -24,6 +26,7 @@ namespace Color_it.game.coloring
                 throw new ArgumentException("type must be SnakeSubGame, MatchThreeSubGame or LinesSubGame!\n" +
                                             "Was taken " + type.Name);
             ((GameModel) Model).SubGame = subGame;
+            ((GameController) Controller).Model = Model as GameModel;
         }
 
         /// <summary>
@@ -74,29 +77,80 @@ namespace Color_it.game.coloring
         /// </summary>
         private class GameController : IController
         {
+            internal GameModel Model { get; set; }
+
+
             public void Update(float delta)
             {
-                throw new NotImplementedException();
+                Model.SubGame.Controller.Update(delta);
+                foreach (var key in Keyboard.GetState().GetPressedKeys())
+                {
+                    var state = CheckKeyBoardInput(key);
+                    if (state == Model.State) continue;
+                    Model.State = state;
+                    NotifyStateChanged(state);
+                    break;
+                }
+            }
+
+            private GameModel.GameState CheckKeyBoardInput(Keys key)
+            {
+                
+                if (key == GameCore.Core.Settings.PauseAndBackKey)
+                    switch (Model.State)
+                    {
+                        case GameModel.GameState.PAUSE:
+                            return GameModel.GameState.RUN;
+                        case GameModel.GameState.RUN:
+                            return GameModel.GameState.PAUSE;
+                        default:
+                            return Model.State;
+                    }
+
+                if (key == GameCore.Core.Settings.EnterAndForwardKey)
+                    if (Model.State is GameModel.GameState.LOSE or GameModel.GameState.WIN)
+                        return GameModel.GameState.END;
+
+                return Model.State;
+            }
+
+            private void NotifyStateChanged(GameModel.GameState state)
+            {
+                switch (state)
+                {
+                    case GameModel.GameState.BEGIN:
+                        OnBegin();
+                        break;
+                    case GameModel.GameState.RUN:
+                        OnResume();
+                        break;
+                    case GameModel.GameState.PAUSE:
+                        OnPause();
+                        break;
+                    case GameModel.GameState.END:
+                        OnEnd();
+                        break;
+                }
             }
 
             public void OnBegin()
             {
-                throw new NotImplementedException();
+                Model.SubGame.Controller.OnBegin();
             }
 
             public void OnResume()
             {
-                throw new NotImplementedException();
+                Model.SubGame.Controller.OnResume();
             }
 
             public void OnPause()
             {
-                throw new NotImplementedException();
+                Model.SubGame.Controller.OnPause();
             }
 
             public void OnEnd()
             {
-                throw new NotImplementedException();
+                Model.SubGame.Controller.OnEnd();
             }
         }
     }
