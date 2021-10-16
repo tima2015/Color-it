@@ -17,6 +17,8 @@ namespace Color_it
             ResourceManager.CreateFileBasedResourceManager("resources", "resources",null);
 
         public GameSettings Settings { get; } = GameSettings.Load();
+        
+        public Viewport subGameViewport {get; } = new Viewport(0,0,1000,1000);
 
         public static GameCore Core { get; }
         
