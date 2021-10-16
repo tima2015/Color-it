@@ -1,0 +1,4 @@
+var struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data =
+[
+    [ "ColorPoints", "struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data_1_1_color_points.html", "struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data_1_1_color_points" ]
+];

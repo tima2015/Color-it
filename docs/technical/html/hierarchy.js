@@ -6,6 +6,10 @@ var hierarchy =
     [ "System.Windows.Application", null, [
       [ "Color_it.App", "class_color__it_1_1_app.html", null ]
     ] ],
+    [ "Color_it.game.coloring.FillingMap.FillingMapData.ColorPoints", "struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data_1_1_color_points.html", null ],
+    [ "Color_it.game.coloring.FillingMap", "class_color__it_1_1game_1_1coloring_1_1_filling_map.html", null ],
+    [ "Color_it.game.coloring.FillingMap.FillingMapData", "struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data.html", null ],
+    [ "Color_it.GameCore", "class_color__it_1_1_game_core.html", null ],
     [ "System.Windows.Markup.IComponentConnector", null, [
       [ "Color_it.MainWindow", "class_color__it_1_1_main_window.html", null ]
     ] ],
@@ -25,6 +29,8 @@ var hierarchy =
       [ "Color_it.game.coloring.Game", "class_color__it_1_1game_1_1coloring_1_1_game.html", null ]
     ] ],
     [ "Color_it.game.coloring.GameEventListener.PaintingEvent", "class_color__it_1_1game_1_1coloring_1_1_game_event_listener_1_1_painting_event.html", null ],
+    [ "Color_it.game.coloring.FillingMap.FillingMapData.ColorPoints.Point", "struct_color__it_1_1game_1_1coloring_1_1_filling_map_1_1_filling_map_data_1_1_color_points_1_1_point.html", null ],
+    [ "Colot_it_Tests.Tests", "class_colot__it___tests_1_1_tests.html", null ],
     [ "System.Windows.Window", null, [
       [ "Color_it.MainWindow", "class_color__it_1_1_main_window.html", null ]
     ] ],
