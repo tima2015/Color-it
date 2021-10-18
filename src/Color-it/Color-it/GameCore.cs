@@ -2,6 +2,7 @@ using System.IO;
 using System.Resources;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Color_it

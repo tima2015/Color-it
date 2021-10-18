@@ -16,16 +16,14 @@ namespace Color_it.game.lines
         /// @noop 6 - синий выделенный шар
         /// @noop 7 - зелёный выделенный шар
         /// @noop 8 - жёлтый выделенный шар
-        private bool is_orb, choosed, visited;
+        private bool choosed, visited;
         private int textureNumber;
         public bool Choosed { get { return choosed; } set { choosed = value; } }
-        public bool IsOrb { get { return is_orb; } set { is_orb = value; } }
         public bool Visited { get { return visited; } set { visited = value; } }
         public int TextureNumber { get { return textureNumber; } set { textureNumber = value; } }
 
         public LinesCell()
         {
-            is_orb = false;
             choosed = false;
             visited = false;
             textureNumber = 0;
