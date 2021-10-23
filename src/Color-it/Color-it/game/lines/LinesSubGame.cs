@@ -9,9 +9,7 @@ using static Color_it.game.coloring.GameEventListener;
 namespace Color_it.game.lines
 {
     
-    /// <summary>
-    ///     Класс реализующий мини игру "Линии"
-    /// </summary>
+    /// @brief Класс реализующий мини игру "Линии"
     public class LinesSubGame : SubGame
     {
         public LinesSubGame(GameEventListener listener) :
@@ -19,35 +17,58 @@ namespace Color_it.game.lines
         {
         }
 
-        /// <summary>
-        ///     Реализация модели мини игры.
-        /// </summary>
+        /// @brief Модель мини игры "Линии"
+        /// @author eremchuk-mp-8
+        /// @details
         private class LinesModel : IModel
         {
-            private const int fieldSize = 9;
-            private const int cellSize = 40;
-            private int fieldX, fieldY; 
-            private LinesCell[,] cells;
-            private LinesCell[] nextCells;
+            /// @brief
+            /// @details
+            public const int FieldSize = 9;
+            
+            /// @brief
+            /// @details
+            public const int CellSize = 40;
 
+            /// @brief Количество ячеек
+            /// @details
+            public const int CellsCount = FieldSize * FieldSize;
+
+            /// @brief Количество шаров при запуске игры
+            /// @details
+            public const int BallsOnInitialize = 3;
+
+            /// @brief
+            /// @details
             public LinesModel()
             {
-                cells = new LinesCell[fieldSize, fieldSize];
-                nextCells = new LinesCell[3];
-                fieldX = GameCore.Core.SubGameViewport.Width / 2 - 5 * cellSize;
-                fieldX = GameCore.Core.SubGameViewport.Height / 2 - 5 * cellSize;
+                Cells = new LinesCell[FieldSize, FieldSize];
+                NextCells = new LinesCell[3];
+                for (var i = 0; i < NextCells.Length; i++) NextCells[i] = new LinesCell();
+                FieldX = GameCore.Core.SubGameViewport.Width / 2 - 5 * CellSize;
+                FieldX = GameCore.Core.SubGameViewport.Height / 2 - 5 * CellSize;
             }
-            public LinesCell[,] Cells { get { return cells; } }
-            public LinesCell[] NextCells { get { return nextCells; } }
-            public int FieldSize { get { return fieldSize; } }
-            public int CellSize { get { return cellSize; } }
-            public int FieldX { get { return fieldX; } }
-            public int FieldY { get { return fieldY; } }
+            
+            /// @brief
+            /// @details
+            public LinesCell[,] Cells { get; }
+
+            /// @brief
+            /// @details
+            public LinesCell[] NextCells { get; }
+            
+            /// @brief
+            /// @details
+            public int FieldX { get; }
+            
+            /// @brief
+            /// @details
+            public int FieldY { get; }
         }
 
-            /// <summary>
-            ///     Реализация отображения мини игры.
-            /// </summary>
+            /// @brief Реализация отображения мини игры.
+            /// @author eremchuk-mp-8
+            /// @details
             private class LinesView : IView
         {
             public void Draw(SpriteBatch batch)
@@ -55,24 +76,23 @@ namespace Color_it.game.lines
                 throw new NotImplementedException();
             }
         }
-
-        /// <summary>
-        ///     Реализация контроллера мини игры.
-        /// </summary>
+            
+        /// @brief Реализация контроллера мини игры.
+        /// @author eremchuk-mp-8
+        /// @details
         private class LinesController : IController
         {
             //при выполнии условия закрашивания вызывайте listener.Notify(new PaintingEvent(count, color))
             //для подробностей смотрите GameEventListenr.cs
-            private GameEventListener _listener;
-            private LinesCell choosedCell;
-            private int choosedCellX, choosedCellY;
-            private int[] orbs = new int[3];
-            private LinesModel model;
+            private GameEventListener _listener;//warning!
+            private LinesCell _choosedCell;
+            private int _choosedCellX, _choosedCellY;
+            private readonly int[] _orbs = new int[3];
+            private readonly LinesModel _model = new();
 
             public LinesController(GameEventListener listener)
             {
                 _listener = listener;
-                model = new LinesModel();
             }
 
             public void Update(float delta)
@@ -80,45 +100,58 @@ namespace Color_it.game.lines
                 CellSearch();                
             }
 
-            public void OnBegin()
+            /// @brief Назначение NextCells случайных значений
+            /// @details 
+            private void InitWithRandNextCells(Random rand)
             {
-                choosedCell = new LinesCell();
-                var rand = new Random();
-                for (int i = 0; i < 3; i++)
-                {
-                    model.NextCells[i] = new LinesCell();
-                    model.NextCells[i].TextureNumber = rand.Next(1, 4);
-                }
+                for (var i = 0; i < LinesModel.BallsOnInitialize; i++)
+                    _model.NextCells[i].TextureNumber = rand.Next((int) TextureNumber.RED, (int) TextureNumber.YELLOW);
+            }
+
+            /// @brief
+            /// @details
+            /// @noop Это же поиск? На мой взгляд, довольно неоптимизированый, в худшем случае пользователь может ждать очень долго
+            private void FindOrbs(Random rand)
+            {
                 while (true)
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        orbs[i] = rand.Next(0, 81);
+                        _orbs[i] = rand.Next(0, LinesModel.CellsCount);
                     }
-                    if (!(orbs[0] == orbs[1] || orbs[0] == orbs[2]
-                        || orbs[1] == orbs[2]))
+                    if (!(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2]
+                                               || _orbs[1] == _orbs[2]))
                         break;
                 }
+            }
 
-                for (int i = 0; i < model.FieldSize; i++)
+            /// @brief
+            /// @details
+            private void InitCellsGrid()
+            {
+                for (int i = 0; i < LinesModel.FieldSize; i++)
+                for (int j = 0; j < LinesModel.FieldSize; j++)
                 {
-                    for (int j = 0; j < model.FieldSize; j++)
+                    _model.Cells[i, j] = new LinesCell();
+                    for (int k = 0; k < LinesModel.BallsOnInitialize; k++)
                     {
-                        model.Cells[i, j] = new LinesCell();
-                        for (int k = 0; k < 3; k++)
-                        {
-                            if (orbs[k] / model.FieldSize == i && orbs[k] % model.FieldSize == j)
-                            {
-                                model.Cells[i, j].TextureNumber = model.NextCells[k].TextureNumber;
-                                break;
-                            }
-                        }
+                        if (_orbs[k] / LinesModel.FieldSize != i || _orbs[k] % LinesModel.FieldSize != j) continue;
+                        _model.Cells[i, j].TextureNumber = _model.NextCells[k].TextureNumber;
+                        break;
                     }
                 }
-                for (int i = 0; i < 3; i++)
-                {
-                    model.NextCells[i].TextureNumber = rand.Next(1, 4);
-                }
+            }
+
+            /// @brief Вызывается единожды перед запуском игры
+            /// @details
+            public void OnBegin()
+            {
+                _choosedCell = new LinesCell();
+                var rand = new Random();
+                InitWithRandNextCells(rand);
+                FindOrbs(rand);
+                InitCellsGrid();
+                InitWithRandNextCells(rand);
             }
 
             public void OnResume()
@@ -143,14 +176,14 @@ namespace Color_it.game.lines
             private int DeleteLines()
             {
                 int del = 0;
-                for (int i = 0; i < model.FieldSize; i++)
+                for (int i = 0; i < LinesModel.FieldSize; i++)
                 {
-                    for (int j = 0; j < model.FieldSize; j++)
+                    for (int j = 0; j < LinesModel.FieldSize; j++)
                     {
-                        if (model.Cells[i, j].Visited)
+                        if (_model.Cells[i, j].Visited)
                         {
-                            model.Cells[i, j].Visited = false;
-                            model.Cells[i, j].TextureNumber = 0;
+                            _model.Cells[i, j].Visited = false;
+                            _model.Cells[i, j].TextureNumber = 0;
                             del++;
                         }
                     }
@@ -168,23 +201,23 @@ namespace Color_it.game.lines
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        orbs[i] = rand.Next(0, 81);
+                        _orbs[i] = rand.Next(0, 81);
                     }
-                    if (!(orbs[0] == orbs[1] || orbs[0] == orbs[2] || orbs[1] == orbs[2]))
-                        if (!(model.Cells[orbs[0] / model.FieldSize, orbs[0] % model.FieldSize].TextureNumber > 0
-                            || model.Cells[orbs[1] / model.FieldSize, orbs[1] % model.FieldSize].TextureNumber > 0
-                            || model.Cells[orbs[2] / model.FieldSize, orbs[2] % model.FieldSize].TextureNumber > 0))
+                    if (!(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2] || _orbs[1] == _orbs[2]))
+                        if (!(_model.Cells[_orbs[0] / LinesModel.FieldSize, _orbs[0] % LinesModel.FieldSize].TextureNumber > 0
+                            || _model.Cells[_orbs[1] / LinesModel.FieldSize, _orbs[1] % LinesModel.FieldSize].TextureNumber > 0
+                            || _model.Cells[_orbs[2] / LinesModel.FieldSize, _orbs[2] % LinesModel.FieldSize].TextureNumber > 0))
                             break;
                 }
-                for (int i = 0; i < model.FieldSize; i++)
+                for (int i = 0; i < LinesModel.FieldSize; i++)
                 {
-                    for (int j = 0; j < model.FieldSize; j++)
+                    for (int j = 0; j < LinesModel.FieldSize; j++)
                     {
                         for (int k = 0; k < 3; k++)
                         {
-                            if (i == orbs[k] / model.FieldSize && j == orbs[k] % model.FieldSize)
+                            if (i == _orbs[k] / LinesModel.FieldSize && j == _orbs[k] % LinesModel.FieldSize)
                             {
-                                model.Cells[i, j].TextureNumber = model.NextCells[k].TextureNumber;
+                                _model.Cells[i, j].TextureNumber = _model.NextCells[k].TextureNumber;
                                 break;
                             }
                         }
@@ -193,7 +226,7 @@ namespace Color_it.game.lines
                 //Выбор 3-х следующих шаров для вставки
                 for (int i = 0; i < 3; i++)
                 {
-                    model.NextCells[i].TextureNumber = rand.Next(1, 5);
+                    _model.NextCells[i].TextureNumber = rand.Next(1, 5);
                 }
             }
             /// <summary>
@@ -201,7 +234,7 @@ namespace Color_it.game.lines
             /// </summary>
             private void UnmarkCells()
             {
-                foreach (LinesCell c in model.Cells)
+                foreach (LinesCell c in _model.Cells)
                 {
                     c.Visited = false;
                 }
@@ -218,7 +251,7 @@ namespace Color_it.game.lines
             private bool Movable(int start_x, int start_y, int end_x, int end_y)
             {
                 Queue<LinesCell> queue = new Queue<LinesCell>();
-                queue.Enqueue(model.Cells[start_x, start_y]);
+                queue.Enqueue(_model.Cells[start_x, start_y]);
                 int cur_x = start_x, cur_y = start_y;
 
                 while (queue.Count > 0)
@@ -232,12 +265,12 @@ namespace Color_it.game.lines
                     cur.Visited = true;
 
                     //проверка слева от текущей позиции
-                    if (cur_x > 0 && !(model.Cells[cur_x - 1, cur_y].TextureNumber > 0))
+                    if (cur_x > 0 && !(_model.Cells[cur_x - 1, cur_y].TextureNumber > 0))
                     {
-                        if (!(model.Cells[cur_x - 1, cur_y].Visited))
+                        if (!(_model.Cells[cur_x - 1, cur_y].Visited))
                         {
-                            queue.Enqueue(model.Cells[cur_x - 1, cur_y]);
-                            model.Cells[cur_x - 1, cur_y].Visited = true;
+                            queue.Enqueue(_model.Cells[cur_x - 1, cur_y]);
+                            _model.Cells[cur_x - 1, cur_y].Visited = true;
                             if (cur_x  == end_x && cur_y == end_y)
                             {
                                 UnmarkCells();
@@ -247,12 +280,12 @@ namespace Color_it.game.lines
                     }
 
                     //проверка справа от текущей позиции
-                    if (cur_x < model.FieldSize - 1 && !(model.Cells[cur_x + 1, cur_y].TextureNumber > 0))
+                    if (cur_x < LinesModel.FieldSize - 1 && !(_model.Cells[cur_x + 1, cur_y].TextureNumber > 0))
                     {
-                        if (!(model.Cells[cur_x + 1, cur_y].Visited))
+                        if (!(_model.Cells[cur_x + 1, cur_y].Visited))
                         {
-                            queue.Enqueue(model.Cells[cur_x + 1, cur_y]);
-                            model.Cells[cur_x + 1, cur_y].Visited = true;
+                            queue.Enqueue(_model.Cells[cur_x + 1, cur_y]);
+                            _model.Cells[cur_x + 1, cur_y].Visited = true;
                             if (cur_x + 1 == end_x && cur_y == end_y)
                             {
                                 UnmarkCells();
@@ -262,12 +295,12 @@ namespace Color_it.game.lines
                     }
 
                     //проверка сверху от текущей позиции
-                    if (cur_y > 0 && !(model.Cells[cur_x, cur_y - 1].TextureNumber > 0))
+                    if (cur_y > 0 && !(_model.Cells[cur_x, cur_y - 1].TextureNumber > 0))
                     {
-                        if (!(model.Cells[cur_x, cur_y - 1].Visited))
+                        if (!(_model.Cells[cur_x, cur_y - 1].Visited))
                         {
-                            queue.Enqueue(model.Cells[cur_x, cur_y - 1]);
-                            model.Cells[cur_x, cur_y - 1].Visited = true;
+                            queue.Enqueue(_model.Cells[cur_x, cur_y - 1]);
+                            _model.Cells[cur_x, cur_y - 1].Visited = true;
                             if (cur_x == end_x && cur_y - 1 == end_y)
                             {
                                 UnmarkCells();
@@ -277,12 +310,12 @@ namespace Color_it.game.lines
                     }
 
                     //проверка снизку от текущей позиции
-                    if (cur_y < model.FieldSize - 1 && !(model.Cells[cur_x, cur_y + 1].TextureNumber > 0))
+                    if (cur_y < LinesModel.FieldSize - 1 && !(_model.Cells[cur_x, cur_y + 1].TextureNumber > 0))
                     {
-                        if (!(model.Cells[cur_x, cur_y + 1].Visited))
+                        if (!(_model.Cells[cur_x, cur_y + 1].Visited))
                         {
-                            queue.Enqueue(model.Cells[cur_x, cur_y + 1]);
-                            model.Cells[cur_x, cur_y + 1].Visited = true;
+                            queue.Enqueue(_model.Cells[cur_x, cur_y + 1]);
+                            _model.Cells[cur_x, cur_y + 1].Visited = true;
                             if (cur_x == end_x && cur_y + 1 == end_y)
                             {
                                 UnmarkCells();
@@ -307,15 +340,15 @@ namespace Color_it.game.lines
             {
                 int s1 = 0, s2 = 0, cur_x=x, cur_y=y;
                 //влево-вправо
-                while (cur_x > 0 && model.Cells[cur_x - 1, cur_y].TextureNumber > 0
-                    && model.Cells[cur_x - 1, cur_y].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_x > 0 && _model.Cells[cur_x - 1, cur_y].TextureNumber > 0
+                    && _model.Cells[cur_x - 1, cur_y].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s1++;
                     cur_x--;
                 }
                 cur_x = x;
-                while (cur_x < model.FieldSize - 1 && model.Cells[cur_x + 1, cur_y].TextureNumber > 0
-                    && model.Cells[cur_x + 1, cur_y].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_x < LinesModel.FieldSize - 1 && _model.Cells[cur_x + 1, cur_y].TextureNumber > 0
+                                                        && _model.Cells[cur_x + 1, cur_y].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s2++;
                     cur_x++;
@@ -324,21 +357,21 @@ namespace Color_it.game.lines
                 if (s1 + s2 > 3)
                 {
                     for (int i = cur_x - s1; i < cur_x + s2 + 1; i++)
-                        model.Cells[i, cur_y].Visited = true;
+                        _model.Cells[i, cur_y].Visited = true;
                     //TODO здесь нужно передать цвет найденных линий в Coloring
                 }
                 s1 = 0;
                 s2 = 0;
                 //вверх-вниз
-                while (cur_y > 0 && model.Cells[cur_x, cur_y - 1].TextureNumber > 0
-                    && model.Cells[cur_x, cur_y - 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y > 0 && _model.Cells[cur_x, cur_y - 1].TextureNumber > 0
+                    && _model.Cells[cur_x, cur_y - 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s1++;
                     cur_y--;
                 }
                 cur_y = y;
-                while (cur_y < model.FieldSize - 1 && model.Cells[cur_x, cur_y + 1].TextureNumber > 0
-                    && model.Cells[cur_x, cur_y + 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y < LinesModel.FieldSize - 1 && _model.Cells[cur_x, cur_y + 1].TextureNumber > 0
+                                                        && _model.Cells[cur_x, cur_y + 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s2++;
                     cur_y++;
@@ -347,14 +380,14 @@ namespace Color_it.game.lines
                 if (s1 + s2 > 3)
                 {
                     for (int i = cur_y - s1; i < cur_y + s2 + 1; i++)
-                        model.Cells[cur_x, i].Visited = true;
+                        _model.Cells[cur_x, i].Visited = true;
                     //TODO здесь нужно передать цвет найденных линий в Coloring
                 }
                 s1 = 0;
                 s2 = 0;
                 //по диагонали
-                while (cur_y > 0 && cur_x > 0 && model.Cells[cur_x - 1, cur_y - 1].TextureNumber > 0
-                    && model.Cells[cur_x - 1, cur_y - 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y > 0 && cur_x > 0 && _model.Cells[cur_x - 1, cur_y - 1].TextureNumber > 0
+                    && _model.Cells[cur_x - 1, cur_y - 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s1++;
                     cur_y--;
@@ -362,9 +395,10 @@ namespace Color_it.game.lines
                 }
                 cur_x = x;
                 cur_y = y;
-                while (cur_y < model.FieldSize - 1 && cur_x < model.FieldSize - 1
-                    && model.Cells[cur_x + 1, cur_y + 1].TextureNumber > 0
-                    && model.Cells[cur_x + 1, cur_y + 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y < LinesModel.FieldSize - 1
+                       && cur_x < LinesModel.FieldSize - 1 
+                       && _model.Cells[cur_x + 1, cur_y + 1].TextureNumber > 0
+                       && _model.Cells[cur_x + 1, cur_y + 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s2++;
                     cur_y++;
@@ -376,13 +410,13 @@ namespace Color_it.game.lines
                 {
                     for (int i = cur_y - s1, j = cur_x - s1; i < cur_y + s2 + 1
                         && j < cur_x + s2 + 1; i++, j++)
-                        model.Cells[j, i].Visited = true;
+                        _model.Cells[j, i].Visited = true;
                     //TODO здесь нужно передать цвет найденных линий в Coloring
                 }
                 s1 = 0;
                 s2 = 0;
-                while (cur_y < model.FieldSize - 1 && x > 0 && model.Cells[cur_x - 1, cur_y + 1].TextureNumber > 0
-                    && model.Cells[cur_x - 1, cur_y + 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y < LinesModel.FieldSize - 1 && x > 0 && _model.Cells[cur_x - 1, cur_y + 1].TextureNumber > 0
+                    && _model.Cells[cur_x - 1, cur_y + 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s1++;
                     cur_y++;
@@ -390,8 +424,8 @@ namespace Color_it.game.lines
                 }
                 cur_x = x;
                 cur_y = y;
-                while (cur_y > 0 && cur_x < model.FieldSize - 1 && model.Cells[cur_x + 1, cur_y - 1].TextureNumber > 0
-                    && model.Cells[cur_x + 1, cur_y - 1].TextureNumber == model.Cells[cur_x, cur_y].TextureNumber)
+                while (cur_y > 0 && cur_x < LinesModel.FieldSize - 1 && _model.Cells[cur_x + 1, cur_y - 1].TextureNumber > 0
+                    && _model.Cells[cur_x + 1, cur_y - 1].TextureNumber == _model.Cells[cur_x, cur_y].TextureNumber)
                 {
                     s2++;
                     cur_y--;
@@ -403,7 +437,7 @@ namespace Color_it.game.lines
                 {
                     for (int i = cur_y + s1, j = cur_x - s1; i > cur_y - s2 - 1
                         && j < cur_x + s2 + 1; i--, j++)
-                        model.Cells[j, i].Visited = true;
+                        _model.Cells[j, i].Visited = true;
                     //TODO здесь нужно передать цвет найденных линий в Coloring
                 }
             }
@@ -423,11 +457,11 @@ namespace Color_it.game.lines
                 if (DeleteLines() > 0) return 1;
 
                 int Emptys = 0;
-                for (int i = 0; i < model.FieldSize; i++)
+                for (int i = 0; i < LinesModel.FieldSize; i++)
                 {
-                    for (int j = 0; j < model.FieldSize; j++)
+                    for (int j = 0; j < LinesModel.FieldSize; j++)
                     {
-                        if (!(model.Cells[i, j].TextureNumber > 0))
+                        if (!(_model.Cells[i, j].TextureNumber > 0))
                         {
                             Emptys++;
                         }
@@ -444,32 +478,32 @@ namespace Color_it.game.lines
             /// <param name="y">Координаты столбца</param>
             private void CellClick(int x, int y)
             {
-                    if (!(choosedCell.Choosed))
+                    if (!(_choosedCell.Choosed))
                     {
-                        if (!(model.Cells[x,y].TextureNumber > 0)) return;
-                        model.Cells[x, y].Choosed = true;
-                        choosedCell = model.Cells[x, y];
-                        choosedCellX = x;
-                        choosedCellY = y;
+                        if (!(_model.Cells[x,y].TextureNumber > 0)) return;
+                        _model.Cells[x, y].Choosed = true;
+                        _choosedCell = _model.Cells[x, y];
+                        _choosedCellX = x;
+                        _choosedCellY = y;
                         return;
                     }
-                    else if (model.Cells[x, y].TextureNumber > 0)
+                    else if (_model.Cells[x, y].TextureNumber > 0)
                     {
-                        choosedCell.Choosed = false;
-                        model.Cells[x, y].Choosed = true;
-                        choosedCell = model.Cells[x, y];
-                        choosedCellX = x;
-                        choosedCellY = y;
+                        _choosedCell.Choosed = false;
+                        _model.Cells[x, y].Choosed = true;
+                        _choosedCell = _model.Cells[x, y];
+                        _choosedCellX = x;
+                        _choosedCellY = y;
                         return;
                     }
-                    else if (!(Movable(choosedCellX, choosedCellY, x, y))) return;
+                    else if (!(Movable(_choosedCellX, _choosedCellY, x, y))) return;
                     else
                     {
-                        choosedCell.Choosed = false;
-                        model.Cells[x, y].TextureNumber = choosedCell.TextureNumber;
-                        choosedCell.TextureNumber = 0;
+                        _choosedCell.Choosed = false;
+                        _model.Cells[x, y].TextureNumber = _choosedCell.TextureNumber;
+                        _choosedCell.TextureNumber = 0;
                         int status;
-                        if ((status = CheckGame(model.Cells[x, y], x, y)) != 2)
+                        if ((status = CheckGame(_model.Cells[x, y], x, y)) != 2)
                         {
                             if (status == 0)
                                 InsertOrbs();
@@ -490,12 +524,12 @@ namespace Color_it.game.lines
                 MouseState currentMouseState = Mouse.GetState();
                 if (currentMouseState.LeftButton != ButtonState.Pressed)
                     return;
-                if (!(currentMouseState.X > model.FieldX && currentMouseState.Y > model.FieldY
-                     && currentMouseState.X < model.FieldX + 9 * model.CellSize
-                     && currentMouseState.Y < model.FieldY + 9 * model.CellSize))
+                if (!(currentMouseState.X > _model.FieldX && currentMouseState.Y > _model.FieldY
+                     && currentMouseState.X < _model.FieldX + 9 * LinesModel.CellSize
+                     && currentMouseState.Y < _model.FieldY + 9 * LinesModel.CellSize))
                         return;
 
-                CellClick((currentMouseState.X - model.FieldX)/model.CellSize, (currentMouseState.Y - model.FieldY)/model.CellSize);
+                CellClick((currentMouseState.X - _model.FieldX)/LinesModel.CellSize, (currentMouseState.Y - _model.FieldY)/LinesModel.CellSize);
             }
 
         }
