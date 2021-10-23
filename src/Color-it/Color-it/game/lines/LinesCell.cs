@@ -34,7 +34,7 @@
     /// @details
     /// @noop я пока не знаю то сюда вписать, единственное скажу, что магические числа лучше не использовать
     /// @noop с константами же лучше всё понятно
-    enum TextureNumbers : int
+    enum TextureNumber : int
     {
         EMPTY = 0,
         RED = 1,
