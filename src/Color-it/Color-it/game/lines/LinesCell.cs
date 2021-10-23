@@ -1,32 +1,49 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace Color_it.game.lines
+﻿namespace Color_it.game.lines
 {
-    /// <summary>
-    ///     Структура данных "ячейка".
-    /// </summary>
+    /// @brief
+    /// @author eremchuk-mp-8
+    /// @details
     class LinesCell
     {
-        /// @noop 0 - пустая ячейка
-        /// @noop 1 - красный шар
-        /// @noop 2 - синий шар
-        /// @noop 3 - зелёный шар
-        /// @noop 4 - жёлтый шар
-        /// @noop 5 - красный выделенный шар
-        /// @noop 6 - синий выделенный шар
-        /// @noop 7 - зелёный выделенный шар
-        /// @noop 8 - жёлтый выделенный шар
-        private bool choosed, visited;
-        private int textureNumber;
-        public bool Choosed { get { return choosed; } set { choosed = value; } }
-        public bool Visited { get { return visited; } set { visited = value; } }
-        public int TextureNumber { get { return textureNumber; } set { textureNumber = value; } }
-
+        
+        /// @brief
+        /// @details
         public LinesCell()
         {
-            choosed = false;
-            visited = false;
-            textureNumber = 0;
+            Choosed = false;
+            Visited = false;
+            TextureNumber = 0;
         }
+        
+        /// @brief
+        /// @details
+        public bool Choosed { get; set; }
+        
+        /// @brief
+        /// @details
+        public bool Visited { get; set; }
+
+        /// @brief
+        /// @details
+        public int TextureNumber { get; set; }
+
+    }
+
+    /// @brief
+    /// @author tima2015
+    /// @details
+    /// @noop я пока не знаю то сюда вписать, единственное скажу, что магические числа лучше не использовать
+    /// @noop с константами же лучше всё понятно
+    enum TextureNumbers : int
+    {
+        EMPTY = 0,
+        RED = 1,
+        BLUE = 2,
+        GREEN = 3,
+        YELLOW = 4,
+        RED_SELECTED = 5,
+        BLUE_SELECTED = 6,
+        GREEN_SELECTED = 7,
+        YELLOW_SELECTED = 8
     }
 }
