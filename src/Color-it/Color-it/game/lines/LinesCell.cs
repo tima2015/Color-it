@@ -1,39 +1,33 @@
 ﻿namespace Color_it.game.lines
 {
-    /// @brief
+    /// @brief Класс Ячейка для игры Lines
     /// @author eremchuk-mp-8
-    /// @details
     class LinesCell
     {
-        
-        /// @brief
-        /// @details
+        /// @brief Конструктор класса
+        /// @details Создаём пустую ячейку
         public LinesCell()
         {
             Choosed = false;
             Visited = false;
-            TextureNumber = 0;
+            TextureNumber = EMPTY;
         }
         
-        /// @brief
-        /// @details
+        /// @brief Показывает, выбрана ли ячейка
+        /// @details Во время игры выбрать можно только одну ячейку
         public bool Choosed { get; set; }
         
-        /// @brief
-        /// @details
+        /// @brief Показывает, посещена ли ячейка во время обхода
+        /// @details Используется в алгоритме поиска пути и для удаления линий
         public bool Visited { get; set; }
 
-        /// @brief
-        /// @details
+        /// @brief Номер текстуры ячейки
         public int TextureNumber { get; set; }
 
     }
 
-    /// @brief
+    /// @brief Список используемых текстур для ячеек
     /// @author tima2015
-    /// @details
-    /// @noop я пока не знаю то сюда вписать, единственное скажу, что магические числа лучше не использовать
-    /// @noop с константами же лучше всё понятно
     enum TextureNumber : int
     {
         EMPTY = 0,
