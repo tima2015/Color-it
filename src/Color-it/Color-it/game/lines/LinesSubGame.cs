@@ -19,50 +19,41 @@ namespace Color_it.game.lines
 
         /// @brief Модель мини игры "Линии"
         /// @author eremchuk-mp-8
-        /// @details
         private class LinesModel : IModel
         {
-            /// @brief
-            /// @details
+            /// @brief Количество ячеек в длину и ширину игрового поля
             public const int FieldSize = 9;
             
-            /// @brief
-            /// @details
+            /// @brief Длина стороны ячейки
             public const int CellSize = 40;
 
-            /// @brief Количество ячеек
-            /// @details
+            /// @brief Количество ячеек на игровом поле
             public const int CellsCount = FieldSize * FieldSize;
 
-            /// @brief Количество шаров при запуске игры
-            /// @details
+            /// @brief Количество шаров, добавляемых на каждом ходе
             public const int BallsOnInitialize = 3;
 
-            /// @brief
-            /// @details
+            /// @brief Конструктор класса модели Lines
+            /// @details Создаём массив игрового поля и массив ячеек на следующем ходе и определяем координаты верхнего левого угла игрового поля
             public LinesModel()
             {
                 Cells = new LinesCell[FieldSize, FieldSize];
-                NextCells = new LinesCell[3];
+                NextCells = new LinesCell[BallsOnInitialize];
                 for (var i = 0; i < NextCells.Length; i++) NextCells[i] = new LinesCell();
                 FieldX = GameCore.Core.SubGameViewport.Width / 2 - 5 * CellSize;
                 FieldX = GameCore.Core.SubGameViewport.Height / 2 - 5 * CellSize;
             }
             
-            /// @brief
-            /// @details
+            /// @brief Доступ к массиву игрового поля
             public LinesCell[,] Cells { get; }
 
-            /// @brief
-            /// @details
+            /// @brief Доступ к массиву ячеек на следующем ходе
             public LinesCell[] NextCells { get; }
             
-            /// @brief
-            /// @details
+            /// @brief Координата X левого верхнего угла поля
             public int FieldX { get; }
             
-            /// @brief
-            /// @details
+            /// @brief Координата Y левого верхнего угла поля
             public int FieldY { get; }
         }
 
@@ -79,7 +70,6 @@ namespace Color_it.game.lines
             
         /// @brief Реализация контроллера мини игры.
         /// @author eremchuk-mp-8
-        /// @details
         private class LinesController : IController
         {
             //при выполнии условия закрашивания вызывайте listener.Notify(new PaintingEvent(count, color))
@@ -101,15 +91,13 @@ namespace Color_it.game.lines
             }
 
             /// @brief Назначение NextCells случайных значений
-            /// @details 
             private void InitWithRandNextCells(Random rand)
             {
                 for (var i = 0; i < LinesModel.BallsOnInitialize; i++)
                     _model.NextCells[i].TextureNumber = rand.Next((int) TextureNumber.RED, (int) TextureNumber.YELLOW);
             }
 
-            /// @brief
-            /// @details
+            /// @brief Выбор 3-х случайных клеток для вставки шаров
             /// @noop Это же поиск? На мой взгляд, довольно неоптимизированый, в худшем случае пользователь может ждать очень долго
             private void FindOrbs(Random rand)
             {
@@ -125,8 +113,7 @@ namespace Color_it.game.lines
                 }
             }
 
-            /// @brief
-            /// @details
+            /// @brief Инициализируем ячейки игрового поля
             private void InitCellsGrid()
             {
                 for (int i = 0; i < LinesModel.FieldSize; i++)
@@ -142,8 +129,8 @@ namespace Color_it.game.lines
                 }
             }
 
-            /// @brief Вызывается единожды перед запуском игры
-            /// @details
+            /// @brief Инициализация игры
+            /// @details Вызывается единожды перед запуском игры
             public void OnBegin()
             {
                 _choosedCell = new LinesCell();
