@@ -11,7 +11,7 @@ namespace Color_it.game.coloring
     {
         public void Notify(IEvent @event)
         {
-            throw new NotImplementedException(); //todo 
+            //todo 
         }
 
         /// <summary>

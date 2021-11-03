@@ -3,7 +3,7 @@
     /// @brief Класс Ячейка для игры Lines
     /// @author eremchuk-mp-8
     /// @details
-    class LinesCell
+    public class LinesCell
     {
         /// @brief Конструктор класса
         /// @details Создаём пустую ячейку
