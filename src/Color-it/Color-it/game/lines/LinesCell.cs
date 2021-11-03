@@ -2,6 +2,7 @@
 {
     /// @brief Класс Ячейка для игры Lines
     /// @author eremchuk-mp-8
+    /// @details
     class LinesCell
     {
         /// @brief Конструктор класса
@@ -10,7 +11,7 @@
         {
             Choosed = false;
             Visited = false;
-            TextureNumber = EMPTY;
+            TextureNumber = (int) lines.TextureNumber.EMPTY;
         }
         
         /// @brief Показывает, выбрана ли ячейка
