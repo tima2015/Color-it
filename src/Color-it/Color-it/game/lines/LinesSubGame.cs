@@ -221,7 +221,7 @@ namespace Color_it.game.lines
             private bool IsOrbsCellsNotEmpty()
             {
                 return isOrbsNotEquals() && !(CellByOrb(_orbs[0]).TextureNumber > 0 || CellByOrb(_orbs[1]).TextureNumber > 0 
-                    || CellByOrb(_orbs[1]).TextureNumber > 0);
+                    || CellByOrb(_orbs[2]).TextureNumber > 0);
             }
 
             /// @brief Выбор BallsInsertCount случайных клеток для вставки шаров
@@ -232,26 +232,21 @@ namespace Color_it.game.lines
                 //Ищем 3 пустые клетки
                 while (true)
                 {
-                    for (int i = 0; i < 3; i++) _orbs[i] = rand.Next(0, 81);
+                    for (int i = 0; i < LinesModel.BallsInsertCount; i++) _orbs[i] = rand.Next(0, LinesModel.CellsCount);
                     if (IsOrbsCellsNotEmpty()) break;
                 }
                 for (int i = 0; i < LinesModel.FieldSize; i++)
-                {
-                    for (int j = 0; j < LinesModel.FieldSize; j++)
+                for (int j = 0; j < LinesModel.FieldSize; j++)
+                for (int k = 0; k < LinesModel.BallsInsertCount; k++)
+                    if (i == XCellIndexByOrb(_orbs[k]) && j == YCellIndexByOrb(_orbs[k]))
                     {
-                        for (int k = 0; k < 3; k++)
-                        {
-                            if (i == _orbs[k] / LinesModel.FieldSize && j == _orbs[k] % LinesModel.FieldSize)
-                            {
-                                _model.Cells[i, j].TextureNumber = _model.NextCells[k].TextureNumber;
-                                break;
-                            }
-                        }
+                        _model.Cells[i, j].TextureNumber = _model.NextCells[k].TextureNumber;
+                        break;
                     }
-                }
                 //Выбор BallsInsertCount следующих шаров для вставки
                 InitWithRandNextCells(rand);
             }
+            
             /// @brief Снятие всех меток Visited
             private void UnmarkCells()
             {
@@ -264,9 +259,9 @@ namespace Color_it.game.lines
             /// @param[in] start_y Координаты столбца стартовой ячейки
             /// @param[in] end_x Координаты строки конечной ячейки
             /// @param[in] end_y Координаты столбца конечной ячейки
-            private bool Movable(int start_x, int start_y, int end_x, int end_y)
+            private bool Movable(int start_x, int start_y, int end_x, int end_y)//todo Нужно разбить этот метод на группу более мелких методов
             {
-                Queue<LinesCell> queue = new Queue<LinesCell>();
+                Queue<LinesCell> queue = new();
                 queue.Enqueue(_model.Cells[start_x, start_y]);
                 int cur_x = start_x, cur_y = start_y;
 
@@ -345,6 +340,7 @@ namespace Color_it.game.lines
                 UnmarkCells();
                 return false;
             }
+            
             /// <summary>
             ///     Поиск линий длины 5 и более
             ///     Шары, оставляющие линию, помечаются
@@ -352,7 +348,7 @@ namespace Color_it.game.lines
             /// <param name="с">Ячейка от которой начинается проверка</param>
             /// <param name="x">Координаты строки</param>
             /// <param name="y">Координаты столбца</param>
-            private void FindLines(LinesCell c, int x, int y) 
+            private void FindLines(LinesCell c, int x, int y) //todo Нужно разбить этот метод на группу более мелких методов
             {
                 int s1 = 0, s2 = 0, cur_x=x, cur_y=y;
                 //влево-вправо
@@ -370,7 +366,7 @@ namespace Color_it.game.lines
                     cur_x++;
                 }
                 cur_x=x;
-                if (s1 + s2 > 3)
+                if (s1 + s2 > LinesModel.BallsInsertCount)
                 {
                     for (int i = cur_x - s1; i < cur_x + s2 + 1; i++)
                         _model.Cells[i, cur_y].Visited = true;
@@ -393,7 +389,7 @@ namespace Color_it.game.lines
                     cur_y++;
                 }
                 cur_y = y;
-                if (s1 + s2 > 3)
+                if (s1 + s2 > LinesModel.BallsInsertCount)
                 {
                     for (int i = cur_y - s1; i < cur_y + s2 + 1; i++)
                         _model.Cells[cur_x, i].Visited = true;
@@ -422,7 +418,7 @@ namespace Color_it.game.lines
                 }
                 cur_x = x;
                 cur_y = y;
-                if (s1 + s2 > 3)
+                if (s1 + s2 > LinesModel.BallsInsertCount)
                 {
                     for (int i = cur_y - s1, j = cur_x - s1; i < cur_y + s2 + 1
                         && j < cur_x + s2 + 1; i++, j++)
@@ -449,7 +445,7 @@ namespace Color_it.game.lines
                 }
                 cur_x = x;
                 cur_y = y;
-                if (s1 + s2 > 3)
+                if (s1 + s2 > LinesModel.BallsInsertCount)
                 {
                     for (int i = cur_y + s1, j = cur_x - s1; i > cur_y - s2 - 1
                         && j < cur_x + s2 + 1; i--, j++)
@@ -457,6 +453,15 @@ namespace Color_it.game.lines
                     //TODO здесь нужно передать цвет найденных линий в Coloring
                 }
             }
+            
+            /// @brief вставляем три новых шара
+            public const int DoInsert = 0;
+            
+            /// @brief удалена линия и не нужно вставлять новых шаров
+            public const int LineDeleted = 1;
+            
+            /// @brief больше нет места для вставки шаров
+            public const int GridFull = 2;
 
             /// <summary>
             ///     Проверка игры после очередного клика мыши
@@ -464,28 +469,20 @@ namespace Color_it.game.lines
             /// <param name="с">Ячейка от которой начинается проверка</param>
             /// <param name="x">Координаты строки</param>
             /// <param name="y">Координаты столбца</param>
-            /// @noop 0 - вставляем три новых шара
-            /// @noop 1 - удалена линия и не нужно вставлять новых шаров
-            /// @noop 2 - больше нет места для вставки шаров
             private int CheckGame(LinesCell c, int x, int y)
             {
                 FindLines(c, x, y);
-                if (DeleteLines() > 0) return 1;
+                if (DeleteLines() > 0) return LineDeleted;
 
-                int Emptys = 0;
+                int emptys = 0;
                 for (int i = 0; i < LinesModel.FieldSize; i++)
-                {
-                    for (int j = 0; j < LinesModel.FieldSize; j++)
-                    {
-                        if (!(_model.Cells[i, j].TextureNumber > 0))
-                        {
-                            Emptys++;
-                        }
-                    }
-                }
-                if (Emptys < 4)
-                    return 2;
-                return 0;
+                for (int j = 0; j < LinesModel.FieldSize; j++)
+                    if (!(_model.Cells[i, j].TextureNumber > 0))
+                        emptys++;
+
+                if (emptys < 4)
+                    return GridFull;
+                return DoInsert;
             }
             /// <summary>
             ///     Обработка клика мыши в пределах игрового поля.
@@ -519,9 +516,9 @@ namespace Color_it.game.lines
                         _model.Cells[x, y].TextureNumber = _choosedCell.TextureNumber;
                         _choosedCell.TextureNumber = 0;
                         int status;
-                        if ((status = CheckGame(_model.Cells[x, y], x, y)) != 2)
+                        if ((status = CheckGame(_model.Cells[x, y], x, y)) != GridFull)
                         {
-                            if (status == 0)
+                            if (status == DoInsert)
                                 InsertOrbs();
                         }
                         else
@@ -531,6 +528,7 @@ namespace Color_it.game.lines
                         return;
                     }
             }
+            
             /// <summary>
             ///     Проверка нажатия ЛКМ и выхода за границу
             ///     Если всё хорошо, преобразует координаты мыши в координаты игрового поля и передаёт в CellClick
@@ -541,8 +539,8 @@ namespace Color_it.game.lines
                 if (currentMouseState.LeftButton != ButtonState.Pressed)
                     return;
                 if (!(currentMouseState.X > _model.FieldX && currentMouseState.Y > _model.FieldY
-                     && currentMouseState.X < _model.FieldX + 9 * LinesModel.CellSize
-                     && currentMouseState.Y < _model.FieldY + 9 * LinesModel.CellSize))
+                     && currentMouseState.X < _model.FieldX + LinesModel.FieldSize * LinesModel.CellSize
+                     && currentMouseState.Y < _model.FieldY + LinesModel.FieldSize * LinesModel.CellSize))
                         return;
 
                 CellClick((currentMouseState.X - _model.FieldX)/LinesModel.CellSize, (currentMouseState.Y - _model.FieldY)/LinesModel.CellSize);
