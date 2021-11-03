@@ -1,32 +1,44 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace Color_it.game.lines
+﻿namespace Color_it.game.lines
 {
-    /// <summary>
-    ///     Структура данных "ячейка".
-    /// </summary>
+    /// @brief Класс Ячейка для игры Lines
+    /// @author eremchuk-mp-8
+    /// @details
     class LinesCell
     {
-        /// @noop 0 - пустая ячейка
-        /// @noop 1 - красный шар
-        /// @noop 2 - синий шар
-        /// @noop 3 - зелёный шар
-        /// @noop 4 - жёлтый шар
-        /// @noop 5 - красный выделенный шар
-        /// @noop 6 - синий выделенный шар
-        /// @noop 7 - зелёный выделенный шар
-        /// @noop 8 - жёлтый выделенный шар
-        private bool choosed, visited;
-        private int textureNumber;
-        public bool Choosed { get { return choosed; } set { choosed = value; } }
-        public bool Visited { get { return visited; } set { visited = value; } }
-        public int TextureNumber { get { return textureNumber; } set { textureNumber = value; } }
-
+        /// @brief Конструктор класса
+        /// @details Создаём пустую ячейку
         public LinesCell()
         {
-            choosed = false;
-            visited = false;
-            textureNumber = 0;
+            Choosed = false;
+            Visited = false;
+            TextureNumber = (int) lines.TextureNumber.EMPTY;
         }
+        
+        /// @brief Показывает, выбрана ли ячейка
+        /// @details Во время игры выбрать можно только одну ячейку
+        public bool Choosed { get; set; }
+        
+        /// @brief Показывает, посещена ли ячейка во время обхода
+        /// @details Используется в алгоритме поиска пути и для удаления линий
+        public bool Visited { get; set; }
+
+        /// @brief Номер текстуры ячейки
+        public int TextureNumber { get; set; }
+
+    }
+
+    /// @brief Список используемых текстур для ячеек
+    /// @author tima2015
+    enum TextureNumber : int
+    {
+        EMPTY = 0,
+        RED = 1,
+        BLUE = 2,
+        GREEN = 3,
+        YELLOW = 4,
+        RED_SELECTED = 5,
+        BLUE_SELECTED = 6,
+        GREEN_SELECTED = 7,
+        YELLOW_SELECTED = 8
     }
 }
