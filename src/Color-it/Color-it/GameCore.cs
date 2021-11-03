@@ -19,7 +19,7 @@ namespace Color_it
 
         public GameSettings Settings { get; } = GameSettings.Load();
         
-        public Viewport SubGameViewport {get; } = new Viewport(0,0,1000,1000);
+        public Viewport SubGameViewport { get; } = new(0,0,1000,1000);
 
         public static GameCore Core { get; }
         
