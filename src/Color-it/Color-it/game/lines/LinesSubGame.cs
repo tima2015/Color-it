@@ -34,9 +34,9 @@ namespace Color_it.game.lines
             /// @details
             public const int CellsCount = FieldSize * FieldSize;
 
-            /// @brief Количество шаров при запуске игры
+            /// @brief Количество шаров для вставки
             /// @details
-            public const int BallsOnInitialize = 3;
+            public const int BallsInsertCount = 3;
 
             /// @brief
             /// @details
@@ -45,8 +45,8 @@ namespace Color_it.game.lines
                 Cells = new LinesCell[FieldSize, FieldSize];
                 NextCells = new LinesCell[3];
                 for (var i = 0; i < NextCells.Length; i++) NextCells[i] = new LinesCell();
-                FieldX = GameCore.Core.SubGameViewport.Width / 2 - 5 * CellSize;
-                FieldX = GameCore.Core.SubGameViewport.Height / 2 - 5 * CellSize;
+                FieldX = GameCore.Core.SubGameViewport.Width / 2 - (FieldSize/2 + 1) * CellSize;
+                FieldX = GameCore.Core.SubGameViewport.Height / 2 - (FieldSize/2 + 1) * CellSize;
             }
             
             /// @brief
@@ -87,7 +87,7 @@ namespace Color_it.game.lines
             private GameEventListener _listener;//warning!
             private LinesCell _choosedCell;
             private int _choosedCellX, _choosedCellY;
-            private readonly int[] _orbs = new int[3];
+            private readonly int[] _orbs = new int[LinesModel.BallsInsertCount];
             private readonly LinesModel _model = new();
 
             public LinesController(GameEventListener listener)
@@ -104,25 +104,50 @@ namespace Color_it.game.lines
             /// @details 
             private void InitWithRandNextCells(Random rand)
             {
-                for (var i = 0; i < LinesModel.BallsOnInitialize; i++)
+                for (var i = 0; i < LinesModel.BallsInsertCount; i++)
                     _model.NextCells[i].TextureNumber = rand.Next((int) TextureNumber.RED, (int) TextureNumber.YELLOW);
+            }
+            
+            /// @brief Проверка несовпадения сфер
+            /// @details
+            /// @return истина если все три сферы уникальны.
+            private bool isOrbsNotEquals()
+            {
+                return !(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2]
+                                              || _orbs[1] == _orbs[2]);
             }
 
             /// @brief
             /// @details
-            /// @noop Это же поиск? На мой взгляд, довольно неоптимизированый, в худшем случае пользователь может ждать очень долго
             private void FindOrbs(Random rand)
             {
                 while (true)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < LinesModel.BallsInsertCount; i++)
                     {
                         _orbs[i] = rand.Next(0, LinesModel.CellsCount);
                     }
-                    if (!(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2]
-                                               || _orbs[1] == _orbs[2]))
+                    if (isOrbsNotEquals())
                         break;
                 }
+            }
+
+            /// @brief Получение индекса по X для ячейки по сфере
+            /// @param[in] orb номер сферы
+            /// @details
+            /// @return индекс по X ячейки.
+            private int XCellIndexByOrb(int orb)
+            {
+                return orb / LinesModel.FieldSize;
+            }
+
+            /// @brief Получение индекса по Y для ячейки по сфере
+            /// @param[in] orb номер сферы
+            /// @details
+            /// @return индекс по Y ячейки.
+            private int YCellIndexByOrb(int orb)
+            {
+                return orb % LinesModel.FieldSize;
             }
 
             /// @brief
@@ -133,9 +158,9 @@ namespace Color_it.game.lines
                 for (int j = 0; j < LinesModel.FieldSize; j++)
                 {
                     _model.Cells[i, j] = new LinesCell();
-                    for (int k = 0; k < LinesModel.BallsOnInitialize; k++)
+                    for (int k = 0; k < LinesModel.BallsInsertCount; k++)
                     {
-                        if (_orbs[k] / LinesModel.FieldSize != i || _orbs[k] % LinesModel.FieldSize != j) continue;
+                        if (XCellIndexByOrb(_orbs[k]) != i || YCellIndexByOrb(_orbs[i]) != j) continue;
                         _model.Cells[i, j].TextureNumber = _model.NextCells[k].TextureNumber;
                         break;
                     }
@@ -155,24 +180,17 @@ namespace Color_it.game.lines
             }
 
             public void OnResume()
-            {
-                throw new NotImplementedException();
-            }
+            { }
 
             public void OnPause()
-            {
-                throw new NotImplementedException();
-            }
+            { }
 
             public void OnEnd()
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            ///     Удаление закрашенных линии
-            ///     Возвращает кол-во освободившихся клеток
-            /// </summary>
+            { }
+            
+            /// @brief Удаление закрашенных линии
+            /// @return Возвращает кол-во освободившихся клеток
+            /// @details
             private int DeleteLines()
             {
                 int del = 0;
@@ -180,34 +198,42 @@ namespace Color_it.game.lines
                 {
                     for (int j = 0; j < LinesModel.FieldSize; j++)
                     {
-                        if (_model.Cells[i, j].Visited)
-                        {
-                            _model.Cells[i, j].Visited = false;
-                            _model.Cells[i, j].TextureNumber = 0;
-                            del++;
-                        }
+                        if (!_model.Cells[i, j].Visited) continue;
+                        _model.Cells[i, j].Visited = false;
+                        _model.Cells[i, j].TextureNumber = 0;
+                        del++;
                     }
                 }
                 return del;
             }
-            /// <summary>
-            ///     Выбор 3-х случайных клеток для вставки шаров
-            /// </summary>
+
+            /// @brief Получение ячейки по номеру сферы
+            /// @return Возвращает ячейку
+            /// @details
+            private LinesCell CellByOrb(int orb)
+            {
+                return _model.Cells[XCellIndexByOrb(orb), YCellIndexByOrb(orb)];
+            }
+
+            /// @brief Проверка ячеек на заполненость
+            /// @return Возвращает истину если ячейки сфер не пусты
+            /// @details
+            private bool IsOrbsCellsNotEmpty()
+            {
+                return isOrbsNotEquals() && !(CellByOrb(_orbs[0]).TextureNumber > 0 || CellByOrb(_orbs[1]).TextureNumber > 0 
+                    || CellByOrb(_orbs[1]).TextureNumber > 0);
+            }
+
+            /// @brief Выбор BallsInsertCount случайных клеток для вставки шаров
+            /// @details
             private void InsertOrbs()
             {
                 var rand = new Random();
                 //Ищем 3 пустые клетки
                 while (true)
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        _orbs[i] = rand.Next(0, 81);
-                    }
-                    if (!(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2] || _orbs[1] == _orbs[2]))
-                        if (!(_model.Cells[_orbs[0] / LinesModel.FieldSize, _orbs[0] % LinesModel.FieldSize].TextureNumber > 0
-                            || _model.Cells[_orbs[1] / LinesModel.FieldSize, _orbs[1] % LinesModel.FieldSize].TextureNumber > 0
-                            || _model.Cells[_orbs[2] / LinesModel.FieldSize, _orbs[2] % LinesModel.FieldSize].TextureNumber > 0))
-                            break;
+                    for (int i = 0; i < 3; i++) _orbs[i] = rand.Next(0, 81);
+                    if (IsOrbsCellsNotEmpty()) break;
                 }
                 for (int i = 0; i < LinesModel.FieldSize; i++)
                 {
@@ -223,31 +249,21 @@ namespace Color_it.game.lines
                         }
                     }
                 }
-                //Выбор 3-х следующих шаров для вставки
-                for (int i = 0; i < 3; i++)
-                {
-                    _model.NextCells[i].TextureNumber = rand.Next(1, 5);
-                }
+                //Выбор BallsInsertCount следующих шаров для вставки
+                InitWithRandNextCells(rand);
             }
-            /// <summary>
-            ///     Снятие всех меток Visited
-            /// </summary>
+            /// @brief Снятие всех меток Visited
             private void UnmarkCells()
             {
-                foreach (LinesCell c in _model.Cells)
-                {
-                    c.Visited = false;
-                }
+                foreach (var c in _model.Cells) c.Visited = false;
             }
 
-            /// <summary>
-            ///     Поиск пути от start до end
-            ///     Реализовано с помощью алгоритма BFS
-            /// </summary>
-            /// <param name="start_x">Координаты строки стартовой ячейки</param>
-            /// <param name="start_y">Координаты столбца стартовой ячейки</param>
-            /// <param name="end_x">Координаты строки конечной ячейки</param>
-            /// <param name="end_y">Координаты столбца конечной ячейки</param>
+            /// @brief Поиск пути от start до end
+            /// @details Реализовано с помощью алгоритма BFS
+            /// @param[in] start_x Координаты строки стартовой ячейки
+            /// @param[in] start_y Координаты столбца стартовой ячейки
+            /// @param[in] end_x Координаты строки конечной ячейки
+            /// @param[in] end_y Координаты столбца конечной ячейки
             private bool Movable(int start_x, int start_y, int end_x, int end_y)
             {
                 Queue<LinesCell> queue = new Queue<LinesCell>();
