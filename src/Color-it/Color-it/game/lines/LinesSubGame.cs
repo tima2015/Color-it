@@ -80,8 +80,47 @@ namespace Color_it.game.lines
         /// @brief Реализация контроллера мини игры.
         /// @author eremchuk-mp-8
         /// @details
-        private class LinesController : IController
+        public class LinesController : IController
         {
+            
+            //#####################################
+            //######## !!!FOR TEST ONLY!!! ########
+            //#####################################
+
+            public static int TEST_XCellIndexByOrb(LinesController controller, int orb)
+            {
+                return controller.XCellIndexByOrb(orb);
+            }
+
+            public static int TEST_YCellIndexByOrb(LinesController controller, int orb)
+            {
+                return controller.YCellIndexByOrb(orb);
+            }
+
+            public static bool TEST_IsOrbsNotEquals(LinesController controller)
+            {
+                return controller.IsOrbsNotEquals();
+            }
+
+            public static int TEST_DeleteLines(LinesController controller)
+            {
+                return controller.DeleteLines();
+            }
+
+            public static LinesCell TEST_CellByOrb(LinesController controller, int orb)
+            {
+                return controller.CellByOrb(orb);
+            }
+
+            public static bool IsOrbsCellsNotEmpty(LinesController controller)
+            {
+                return controller.IsOrbsCellsNotEmpty();
+            }
+
+            //#####################################
+            //######## FOR TEST ONLY ENDS. ########
+            //#####################################
+            
             //при выполнии условия закрашивания вызывайте listener.Notify(new PaintingEvent(count, color))
             //для подробностей смотрите GameEventListenr.cs
             private GameEventListener _listener;//warning!
@@ -111,7 +150,7 @@ namespace Color_it.game.lines
             /// @brief Проверка несовпадения сфер
             /// @details
             /// @return истина если все три сферы уникальны.
-            private bool isOrbsNotEquals()
+            private bool IsOrbsNotEquals()
             {
                 return !(_orbs[0] == _orbs[1] || _orbs[0] == _orbs[2]
                                               || _orbs[1] == _orbs[2]);
@@ -127,7 +166,7 @@ namespace Color_it.game.lines
                     {
                         _orbs[i] = rand.Next(0, LinesModel.CellsCount);
                     }
-                    if (isOrbsNotEquals())
+                    if (IsOrbsNotEquals())
                         break;
                 }
             }
@@ -138,7 +177,7 @@ namespace Color_it.game.lines
             /// @return индекс по X ячейки.
             private int XCellIndexByOrb(int orb)
             {
-                return orb / LinesModel.FieldSize;
+                return orb % LinesModel.FieldSize;
             }
 
             /// @brief Получение индекса по Y для ячейки по сфере
@@ -147,7 +186,7 @@ namespace Color_it.game.lines
             /// @return индекс по Y ячейки.
             private int YCellIndexByOrb(int orb)
             {
-                return orb % LinesModel.FieldSize;
+                return orb / LinesModel.FieldSize;
             }
 
             /// @brief
@@ -220,7 +259,7 @@ namespace Color_it.game.lines
             /// @details
             private bool IsOrbsCellsNotEmpty()
             {
-                return isOrbsNotEquals() && !(CellByOrb(_orbs[0]).TextureNumber > 0 || CellByOrb(_orbs[1]).TextureNumber > 0 
+                return IsOrbsNotEquals() && !(CellByOrb(_orbs[0]).TextureNumber > 0 || CellByOrb(_orbs[1]).TextureNumber > 0 
                     || CellByOrb(_orbs[2]).TextureNumber > 0);
             }
 

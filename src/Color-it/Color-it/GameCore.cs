@@ -21,8 +21,8 @@ namespace Color_it
         
         public Viewport SubGameViewport { get; } = new(0,0,1000,1000);
 
-        public static GameCore Core { get; }
-        
+        public static GameCore Core { get; } = new();
+
         /// <summary>
         /// Класс пользовательских настроек
         /// </summary>
@@ -36,7 +36,7 @@ namespace Color_it
             /// <returns>Сохранённые пользователем настройки или настройки по умолчанию</returns>
             public static GameSettings Load()
             {
-                return JsonSerializer.Deserialize<GameSettings>(File.ReadAllText(SettingsFilePath, Encoding.UTF8));
+                return File.Exists(SettingsFilePath) ? JsonSerializer.Deserialize<GameSettings>(File.ReadAllText(SettingsFilePath, Encoding.UTF8)) : new GameSettings();
             }
 
             /// <summary>
