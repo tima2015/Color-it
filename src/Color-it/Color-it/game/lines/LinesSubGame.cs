@@ -67,14 +67,38 @@ namespace Color_it.game.lines
             public int FieldY { get; }
         }
 
-            /// @brief Реализация отображения мини игры.
-            /// @author eremchuk-mp-8
-            /// @details
-            private class LinesView : IView
+        /// @brief Реализация отображения мини игры.
+        /// @author eremchuk-mp-8
+        /// @details
+        private class LinesView : IView
         {
+            Texture2D _texture;
+            private LinesModel _model;
+            public LinesView(LinesModel model)
+            {
+                _model = model;
+            }
             public void Draw(SpriteBatch batch)
             {
-                throw new NotImplementedException();
+                batch.Begin();
+                for(int i=0; i < LinesModel.FieldSize; i++)
+                {
+                    for(int j=0; j < LinesModel.FieldSize; j++)
+                    {
+                        batch.Draw(_texture,
+                                    new Vector2(GameCore.Core.SubGameViewport.X + _model.FieldX + i * LinesModel.CellSize,
+                                                GameCore.Core.SubGameViewport.Y + _model.FieldY + j * LinesModel.CellSize),
+                                    new Rectangle(320 * _model.Cells[i, j].TextureNumber, 0, 320 * (_model.Cells[i, j].TextureNumber + 1), 320),
+                                    Color.Black,
+                                    0,
+                                    Vector2.Zero,
+                                    (float)320 / LinesModel.CellSize,
+                                    SpriteEffects.FlipVertically,
+                                    0);
+
+                    }
+                }
+                batch.End();
             }
         }
             
@@ -348,7 +372,7 @@ namespace Color_it.game.lines
             /// @param[in] start_y Координаты столбца стартовой ячейки
             /// @param[in] end_x Координаты строки конечной ячейки
             /// @param[in] end_y Координаты столбца конечной ячейки
-            private bool Movable(int start_x, int start_y, int end_x, int end_y)//todo Нужно разбить этот метод на группу более мелких методов
+            private bool Movable(int start_x, int start_y, int end_x, int end_y)
             {
                 Queue<LinesCell> queue = new();
                 queue.Enqueue(_model.Cells[start_x, start_y]);
@@ -357,9 +381,9 @@ namespace Color_it.game.lines
                 while (queue.Count > 0)
                 {
                     LinesCell cur = queue.Dequeue();
-                    for(int i=0; i < _model.Cells.Length; i++)
+                    for(int i=0; i < LinesModel.FieldSize; i++)
                     {
-                        for(int j=0; j < _model.Cells.Length; j++)
+                        for(int j=0; j < LinesModel.FieldSize; j++)
                         {
                             if(_model.Cells[i,j].Equals(cur))
                             {
@@ -385,6 +409,27 @@ namespace Color_it.game.lines
                 //в случае если не найден путь
                 UnmarkCells();
                 return false;
+            }
+
+            private Color DefineColor(int cur_x, int cur_y)
+            {
+                Color color = Color.White;
+                switch (_model.Cells[cur_x, cur_y].TextureNumber)
+                {
+                    case (int)lines.TextureNumber.RED:
+                        color = Color.Red;
+                        break;
+                    case (int)lines.TextureNumber.BLUE:
+                        color = Color.Blue;
+                        break;
+                    case (int)lines.TextureNumber.GREEN:
+                        color = Color.Green;
+                        break;
+                    case (int)lines.TextureNumber.YELLOW:
+                        color = Color.Yellow;
+                        break;
+                }
+                return color;
             }
             
             /// <summary>
@@ -415,7 +460,8 @@ namespace Color_it.game.lines
                 {
                     for (int i = cur_x - s1; i < cur_x + s2 + 1; i++)
                         _model.Cells[i, cur_y].Visited = true;
-                    //TODO здесь нужно передать цвет найденных линий в Coloring
+                    _listener.Notify((IEvent)new PaintingEvent(s1 + s2 + 1, DefineColor(cur_x, cur_y)));
+
                 }
                 s1 = 0;
                 s2 = 0;
@@ -438,7 +484,7 @@ namespace Color_it.game.lines
                 {
                     for (int i = cur_y - s1; i < cur_y + s2 + 1; i++)
                         _model.Cells[cur_x, i].Visited = true;
-                    //TODO здесь нужно передать цвет найденных линий в Coloring
+                    _listener.Notify((IEvent)new PaintingEvent(s1 + s2 + 1, DefineColor(cur_x, cur_y)));
                 }
                 s1 = 0;
                 s2 = 0;
@@ -468,7 +514,7 @@ namespace Color_it.game.lines
                     for (int i = cur_y - s1, j = cur_x - s1; i < cur_y + s2 + 1
                         && j < cur_x + s2 + 1; i++, j++)
                         _model.Cells[j, i].Visited = true;
-                    //TODO здесь нужно передать цвет найденных линий в Coloring
+                    _listener.Notify((IEvent)new PaintingEvent(s1 + s2 + 1, DefineColor(cur_x, cur_y)));
                 }
                 s1 = 0;
                 s2 = 0;
@@ -495,7 +541,7 @@ namespace Color_it.game.lines
                     for (int i = cur_y + s1, j = cur_x - s1; i > cur_y - s2 - 1
                         && j < cur_x + s2 + 1; i--, j++)
                         _model.Cells[j, i].Visited = true;
-                    //TODO здесь нужно передать цвет найденных линий в Coloring
+                    _listener.Notify((IEvent)new PaintingEvent(s1 + s2 + 1, DefineColor(cur_x, cur_y)));
                 }
             }
             
