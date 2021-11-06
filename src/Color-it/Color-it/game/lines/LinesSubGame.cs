@@ -22,11 +22,11 @@ namespace Color_it.game.lines
         /// @details
         private class LinesModel : IModel
         {
-            /// @brief
+            /// @brief Длина стороны игрового поля в ячейках
             /// @details
             public const int FieldSize = 9;
             
-            /// @brief
+            /// @brief Длина стороны одной ячейки
             /// @details
             public const int CellSize = 40;
 
@@ -38,8 +38,9 @@ namespace Color_it.game.lines
             /// @details
             public const int BallsInsertCount = 3;
 
-            /// @brief
-            /// @details
+            /// @brief Объявление модели мини-игры Lines
+            /// @details Объявляются массив ячеек игрового поля и массив ячеек на следующем ходе,
+            /// устанавливается положение игрового поля
             public LinesModel()
             {
                 Cells = new LinesCell[FieldSize, FieldSize];
@@ -128,6 +129,10 @@ namespace Color_it.game.lines
             private int _choosedCellX, _choosedCellY;
             private readonly int[] _orbs = new int[LinesModel.BallsInsertCount];
             private readonly LinesModel _model = new();
+            internal enum Direction
+            {
+                LEFT_UP = 10, LEFT_DOWN = 9, LEFT = 8, RIGHT_UP = 6, RIGHT_DOWN = 5, RIGHT = 4, UP = 2, DOWN = 1
+            }
 
             public LinesController(GameEventListener listener)
             {
@@ -292,6 +297,51 @@ namespace Color_it.game.lines
                 foreach (var c in _model.Cells) c.Visited = false;
             }
 
+            private int[] IntToBinary(int x)
+            {
+                int[] a = new int[4];
+                for(int i = 3; i > -1; i--)
+                {
+                    a[i] = x % 2;
+                    if (x == 1)
+                        break;
+                    x /= 2;
+                }
+                return a;
+            }
+
+            /// @brief Проверка в заданном направлении
+            /// @details Для определения направления переводим параметр direction в двоичное представление
+            /// @param[in] direction Направление (принимает значения LEFT, RIGHT, UP или DOWN)
+            /// @param[in] cur_x Координаты строки текущей ячейки
+            /// @param[in] cur_y Координаты столбца текущей ячейки
+            /// @param[in] end_x Координаты строки конечной ячейки
+            /// @param[in] end_y Координаты столбца конечной ячейки
+            /// @param[in] queue Очередь из просматриваемых ячеек
+            private bool CheckingDirection(int direction, int cur_y,  int cur_x, int end_x, int end_y, ref Queue<LinesCell> queue)
+            {
+                int[] a = IntToBinary(direction);
+                int left = a[0], right = a[1], up = a[2], down = a[3];
+                if (cur_x - left + right >= 0 && cur_y - up + down >= 0 && cur_y - up + down <= LinesModel.FieldSize && cur_x - left + right <= LinesModel.FieldSize
+                    && !(_model.Cells[cur_x - left + right, cur_y - up + down].TextureNumber > 0))
+                {
+                    if (!(_model.Cells[cur_x - left + right, cur_y - up + down].Visited))
+                    {
+                        cur_x += right - left;
+                        cur_y += down - up;
+                        queue.Enqueue(_model.Cells[cur_x, cur_y]);
+                        _model.Cells[cur_x, cur_y].Visited = true;
+                        
+                        if (cur_x == end_x && cur_y == end_y)
+                        {
+                            UnmarkCells();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
             /// @brief Поиск пути от start до end
             /// @details Реализовано с помощью алгоритма BFS
             /// @param[in] start_x Координаты строки стартовой ячейки
@@ -307,72 +357,29 @@ namespace Color_it.game.lines
                 while (queue.Count > 0)
                 {
                     LinesCell cur = queue.Dequeue();
+                    for(int i=0; i < _model.Cells.Length; i++)
+                    {
+                        for(int j=0; j < _model.Cells.Length; j++)
+                        {
+                            if(_model.Cells[i,j].Equals(cur))
+                            {
+                                cur_x = i;
+                                cur_y = j;
+                            }
+                        }
+                    }
+              
                     if (cur_x == end_x && cur_y == end_y)
                     {
                         UnmarkCells();
                         return true;
                     }
                     cur.Visited = true;
-
-                    //проверка слева от текущей позиции
-                    if (cur_x > 0 && !(_model.Cells[cur_x - 1, cur_y].TextureNumber > 0))
-                    {
-                        if (!(_model.Cells[cur_x - 1, cur_y].Visited))
-                        {
-                            queue.Enqueue(_model.Cells[cur_x - 1, cur_y]);
-                            _model.Cells[cur_x - 1, cur_y].Visited = true;
-                            if (cur_x  == end_x && cur_y == end_y)
-                            {
-                                UnmarkCells();
-                                return true;
-                            }
-                        }
-                    }
-
-                    //проверка справа от текущей позиции
-                    if (cur_x < LinesModel.FieldSize - 1 && !(_model.Cells[cur_x + 1, cur_y].TextureNumber > 0))
-                    {
-                        if (!(_model.Cells[cur_x + 1, cur_y].Visited))
-                        {
-                            queue.Enqueue(_model.Cells[cur_x + 1, cur_y]);
-                            _model.Cells[cur_x + 1, cur_y].Visited = true;
-                            if (cur_x + 1 == end_x && cur_y == end_y)
-                            {
-                                UnmarkCells();
-                                return true;
-                            }
-                        }
-                    }
-
-                    //проверка сверху от текущей позиции
-                    if (cur_y > 0 && !(_model.Cells[cur_x, cur_y - 1].TextureNumber > 0))
-                    {
-                        if (!(_model.Cells[cur_x, cur_y - 1].Visited))
-                        {
-                            queue.Enqueue(_model.Cells[cur_x, cur_y - 1]);
-                            _model.Cells[cur_x, cur_y - 1].Visited = true;
-                            if (cur_x == end_x && cur_y - 1 == end_y)
-                            {
-                                UnmarkCells();
-                                return true;
-                            }
-                        }
-                    }
-
-                    //проверка снизку от текущей позиции
-                    if (cur_y < LinesModel.FieldSize - 1 && !(_model.Cells[cur_x, cur_y + 1].TextureNumber > 0))
-                    {
-                        if (!(_model.Cells[cur_x, cur_y + 1].Visited))
-                        {
-                            queue.Enqueue(_model.Cells[cur_x, cur_y + 1]);
-                            _model.Cells[cur_x, cur_y + 1].Visited = true;
-                            if (cur_x == end_x && cur_y + 1 == end_y)
-                            {
-                                UnmarkCells();
-                                return true;
-                            }
-                        }
-                    }
+                    if (CheckingDirection((int)Direction.LEFT, cur_x, cur_y, end_x, end_y, ref queue) ||
+                        CheckingDirection((int)Direction.RIGHT, cur_x, cur_y, end_x, end_y, ref queue) ||
+                        CheckingDirection((int)Direction.UP, cur_x, cur_y, end_x, end_y, ref queue) ||
+                        CheckingDirection((int)Direction.DOWN, cur_x, cur_y, end_x, end_y, ref queue))
+                        return true;
                 }
 
                 //в случае если не найден путь
@@ -384,10 +391,9 @@ namespace Color_it.game.lines
             ///     Поиск линий длины 5 и более
             ///     Шары, оставляющие линию, помечаются
             /// </summary>
-            /// <param name="с">Ячейка от которой начинается проверка</param>
             /// <param name="x">Координаты строки</param>
             /// <param name="y">Координаты столбца</param>
-            private void FindLines(LinesCell c, int x, int y) //todo Нужно разбить этот метод на группу более мелких методов
+            private void FindLines(int x, int y) //todo Нужно разбить этот метод на группу более мелких методов
             {
                 int s1 = 0, s2 = 0, cur_x=x, cur_y=y;
                 //влево-вправо
@@ -505,12 +511,11 @@ namespace Color_it.game.lines
             /// <summary>
             ///     Проверка игры после очередного клика мыши
             /// </summary>
-            /// <param name="с">Ячейка от которой начинается проверка</param>
             /// <param name="x">Координаты строки</param>
             /// <param name="y">Координаты столбца</param>
-            private int CheckGame(LinesCell c, int x, int y)
+            private int CheckGame(int x, int y)
             {
-                FindLines(c, x, y);
+                FindLines(x, y);
                 if (DeleteLines() > 0) return LineDeleted;
 
                 int emptys = 0;
@@ -555,7 +560,7 @@ namespace Color_it.game.lines
                         _model.Cells[x, y].TextureNumber = _choosedCell.TextureNumber;
                         _choosedCell.TextureNumber = 0;
                         int status;
-                        if ((status = CheckGame(_model.Cells[x, y], x, y)) != GridFull)
+                        if ((status = CheckGame(x, y)) != GridFull)
                         {
                             if (status == DoInsert)
                                 InsertOrbs();
