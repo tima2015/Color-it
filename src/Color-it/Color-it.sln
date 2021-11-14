@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Color-it", "Color-it\Color-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colot-it Tests", "Colot-it Tests\Colot-it Tests.csproj", "{A35CBD16-31F0-4D48-802B-8652E542FF4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Color-it Subgame Test", "Color-it Subgame Test\Color-it Subgame Test.csproj", "{A523EA31-2ABD-4897-8829-9B56ECD81141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A35CBD16-31F0-4D48-802B-8652E542FF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A35CBD16-31F0-4D48-802B-8652E542FF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A35CBD16-31F0-4D48-802B-8652E542FF4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A523EA31-2ABD-4897-8829-9B56ECD81141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A523EA31-2ABD-4897-8829-9B56ECD81141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A523EA31-2ABD-4897-8829-9B56ECD81141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A523EA31-2ABD-4897-8829-9B56ECD81141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
