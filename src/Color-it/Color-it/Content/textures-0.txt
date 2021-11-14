@@ -1,0 +1,35 @@
+#
+# Sprite sheet data for MonoGame.
+#
+# To learn how to import these sprites into your MonoGame project visit:
+# https://www.codeandweb.com/texturepacker/monogame
+#
+# Sprite sheet: textures-0.png (1824 x 1172)
+# $TexturePacker:SmartUpdate:d3c0d5a1399442bdc9ff95d2d53e82f7:ec169a948eae2079d8ae8be541dc40a7:4c2199d29d449d907da3098a8b2da4c6$
+#
+
+blue;0;523;523;320;320;320;320;0.5;0.5
+blue_food;0;3;3;256;256;256;256;0.5;0.5
+blue_gem;0;263;3;256;256;256;256;0.5;0.5
+blue_selected;0;847;523;320;320;320;320;0.5;0.5
+cyan_food;0;523;3;256;256;256;256;0.5;0.5
+cyan_gem;0;783;3;256;256;256;256;0.5;0.5
+empty_cell;0;1171;523;320;320;320;320;0.5;0.5
+green;0;1495;523;320;320;320;320;0.5;0.5
+green_food;0;1043;3;256;256;256;256;0.5;0.5
+green_gem;0;1303;3;256;256;256;256;0.5;0.5
+green_selected;0;3;783;320;320;320;320;0.5;0.5
+match_three_grid_cell;0;1563;3;256;256;256;256;0.5;0.5
+orange_food;0;3;263;256;256;256;256;0.5;0.5
+pink_food;0;263;263;256;256;256;256;0.5;0.5
+pink_gem;0;523;263;256;256;256;256;0.5;0.5
+purple_food;0;783;263;256;256;256;256;0.5;0.5
+red;0;327;847;320;320;320;320;0.5;0.5
+red_foodl;0;1043;263;256;256;256;256;0.5;0.5
+red_gem;0;1303;263;256;256;256;256;0.5;0.5
+red_selected;0;651;847;320;320;320;320;0.5;0.5
+snake_grid_cell;0;1563;263;256;256;256;256;0.5;0.5
+yellow;0;975;847;320;320;320;320;0.5;0.5
+yellow_food;0;3;523;256;256;256;256;0.5;0.5
+yellow_gem;0;263;523;256;256;256;256;0.5;0.5
+yellow_selected;0;1299;847;320;320;320;320;0.5;0.5
