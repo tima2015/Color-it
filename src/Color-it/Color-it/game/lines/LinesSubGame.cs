@@ -15,6 +15,8 @@ namespace Color_it.game.lines
         public LinesSubGame(GameEventListener listener) :
             base(new LinesModel(), new LinesView(), new LinesController(listener))
         {
+            ((LinesView) View).Model = (LinesModel) Model;
+            ((LinesController) Controller).Model = Model;
         }
 
         /// @brief Модель мини игры "Линии"
@@ -74,10 +76,16 @@ namespace Color_it.game.lines
         {
             Texture2D _texture;
             private LinesModel _model;
-            public LinesView(LinesModel model)
+            public LinesView()
             {
-                _model = model;
             }
+
+            public LinesModel Model
+            {
+                get => _model;
+                set => _model = value;
+            }
+
             public void Draw(SpriteBatch batch)
             {
                 batch.Begin();
@@ -152,7 +160,7 @@ namespace Color_it.game.lines
             private LinesCell _choosedCell;
             private int _choosedCellX, _choosedCellY;
             private readonly int[] _orbs = new int[LinesModel.BallsInsertCount];
-            private readonly LinesModel _model = new();
+            private LinesModel _model;
             internal enum Direction
             {
                 LEFT_UP = 10, LEFT_DOWN = 9, LEFT = 8, RIGHT_UP = 6, RIGHT_DOWN = 5, RIGHT = 4, UP = 2, DOWN = 1
@@ -161,6 +169,12 @@ namespace Color_it.game.lines
             public LinesController(GameEventListener listener)
             {
                 _listener = listener;
+            }
+
+            public IModel Model
+            {
+                get => _model;
+                set => _model = (LinesModel) value;
             }
 
             public void Update(float delta)
