@@ -1,9 +1,15 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
+using Color_it.game;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TexturePackerLoader;
 
 namespace Color_it
 {
@@ -12,16 +18,58 @@ namespace Color_it
     /// </summary>
     /// @noop Используйте GameCore.Core.ResourceManager для получения необходимых ресурсов!
     /// @noop Позже приведу этот класс в нормальный вид
-    public class GameCore //TODO дописать класс
+    public class GameCore : Game//TODO дописать класс
     {
+        private SpriteSheet _spriteSheet;
+
+        public  GameCore()
+        {
+            Content.RootDirectory = "Content";
+            GraphicsDeviceManager = new GraphicsDeviceManager(this);
+            //var sheetCount = Directory.GetFiles("assets").Sum(file => (file.Contains("textures-") && file.Contains(".png")) ? 1 : 0);
+        }
+
+        public GraphicsDeviceManager GraphicsDeviceManager { get; }
+
+        public SpriteSheet SpriteSheet
+        {
+            get => _spriteSheet;
+        }
+
         public ResourceManager ResourceManager { get; } =
-            ResourceManager.CreateFileBasedResourceManager("resources", "resources",null);
+            ResourceManager.CreateFileBasedResourceManager("assets", "assets",null);
 
         public GameSettings Settings { get; } = GameSettings.Load();
         
         public Viewport SubGameViewport { get; } = new(0,0,1000,1000);
 
         public static GameCore Core { get; } = new();
+
+        public ModelViewController CurrentMvc { get; set; }
+        
+        /// @brief Выполняет начальную инициализацию игры
+        protected override void Initialize()
+        {
+            base.Initialize();
+        }
+ 
+        /// @brief Загружает ресурсы игры
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            _spriteSheet = new SpriteSheetLoader(Content).MultiLoad("textures-{0}", 1);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            GraphicsDevice.Clear(Color.Purple);
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
 
         /// <summary>
         /// Класс пользовательских настроек
