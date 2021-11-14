@@ -36,7 +36,7 @@ namespace Color_it.game.coloring
         public FillingMap(string fillingMapJsonString)
         {
             _fillingMapData = JsonSerializer.Deserialize<FillingMapData>(fillingMapJsonString);
-            Texture2D rowImage = GameCore.Core.ResourceManager.GetObject(_fillingMapData.RowImage) as Texture2D;
+            Texture2D rowImage = null;//todo GameCore.Core.ResourceManager.GetObject(_fillingMapData.RowImage) as Texture2D;
             width = rowImage.Width;
             height = rowImage.Height;
             _rowData = new Color[width * height];

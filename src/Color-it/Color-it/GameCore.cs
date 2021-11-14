@@ -21,6 +21,7 @@ namespace Color_it
     public class GameCore : Game//TODO дописать класс
     {
         private SpriteSheet _spriteSheet;
+        private SpriteBatch _spriteBatch;
 
         public  GameCore()
         {
@@ -35,9 +36,6 @@ namespace Color_it
         {
             get => _spriteSheet;
         }
-
-        public ResourceManager ResourceManager { get; } =
-            ResourceManager.CreateFileBasedResourceManager("assets", "assets",null);
 
         public GameSettings Settings { get; } = GameSettings.Load();
         
@@ -58,17 +56,27 @@ namespace Color_it
         {
             base.LoadContent();
             _spriteSheet = new SpriteSheetLoader(Content).MultiLoad("textures-{0}", 1);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             GraphicsDevice.Clear(Color.Purple);
+            CurrentMvc?.View.Draw(_spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            CurrentMvc?.View.Draw(_spriteBatch);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _spriteBatch.Dispose();
+            Content.Dispose();
         }
 
         /// <summary>
