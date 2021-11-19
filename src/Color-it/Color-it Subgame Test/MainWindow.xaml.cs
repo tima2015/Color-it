@@ -46,9 +46,7 @@ namespace Color_it_Subgame_Test
 
         private void BeginCore()
         {
-            _core = new GameCore();
-            _core.GraphicsDeviceManager.PreferredBackBufferWidth = 1024;
-            _core.GraphicsDeviceManager.PreferredBackBufferHeight = 1024;
+            _core = GameCore.Core;
             Thread thread = new Thread(() => _core.Run());
             thread.Start();
         }
