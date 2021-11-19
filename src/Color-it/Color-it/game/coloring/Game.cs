@@ -5,6 +5,7 @@ using Color_it.game.match_three;
 using Color_it.game.snake;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TexturePackerLoader;
 
 namespace Color_it.game.coloring
 {
@@ -66,7 +67,7 @@ namespace Color_it.game.coloring
         /// </summary>
         private class GameView : IView
         {
-            public void Draw(SpriteBatch batch)
+            public void Draw(SpriteBatch batch, SpriteRender render)
             {
                 throw new NotImplementedException();
             }

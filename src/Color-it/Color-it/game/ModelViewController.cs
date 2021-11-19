@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using TexturePackerLoader;
 
 namespace Color_it.game
 {
@@ -104,7 +105,8 @@ namespace Color_it.game
         ///     В среднем вызывается 60 раз в секунду.
         /// </summary>
         /// <param name="batch">Упаковщик спрайтов. Используется для отрисовки</param>
-        void Draw(SpriteBatch batch);
+        /// <param name="render">Визуализатор для спрайтов</param>
+        void Draw(SpriteBatch batch, SpriteRender render);
     }
 
     /// <summary>

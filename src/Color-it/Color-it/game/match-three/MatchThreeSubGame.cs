@@ -1,6 +1,7 @@
 using System;
 using Color_it.game.coloring;
 using Microsoft.Xna.Framework.Graphics;
+using TexturePackerLoader;
 
 namespace Color_it.game.match_three
 {
@@ -26,7 +27,7 @@ namespace Color_it.game.match_three
         /// </summary>
         private class MatchThreeView : IView
         {
-            public void Draw(SpriteBatch batch)
+            public void Draw(SpriteBatch batch, SpriteRender render)
             {
                 throw new NotImplementedException();
             }

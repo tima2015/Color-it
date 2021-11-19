@@ -22,6 +22,7 @@ namespace Color_it
     {
         private SpriteSheet _spriteSheet;
         private SpriteBatch _spriteBatch;
+        private SpriteRender _spriteRender;
 
         public  GameCore()
         {
@@ -57,19 +58,20 @@ namespace Color_it
             base.LoadContent();
             _spriteSheet = new SpriteSheetLoader(Content).MultiLoad("textures-{0}", 1);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteRender = new SpriteRender(_spriteBatch);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             GraphicsDevice.Clear(Color.Purple);
-            CurrentMvc?.View.Draw(_spriteBatch);
+            CurrentMvc?.View.Draw(_spriteBatch, _spriteRender);
         }
 
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            CurrentMvc?.View.Draw(_spriteBatch);
+            CurrentMvc?.View.Draw(_spriteBatch, _spriteRender);
         }
 
         protected override void Dispose(bool disposing)

@@ -4,6 +4,7 @@ using Color_it.game.coloring;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TexturePackerLoader;
 using static Color_it.game.coloring.GameEventListener;
 
 namespace Color_it.game.lines
@@ -86,7 +87,7 @@ namespace Color_it.game.lines
                 set => _model = value;
             }
 
-            public void Draw(SpriteBatch batch)
+            public void Draw(SpriteBatch batch, SpriteRender render)
             {
                 batch.Begin();
                 for(int i=0; i < LinesModel.FieldSize; i++)
