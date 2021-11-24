@@ -1,0 +1,272 @@
+
+ui.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 898, 937
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+ComicCAT_16
+  rotate: false
+  xy: 1, 918
+  size: 506, 46
+  orig: 506, 46
+  offset: 0, 0
+  index: -1
+ComicCAT_32
+  rotate: false
+  xy: 1, 776
+  size: 505, 140
+  orig: 505, 140
+  offset: 0, 0
+  index: -1
+ComicCAT_8
+  rotate: false
+  xy: 1, 966
+  size: 506, 19
+  orig: 506, 19
+  offset: 0, 0
+  index: -1
+blue_boxCheckmark
+  rotate: false
+  xy: 385, 516
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+blue_boxCross
+  rotate: false
+  xy: 103, 328
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+blue_button00
+  rotate: false
+  xy: 1, 672
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_button02
+  rotate: false
+  xy: 706, 936
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_button03
+  rotate: false
+  xy: 1, 723
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+blue_button10
+  rotate: false
+  xy: 898, 940
+  size: 49, 45
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+blue_button13
+  rotate: false
+  xy: 193, 725
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+blue_panel
+  rotate: false
+  xy: 385, 554
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+blue_sliderDown
+  rotate: false
+  xy: 143, 322
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+blue_sliderRight
+  rotate: false
+  xy: 193, 398
+  size: 39, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+blue_tick
+  rotate: false
+  xy: 193, 379
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+brush
+  rotate: false
+  xy: 385, 656
+  size: 113, 118
+  orig: 113, 118
+  offset: 0, 0
+  index: -1
+brush-V
+  rotate: false
+  xy: 508, 619
+  size: 37, 297
+  orig: 37, 297
+  offset: 0, 0
+  index: -1
+green_button00
+  rotate: false
+  xy: 193, 525
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+green_button02
+  rotate: false
+  xy: 1, 468
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+green_button03
+  rotate: false
+  xy: 193, 478
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+green_button13
+  rotate: false
+  xy: 1, 417
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+grey_box
+  rotate: false
+  xy: 103, 290
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+grey_boxCheckmark
+  rotate: false
+  xy: 949, 949
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+grey_boxCross
+  rotate: false
+  xy: 1, 193
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+grey_button05
+  rotate: false
+  xy: 509, 936
+  size: 195, 49
+  orig: 195, 49
+  offset: 0, 0
+  index: -1
+grey_panel
+  rotate: false
+  xy: 1, 264
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+grey_sliderDown
+  rotate: false
+  xy: 385, 472
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+grey_sliderHorizontal
+  rotate: false
+  xy: 1, 770
+  size: 190, 4
+  orig: 190, 4
+  offset: 0, 0
+  index: -1
+grey_sliderRight
+  rotate: false
+  xy: 1, 231
+  size: 39, 31
+  orig: 39, 31
+  offset: 0, 0
+  index: -1
+grey_sliderVertical
+  rotate: false
+  xy: 1, 91
+  size: 4, 100
+  orig: 4, 100
+  offset: 0, 0
+  index: -1
+red_button00
+  rotate: false
+  xy: 193, 431
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+red_button10
+  rotate: false
+  xy: 1, 366
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+red_button11
+  rotate: false
+  xy: 193, 576
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+red_button13
+  rotate: false
+  xy: 1, 519
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+yellow_button00
+  rotate: false
+  xy: 193, 674
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+yellow_button02
+  rotate: false
+  xy: 1, 621
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1
+yellow_button03
+  rotate: false
+  xy: 193, 627
+  size: 190, 45
+  orig: 190, 45
+  offset: 0, 0
+  index: -1
+yellow_button13
+  rotate: false
+  xy: 1, 570
+  size: 190, 49
+  orig: 190, 49
+  offset: 0, 0
+  index: -1

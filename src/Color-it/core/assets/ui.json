@@ -1,0 +1,270 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"ComicCAT_16": {
+		"file": "ComicCAT_16.fnt"
+	},
+	"ComicCAT_32": {
+		"file": "ComicCAT_32.fnt"
+	},
+	"ComicCAT_8": {
+		"file": "ComicCAT_8.fnt"
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"BLACK": {
+		"r": 0,
+		"g": 0,
+		"b": 0,
+		"a": 1
+	},
+	"GRAY": {
+		"r": 0.58666676,
+		"g": 0.58666676,
+		"b": 0.58666676,
+		"a": 1
+	},
+	"GREEN": {
+		"r": 0,
+		"g": 1,
+		"b": 0,
+		"a": 1
+	},
+	"LIGHT_GRAY": {
+		"r": 0.83333325,
+		"g": 0.83333325,
+		"b": 0.83333325,
+		"a": 1
+	},
+	"RED": {
+		"r": 0.87666667,
+		"g": 0.05844444,
+		"b": 0.05844444,
+		"a": 1
+	},
+	"RED_": {
+		"r": 1,
+		"g": 0.41000003,
+		"b": 0.41000003,
+		"a": 1
+	},
+	"RGBA_0_0_0_150": {
+		"r": 0,
+		"g": 0,
+		"b": 0,
+		"a": 0.5882353
+	},
+	"RGBA_129_185_93_255": {
+		"r": 0.5058824,
+		"g": 0.7254902,
+		"b": 0.3647059,
+		"a": 1
+	},
+	"RGBA_229_146_22_255": {
+		"r": 0.8999999,
+		"g": 0.57344496,
+		"b": 0.08700001,
+		"a": 1
+	},
+	"RGBA_30_167_225_255": {
+		"r": 0.11764706,
+		"g": 0.654902,
+		"b": 0.88235295,
+		"a": 1
+	},
+	"WHITE": {
+		"r": 1,
+		"g": 1,
+		"b": 1,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable": {
+	"GREEN_6_PIXEL": {
+		"name": "white-pixel",
+		"color": "GREEN",
+		"minWidth": 6,
+		"minHeight": 6
+	},
+	"GRAY_6_PIXEL": {
+		"name": "white-pixel",
+		"color": "GRAY",
+		"minWidth": 6,
+		"minHeight": 6
+	},
+	"PROGRESS_BAR_BRUSH_PIXEL_6": {
+		"name": "white-pixel",
+		"color": "RGBA_129_185_93_255",
+		"minHeight": 8
+	},
+	"BLUE_PIXEL": {
+		"name": "white-pixel",
+		"color": "RGBA_30_167_225_255"
+	},
+	"BLUE_PIXEL_10": {
+		"name": "white-pixel",
+		"color": "RGBA_30_167_225_255",
+		"minWidth": 10,
+		"minHeight": 10
+	},
+	"ALPHA_PIXEL": {
+		"name": "white-pixel",
+		"color": "RGBA_0_0_0_150"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+	"default": {
+		"up": "blue_button00",
+		"down": "blue_button03",
+		"over": "blue_button02",
+		"disabled": "blue_button13"
+	},
+	"yellow": {
+		"up": "yellow_button00",
+		"down": "yellow_button03",
+		"over": "yellow_button02",
+		"disabled": "yellow_button13"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+	"default": {
+		"checkboxOn": "blue_boxCheckmark",
+		"checkboxOff": "blue_boxCross",
+		"checkboxOnDisabled": "grey_boxCheckmark",
+		"checkboxOffDisabled": "grey_boxCross",
+		"font": "ComicCAT_16"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+	"default": {
+		"font": "ComicCAT_16",
+		"fontColor": "BLACK"
+	},
+	"large": {
+		"parent": "default",
+		"font": "ComicCAT_32"
+	},
+	"small": {
+		"parent": "default",
+		"font": "ComicCAT_8"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {
+	"default": {
+		"font": "ComicCAT_16",
+		"fontColorSelected": "WHITE",
+		"fontColorUnselected": "GRAY",
+		"selection": "BLUE_PIXEL",
+		"background": "grey_panel"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle": {
+	"default-horizontal": {
+		"background": "grey_sliderHorizontal",
+		"knob": "brush-V",
+		"knobBefore": "PROGRESS_BAR_BRUSH_PIXEL_6"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
+	"default": {
+		"background": "grey_panel",
+		"corner": "blue_button10",
+		"hScrollKnob": "BLUE_PIXEL_10",
+		"vScrollKnob": "BLUE_PIXEL_10"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle": {
+	"default": {
+		"font": "ComicCAT_16",
+		"fontColor": "BLACK",
+		"background": "grey_button05",
+		"scrollStyle": "default",
+		"listStyle": "default"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+	"default-horizontal": {
+		"background": "grey_sliderHorizontal",
+		"knob": "blue_sliderDown",
+		"disabledKnob": "grey_sliderDown",
+		"knobBefore": "GREEN_6_PIXEL",
+		"disabledKnobBefore": "GREEN_6_PIXEL"
+	},
+	"default-vertical": {
+		"background": "grey_sliderVertical",
+		"knob": "blue_sliderRight",
+		"disabledKnob": "grey_sliderRight",
+		"knobBefore": "GREEN_6_PIXEL",
+		"disabledKnobBefore": "GRAY_6_PIXEL"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle": {
+	"default-horizontal": {
+		"handle": "GRAY_6_PIXEL"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "ComicCAT_16",
+		"fontColor": "WHITE",
+		"overFontColor": "LIGHT_GRAY",
+		"up": "blue_button00",
+		"down": "blue_button03",
+		"over": "blue_button02",
+		"disabled": "blue_button13"
+	},
+	"yellow": {
+		"parent": "default",
+		"font": "ComicCAT_32",
+		"fontColor": "RGBA_229_146_22_255",
+		"overFontColor": "WHITE",
+		"up": "yellow_button00",
+		"down": "yellow_button03",
+		"over": "yellow_button02",
+		"disabled": "yellow_button13"
+	},
+	"red": {
+		"font": "ComicCAT_16",
+		"fontColor": "WHITE",
+		"overFontColor": "RED",
+		"disabledFontColor": "WHITE",
+		"up": "red_button11",
+		"down": "red_button00",
+		"over": "red_button13",
+		"disabled": "red_button10"
+	},
+	"green": {
+		"font": "ComicCAT_16",
+		"fontColor": "WHITE",
+		"overFontColor": "GREEN",
+		"disabledFontColor": "BLACK",
+		"up": "green_button00",
+		"down": "green_button03",
+		"over": "green_button02",
+		"disabled": "green_button13"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+	"default": {
+		"font": "ComicCAT_16",
+		"fontColor": "BLACK",
+		"background": "grey_button05",
+		"cursor": "BLUE_PIXEL"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+	"default": {
+		"label": "default"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+	"default": {
+		"background": "grey_panel",
+		"titleFont": "ComicCAT_16"
+	},
+	"pause": {
+		"parent": "default",
+		"background": "grey_panel",
+		"stageBackground": "ALPHA_PIXEL"
+	}
+}
+}
