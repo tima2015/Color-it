@@ -10,11 +10,28 @@ import com.badlogic.gdx.utils.Queue;
 import com.forward.colorit.coloring.ColoringEvent;
 import com.forward.colorit.coloring.GameEndEvent;
 
+/**
+ * Класс реализующий мини игру "Линии"
+ */
 public class LinesSubGame extends Group {
-
+    /**
+     * Длина стороны игрового поля в ячейках
+     */
     private final static int FIELD_SIZE = 9;
+
+    /**
+     * Длина стороны одной ячейки
+     */
     private final static int CELL_SIZE = 40;
+
+    /**
+     * Количество ячеек
+     */
     private final static int CELL_COUNT = FIELD_SIZE * FIELD_SIZE;
+
+    /**
+     * Количество шаров для вставки
+     */
     private final static int BALL_INSERT_COUNT = 3;
 
     private final LinesCell[][] cells = new LinesCell[FIELD_SIZE][FIELD_SIZE];
@@ -22,6 +39,13 @@ public class LinesSubGame extends Group {
     private final CellTextureState[] nextCellTextureState = new CellTextureState[BALL_INSERT_COUNT];
     private LinesCell selected;
 
+    /**
+     * Инициализация мини-игры Lines
+     * <p>
+     *     Объявляются массив ячеек игрового поля и массив ячеек на следующем ходе,
+     *     устанавливается положение игрового поля
+     * </p>
+     */
     public LinesSubGame() {
         for (int i = 0; i < cells.length; i++)
             for (int j = 0; j < cells[i].length; j++) {
@@ -33,7 +57,9 @@ public class LinesSubGame extends Group {
         initWithRandNextCells();
         insertNextCells();
     }
-
+    /**
+     * Устанавливаются позиции ячеек игрового поля
+     */
     @Override
     public void setSize(float width, float height) {
         float nCellSizeH = width/(float) FIELD_SIZE;
@@ -46,23 +72,37 @@ public class LinesSubGame extends Group {
         super.setSize(width, height);
     }
 
+    /**
+     * проверка несовпадения сфер в NextCells
+     * @return "истина", если не совпадают, "ложь" - в противном случае
+     */
     private boolean isNextCellNotEquals() {
         return !(nextCells[0].equals(nextCells[1])
                 || nextCells[1].equals(nextCells[2])
                 || nextCells[0].equals(nextCells[2]));
     }
 
+    /**
+     * Проверка на "пустоту" NextCells
+     * @return "истина", если все ячейки NextCells пусты
+     */
     private boolean isNextCellsEmpty() {
         return nextCells[0].getState() == CellTextureState.EMPTY
                 && nextCells[1].getState() == CellTextureState.EMPTY
                 && nextCells[2].getState() == CellTextureState.EMPTY;
     }
 
+    /**
+     * Назначение NextCells случайных значений
+     */
     private void initWithRandNextCells() {
         for (int i = 0; i < BALL_INSERT_COUNT; i++)
             nextCellTextureState[i] = CellTextureState.getRandomNotEmptyAndNotSelectedState();
     }
 
+    /**
+     * Выбор BALL_INSERT_COUNT случайных клеток для вставки шаров
+     */
     private void insertNextCells() {
         do {
             for (int i = 0; i < nextCells.length; i++) {
@@ -76,6 +116,11 @@ public class LinesSubGame extends Group {
         initWithRandNextCells();
     }
 
+    /**
+     * Получение координат ячейки игрового поля
+     * @param cell - ячейка игрового поля
+     * @return координаты ячейки игрового поля
+     */
     private GridPoint2 getCellPosition(LinesCell cell) {
         for (int x = 0; x < cells.length; x++)
             for (int y = 0; y < cells[x].length; y++)
@@ -84,6 +129,12 @@ public class LinesSubGame extends Group {
         throw new RuntimeException("An attempt to get the coordinates of a cell not included in the grid!");
     }
 
+    /**
+     * Поиск ячейки аналогичного состояния в заданном направлении
+     * @param pos - текущая позиция на игровом поле
+     * @param direction - направление поиска
+     * @return
+     */
     private int sameStatesInDirection(GridPoint2 pos, Direction direction) {
         try {
             GridPoint2 next = new GridPoint2(pos.x + direction.direction_x, pos.y + direction.direction_y);
@@ -96,6 +147,10 @@ public class LinesSubGame extends Group {
         return 0;
     }
 
+    /**
+     * Поиск линий длины 5 и более
+     * @param cell - ячейка, от которой начинается поиск
+     */
     private void findLines(LinesCell cell) {
         GridPoint2 pos = getCellPosition(cell);
         //горизонталь
@@ -135,6 +190,10 @@ public class LinesSubGame extends Group {
         }
     }
 
+    /**
+     * удаление линий
+     * @return "истина", если есть линия для удаления
+     */
     private boolean deleteLines() {
         boolean isDelete = false;
         for (LinesCell[] cell : cells)
@@ -147,6 +206,11 @@ public class LinesSubGame extends Group {
         return isDelete;
     }
 
+    /**
+     * Проверка игры после очередного хода игрока
+     * @param cell - последняя ячейка, по которой кликнул игрок
+     * @return состояние игры после хода игрока
+     */
     private LinesState checkGame(LinesCell cell) {
         findLines(cell);
         if (deleteLines()) return LinesState.LINE_DELETED;
@@ -162,12 +226,23 @@ public class LinesSubGame extends Group {
         return LinesState.DO_INSERT;
     }
 
+    /**
+     * Удаление всех пометок с ячеек
+     */
     private void unmarkCells() {
         for (LinesCell[] cell : cells)
             for (LinesCell linesCell : cell)
                 linesCell.setVisited(false);
     }
 
+    /**
+     * Поиск пути в заданном направлении
+     * @param direction - направление
+     * @param current - ячейка, от которой начинается поиск
+     * @param end - ячейка, в которой оканчивается путь
+     * @param queue - путь
+     * @return "истина", если существует путь от current до end
+     */
     private boolean checkingDirection(Direction direction, GridPoint2 current, GridPoint2 end, Queue<LinesCell> queue) {
         try {
             GridPoint2 next = new GridPoint2(current).add(direction.direction_x, direction.direction_y);
@@ -187,6 +262,11 @@ public class LinesSubGame extends Group {
         return false;
     }
 
+    /**
+     * Поиск пути от "selected" до "to"
+     * @param to - ячейка, до которой нужно проложить путь
+     * @return "истина", если путь от "selected" до "to" существует
+     */
     private boolean isMovable(LinesCell to) {
         GridPoint2 end = getCellPosition(to);
         Queue<LinesCell> queue = new Queue<>();
@@ -215,6 +295,9 @@ public class LinesSubGame extends Group {
         return false;
     }
 
+    /**
+     * Обработка клика мыши
+     */
     private class LineSubGameClickListener extends ClickListener {
 
         private static final String TAG = "LineSubGameClickListene";
