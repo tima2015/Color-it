@@ -1,21 +1,23 @@
 package com.forward.colorit;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.forward.colorit.coloring.Settings;
 import com.forward.colorit.ui.MenuScreen;
 
 public class Core extends Game {
+
+	private static final String TAG = "Core";
 
 	public static final String TEXTBUTTON_STYLE_YELLOW = "yellow";
 	public static final String TEXTBUTTON_STYLE_GREEN = "green";
@@ -31,6 +33,12 @@ public class Core extends Game {
 
 	public static Settings getSettings() {
 		return settings;
+	}
+
+	public static  ProgressData progressData;
+
+	public static ProgressData getProgressData() {
+		return progressData;
 	}
 
 	public Core(){}
@@ -50,6 +58,7 @@ public class Core extends Game {
 	private Viewport viewport = new ScreenViewport();
 	private Skin ui;
 	private MenuScreen menuScreen;
+	private AssetManager manager;// TODO: 24.11.2021 Создать экран загрузки и навести порядок в ядре
 
 	private Cursor cursor;
 	private Pixmap pixmapCursor;
@@ -57,6 +66,22 @@ public class Core extends Game {
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);// FIXME: 24.11.2021
+		manager = new AssetManager();
+		for (FileHandle f : Gdx.files.internal("sound/").list()) {
+			manager.load(f.path(), Sound.class);
+			Gdx.app.log(TAG, f.path() + " - was be marked to load.");
+		}
+		for (FileHandle f1 : Gdx.files.internal("coloring/").list()) {
+			if (f1.extension().equals("png")) {
+				manager.load(f1.path(), Texture.class);
+				Gdx.app.log(TAG, f1.path() + " - was be marked to load.");
+			}
+		}
+		manager.load("coloring/thumbnails.txt", TextureAtlas.class);
+
+		while (!manager.update()) {
+			//Gdx.app.debug(TAG, "FIXME!!!"); // FIXME: 24.11.2021 Нужно сделать экран загрузки
+		}
 		textures = new TextureAtlas("textures.atlas");
 		backgroundSpriteBatch = new SpriteBatch();
 		background = new Texture("background-1.jpg");
@@ -65,6 +90,7 @@ public class Core extends Game {
 		initCursor();
 		settings = new Settings();
 		setStateToMenuScreen();
+		progressData = new ProgressData();
 		if (current != null) setScreen(current);// FIXME: 21.11.2021
 	}
 
@@ -97,6 +123,8 @@ public class Core extends Game {
 		background.dispose();
 		backgroundSpriteBatch.dispose();
 		textures.dispose();
+		cursor.dispose();
+		manager.dispose();
 	}
 
 	public TextureAtlas getTextures() {
@@ -114,6 +142,10 @@ public class Core extends Game {
 
 	public Cursor getCursor() {
 		return cursor;
+	}
+
+	public AssetManager getManager() {
+		return manager;
 	}
 
 	public void setStateToMenuScreen(){

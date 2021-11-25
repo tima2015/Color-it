@@ -16,10 +16,10 @@ class MainMenu extends Window {
     private static final int BUTTON_WIDTH = 200;
     private static final int SPACE = 24;
 
-    private final TextButton playButton = new TextButton("Играть!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
-    private final TextButton settingsButton = new TextButton("Настройки", Core.core().getUi());
-    private final TextButton aboutButton = new TextButton("О разработчиках", Core.core().getUi());
-    private final TextButton exitButton = new TextButton("Выход", Core.core().getUi());
+    private final TextButton playButton = new SoundTextButton("Играть!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
+    private final TextButton settingsButton = new SoundTextButton("Настройки", Core.core().getUi());
+    private final TextButton aboutButton = new SoundTextButton("О разработчиках", Core.core().getUi());
+    private final TextButton exitButton = new SoundTextButton("Выход", Core.core().getUi());
 
     MainMenu() {
         super("", Core.core().getUi());
@@ -59,13 +59,20 @@ class MainMenu extends Window {
         public void clicked(InputEvent event, float x, float y) {
             MainMenu.this.setVisible(false);
             SettingsMenu settingsMenu = new SettingsMenu(MainMenu.this);
-            Stage stage = MainMenu.this.getStage();
+            Stage stage = getStage();
             stage.addActor(settingsMenu);
             settingsMenu.setPosition((stage.getWidth() - settingsMenu.getWidth())*.5f, (stage.getHeight() - settingsMenu.getHeight())*.5f);
         }
     }
 
     private class PlayClickListener extends ClickListener{
-
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            MainMenu.this.setVisible(false);
+            PlayMenu playMenu = new PlayMenu(MainMenu.this);
+            Stage stage = getStage();
+            stage.addActor(playMenu);
+            playMenu.setPosition((stage.getWidth() - playMenu.getWidth())*.5f, (stage.getHeight() - playMenu.getHeight())*.5f);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.forward.colorit.lines;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,6 +24,8 @@ public class LinesSubGame extends Group {
     private final CellTextureState[] nextCellTextureState = new CellTextureState[BALL_INSERT_COUNT];
     private LinesCell selected;
 
+    private Actor additionalInfoActor = new Actor();//todo актёр отображающий следующую вставку
+
     public LinesSubGame() {
         for (int i = 0; i < cells.length; i++)
             for (int j = 0; j < cells[i].length; j++) {
@@ -32,6 +36,7 @@ public class LinesSubGame extends Group {
         setSize(FIELD_SIZE * CELL_SIZE, FIELD_SIZE * CELL_SIZE);
         initWithRandNextCells();
         insertNextCells();
+        setDebug(Gdx.app.getLogLevel() == Application.LOG_DEBUG, true);
     }
 
     @Override

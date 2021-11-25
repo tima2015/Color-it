@@ -64,7 +64,7 @@ public class SettingsMenu extends Window {
 
     private void initCancel(){
         row();
-        TextButton button = new TextButton("Отмена", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        TextButton button = new SoundTextButton("Отмена", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
         button.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,7 +77,7 @@ public class SettingsMenu extends Window {
     }
 
     private void initSave(){
-        TextButton button = new TextButton("Сохранить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
+        TextButton button = new SoundTextButton("Сохранить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
         button.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

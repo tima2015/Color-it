@@ -1,4 +1,4 @@
-package com.forward.colorit.coloring;
+package com.forward.colorit;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
