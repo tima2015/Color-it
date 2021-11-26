@@ -301,6 +301,8 @@
 	"pause": {
 		"parent": "default",
 		"background": "grey_panel",
+		"titleFont": "ComicCAT_32",
+		"titleFontColor": "BLACK",
 		"stageBackground": "ALPHA_PIXEL"
 	}
 }

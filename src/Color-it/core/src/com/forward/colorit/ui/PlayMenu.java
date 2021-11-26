@@ -48,7 +48,7 @@ public class PlayMenu extends Table {
                 PlayMenu.this.setVisible(false);
                 getStage().getActors().removeValue(PlayMenu.this, true);
                 mainMenu.setVisible(true);
-                Core.core().setScreen(new ColoringGameScreen(new LinesSubGame(), ankhaData));
+                Core.core().setScreen(new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA));
             }
         });
         add(ankha);

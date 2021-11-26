@@ -3,13 +3,13 @@ package com.forward.colorit.coloring;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
@@ -30,14 +30,16 @@ public class ColoringGameScreen extends ScreenAdapter {
     private SubGameGroup subGame;
     private ColoringLevelData data;
     private ColoringImage image;
-    private Window gameInfo;
+    private final String levelName;
+    private final Window gameInfo;
     private final Hashtable<Color, Integer> uncoloredFragmentsCounts = new Hashtable<>();
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
-    public ColoringGameScreen(SubGameGroup subGame, ColoringLevelData data) {
+    public ColoringGameScreen(SubGameGroup subGame, ColoringLevelData data, String levelName) {
         this.subGame = subGame;
         this.data = data;
         this.image = new ColoringImage(data.getImg());
+        this.levelName = levelName;
         stage = new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
         gameInfo = new Window("", Core.core().getUi());
         for (ColoringMap map : data.getMap()) {
@@ -62,8 +64,6 @@ public class ColoringGameScreen extends ScreenAdapter {
         initSubGameInfoActor();
         initGameInfo();
 
-// TODO: 26.11.2021 разбить на родметоды
-        // TODO: 26.11.2021 заполнить панель информации
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -72,27 +72,56 @@ public class ColoringGameScreen extends ScreenAdapter {
         float subGameSize = VIEWPORT_HEIGHT - 2 * MARGINS;
         subGame.setSize(subGameSize, subGameSize);
         subGame.setPosition(MARGINS, MARGINS);
-        subGame.addListener(new EventListener() {
-            @Override
-            public boolean handle(Event event) {
-                if (event instanceof ColoringEvent) {
-                    ColoringEvent cEvent = (ColoringEvent) event;
-                    for (int i = 0; i < data.getMap().length; i++) {
-                        if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(cEvent.color)) {
-                            image.color(data.getMap()[i]);
-                            data.getMap()[i] = null;
-                            uncoloredFragmentsCounts.put(cEvent.color, uncoloredFragmentsCounts.getOrDefault(cEvent.color, 0) - 1);
-                            updateUncoloredFragmentsCountLabels();
-                            return true;
+        subGame.addListener(event -> {
+            if (event instanceof ColoringEvent) {
+                ColoringEvent cEvent = (ColoringEvent) event;
+                for (int i = 0; i < data.getMap().length; i++) {
+                    if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(cEvent.color)) {
+                        image.color(data.getMap()[i]);
+                        data.getMap()[i] = null;
+                        uncoloredFragmentsCounts.put(cEvent.color, uncoloredFragmentsCounts.getOrDefault(cEvent.color, 0) - 1);
+                        updateUncoloredFragmentsCountLabels();
+                        Enumeration<Color> keys = uncoloredFragmentsCounts.keys();
+                        boolean win = true;
+                        while (keys.hasMoreElements()) {
+                            Color key = keys.nextElement();
+                            if (uncoloredFragmentsCounts.get(key) != 0)
+                                win = false;
                         }
+                        if (win){
+                            Core.getProgressData().setLevelComplete(levelName);
+                            initGameEndWindow("Вы выйграли!");
+                        }
+                        return true;
                     }
                 }
-                if (event instanceof GameEndEvent) {
-                    // TODO: 25.11.2021
-                }
-                return false;
+            }
+            if (event instanceof GameEndEvent) {
+                initGameEndWindow("Вы проиграли.");
+            }
+            return false;
+        });
+    }
+
+    private void initGameEndWindow(String title){
+        Window window = new Window(title, Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
+        window.setModal(true);
+        window.getTitleLabel().setAlignment(Align.center);
+        window.setMovable(false);
+        stage.addActor(window);
+
+        SoundTextButton mainMenuButton = new SoundTextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        mainMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.core().setStateToMenuScreen();
             }
         });
+        window.add(mainMenuButton);
+
+        window.pad(PADDING);
+        window.pack();
+        window.setPosition((stage.getWidth() - window.getWidth())*.5f, (stage.getHeight() - window.getHeight())*.5f);
     }
 
     private void initImage() {
@@ -121,7 +150,9 @@ public class ColoringGameScreen extends ScreenAdapter {
             gameInfo.add(label).padBottom(PADDING);
         }
         gameInfo.row();
-        gameInfo.add(new SoundTextButton("Пауза", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW)).expand().bottom();
+        SoundTextButton pauseButton = new SoundTextButton("Пауза", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
+        pauseButton.addListener(new PauseButtonClickListener());
+        gameInfo.add(pauseButton).expand().bottom();
         gameInfo.pack();
         gameInfo.setSize(image.getWidth(), (subGame.getSubGameInfoActor() == null ? image.getY() : subGame.getSubGameInfoActor().getY()) - MARGINS - PADDING);
 
@@ -162,5 +193,40 @@ public class ColoringGameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         stage.dispose();
+        image.dispose();
+    }
+
+    private static class PauseButtonClickListener extends ClickListener {
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Window window = new Window("Пауза", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
+            window.setModal(true);
+            window.getTitleLabel().setAlignment(Align.center);
+            window.setMovable(false);
+            event.getListenerActor().getStage().addActor(window);
+            Stage stage = event.getListenerActor().getStage();
+            SoundTextButton resumeButton = new SoundTextButton("Продолжить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
+            resumeButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    window.setVisible(false);
+                    window.getStage().getActors().removeValue(window, true);
+                }
+            });
+            window.row();
+            window.add(resumeButton).padBottom(PADDING);
+            SoundTextButton mainMenuButton = new SoundTextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+            mainMenuButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Core.core().setStateToMenuScreen();
+                }
+            });
+            window.row();
+            window.add(mainMenuButton);
+            window.pad(PADDING);
+            window.pack();
+            window.setPosition((stage.getWidth() - window.getWidth())*.5f, (stage.getHeight() - window.getHeight())*.5f);
+        }
     }
 }

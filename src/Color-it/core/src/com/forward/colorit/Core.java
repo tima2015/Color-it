@@ -24,6 +24,7 @@ public class Core extends Game {
 	public static final String TEXTBUTTON_STYLE_RED = "red";
 	public static final String LABEL_STYLE_LARGE = "large";
 	public static final String LABEL_STYLE_SMALL = "small";
+	public static final String WINDOW_STYLE_PAUSE = "pause";
 
 	public static Core core(){
 		return (Core) Gdx.app.getApplicationListener();
