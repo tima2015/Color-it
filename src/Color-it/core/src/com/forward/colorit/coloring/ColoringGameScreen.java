@@ -2,8 +2,6 @@ package com.forward.colorit.coloring;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -14,19 +12,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
 import com.forward.colorit.ui.SoundTextButton;
+import com.forward.colorit.ui.StageScreenAdapter;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-public class ColoringGameScreen extends ScreenAdapter {
+public class ColoringGameScreen extends StageScreenAdapter {
 
     private static final int VIEWPORT_WIDTH = 1000;
     private static final int VIEWPORT_HEIGHT = 750;
     private static final int MARGINS = 24;
     private static final int PADDING = 12;
 
-    private Stage stage;
     private SubGameGroup subGame;
     private ColoringLevelData data;
     private ColoringImage image;
@@ -36,11 +34,11 @@ public class ColoringGameScreen extends ScreenAdapter {
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
     public ColoringGameScreen(SubGameGroup subGame, ColoringLevelData data, String levelName) {
+        super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), true);
         this.subGame = subGame;
         this.data = data;
         this.image = new ColoringImage(data.getImg());
         this.levelName = levelName;
-        stage = new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
         gameInfo = new Window("", Core.core().getUi());
         for (ColoringMap map : data.getMap()) {
             Color key = Color.valueOf(map.getColor());
@@ -53,7 +51,7 @@ public class ColoringGameScreen extends ScreenAdapter {
             uncoloredFragmentsCountLabels.add(label);
             label.setUserObject(key);
         }
-        stage.setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
+        getStage().setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
     }
 
     @Override
@@ -64,11 +62,11 @@ public class ColoringGameScreen extends ScreenAdapter {
         initSubGameInfoActor();
         initGameInfo();
 
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(getStage());
     }
 
     private void initSubGame() {
-        stage.addActor(subGame);
+        getStage().addActor(subGame);
         float subGameSize = VIEWPORT_HEIGHT - 2 * MARGINS;
         subGame.setSize(subGameSize, subGameSize);
         subGame.setPosition(MARGINS, MARGINS);
@@ -108,7 +106,7 @@ public class ColoringGameScreen extends ScreenAdapter {
         window.setModal(true);
         window.getTitleLabel().setAlignment(Align.center);
         window.setMovable(false);
-        stage.addActor(window);
+        getStage().addActor(window);
 
         SoundTextButton mainMenuButton = new SoundTextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
         mainMenuButton.addListener(new ClickListener() {
@@ -121,11 +119,11 @@ public class ColoringGameScreen extends ScreenAdapter {
 
         window.pad(PADDING);
         window.pack();
-        window.setPosition((stage.getWidth() - window.getWidth())*.5f, (stage.getHeight() - window.getHeight())*.5f);
+        window.setPosition((getStage().getWidth() - window.getWidth())*.5f, (getStage().getHeight() - window.getHeight())*.5f);
     }
 
     private void initImage() {
-        stage.addActor(image);
+        getStage().addActor(image);
         float imageSize = VIEWPORT_WIDTH - (subGame.getX() + subGame.getWidth() + PADDING + MARGINS);
         image.setSize(imageSize, imageSize);
         image.setPosition(subGame.getX() + subGame.getWidth() + PADDING, VIEWPORT_HEIGHT - imageSize - MARGINS);
@@ -134,13 +132,13 @@ public class ColoringGameScreen extends ScreenAdapter {
     private void initSubGameInfoActor(){
         Actor infoActor = subGame.getSubGameInfoActor();
         if (infoActor == null) return;
-        stage.addActor(infoActor);
+        getStage().addActor(infoActor);
         infoActor.setSize(image.getWidth(),  image.getHeight()*.5f);
         infoActor.setPosition(image.getX(), image.getY() - infoActor.getHeight() - PADDING);
     }
 
     private void initGameInfo() {
-        stage.addActor(gameInfo);
+        getStage().addActor(gameInfo);
 
         gameInfo.setPosition(image.getX(), subGame.getY());
         gameInfo.pad(PADDING);
@@ -180,19 +178,19 @@ public class ColoringGameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        stage.getViewport().apply();
-        stage.act(delta);
-        stage.draw();
+        getStage().getViewport().apply();
+        getStage().act(delta);
+        getStage().draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
+        getStage().getViewport().update(width, height);
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+        super.dispose();
         image.dispose();
     }
 

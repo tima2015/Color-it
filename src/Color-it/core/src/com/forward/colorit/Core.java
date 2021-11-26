@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.forward.colorit.ui.MenuScreen;
+import com.forward.colorit.ui.StageScreenAdapter;
+import com.forward.colorit.ui.action.StageReplaceAction;
 
 public class Core extends Game {
 
@@ -109,15 +111,36 @@ public class Core extends Game {
 		backgroundSpriteBatch.dispose();
 		cursor.dispose();
 		manager.dispose();
+		menuScreen.dispose();
+		LoadingScreen.getInstance().dispose();
 	}
 
 	public TextureAtlas getTextures() {
 		return textures;
 	}
 
+	public SpriteBatch getBackgroundSpriteBatch() {
+		return backgroundSpriteBatch;
+	}
+
 	public void setBackground(Texture background) {
 		this.background.dispose();// TODO: 22.11.2021 replase witch assetManageer
 		this.background = background;
+	}
+
+	public Viewport getBackgroundViewport() {
+		return viewport;
+	}
+
+
+	/**
+	 * @return текущий экран. Если класс экрана не относится к StageScreenAdapter, вернёт null
+	 */
+	public StageScreenAdapter getStageScreen() {
+		Screen screen = super.getScreen();
+		if (screen instanceof StageScreenAdapter)
+			return (StageScreenAdapter) screen;
+		return null;
 	}
 
 	public Skin getUi() {
@@ -134,10 +157,15 @@ public class Core extends Game {
 
 	public void setStateToMenuScreen(){
 		Gdx.app.debug(TAG, "setStateToMenuScreen() called");
-		setBackground(manager.get("background/backgroundColorForest.png", Texture.class));
-		Screen old = getScreen();
-		setScreen(menuScreen);
-		if (old == null || old.equals(menuScreen)) return;
-		old.dispose();
+		Screen old = getStageScreen();
+		if (getStageScreen() != null) {
+			((StageScreenAdapter) old).getStage().addAction(new StageReplaceAction(((StageScreenAdapter) old), menuScreen, 2));
+		} else {
+			old = getScreen();
+			setScreen(menuScreen);
+			if (old == null || old.equals(menuScreen) || old.equals(LoadingScreen.getInstance())) return;
+			old.dispose();
+		}
+
 	}
 }

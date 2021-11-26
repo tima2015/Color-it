@@ -1,7 +1,6 @@
 package com.forward.colorit;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -10,16 +9,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
+import com.forward.colorit.ui.StageScreenAdapter;
 
 /**
  * Класс экрана загрузки. Предотвращает ощущение зависания, при запуске приложения.
  * Назначает зависимости для загрузки.
  * Реализует паттерн Синглтон.
  */
-class LoadingScreen extends ScreenAdapter {
+class LoadingScreen extends StageScreenAdapter {
 
     private static final LoadingScreen loadingScreen = new LoadingScreen();
 
@@ -31,6 +32,7 @@ class LoadingScreen extends ScreenAdapter {
     }
 
     private LoadingScreen(){
+        super(new Stage(Core.core().getBackgroundViewport()), false);
         load();
     }
 
@@ -96,29 +98,36 @@ class LoadingScreen extends ScreenAdapter {
         Label.LabelStyle style = new Label.LabelStyle(font, Color.BLACK);
         titleLabel = new Label("Загрузка", style);
         progressLabel = new Label("0%", style);
+        getStage().addActor(titleLabel);
+        getStage().addActor(progressLabel);
         progressLabel.setWidth(titleLabel.getWidth());
         progressLabel.setAlignment(Align.center);
+        titleLabel.setPosition((getStage().getWidth() - titleLabel.getWidth())*.5f, getStage().getHeight()*.5f);
+        progressLabel.setPosition(titleLabel.getX(), titleLabel.getY() - progressLabel.getHeight() - 4);
     }
 
     @Override
     public void hide() {
         font.dispose();
         batch.dispose();
+        getStage().getActors().removeValue(titleLabel, true);
+        getStage().getActors().removeValue(progressLabel, true);
     }
+
+    /**
+     * Флаг предотвращающий зацикливание при анимированой смене экрана
+     */
+    private boolean beginReplace = true;
 
     @Override
     public void render(float delta) {
-        if (Core.core().getManager().update()) {
+        if (beginReplace && Core.core().getManager().update()) {
             Core.core().initCore();
             Core.core().setStateToMenuScreen();
-            return;
+            beginReplace = false;
         }
-        titleLabel.setPosition((Gdx.graphics.getWidth() - titleLabel.getWidth())*.5f, Gdx.graphics.getHeight()*.5f);
-        progressLabel.setPosition(titleLabel.getX(), titleLabel.getY() - progressLabel.getHeight() - 4);
         progressLabel.setText(String.format("%d%%",(int)(100*Core.core().getManager().getProgress())));
-        batch.begin();
-        titleLabel.draw(batch, 1);
-        progressLabel.draw(batch, 1);
-        batch.end();
+        getStage().act();
+        getStage().draw();
     }
 }
