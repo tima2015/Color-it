@@ -39,9 +39,10 @@ class ColoringImage extends Actor implements Disposable {
     }
 
     private void wbPixmap(){
+        pixmap.setColor(Color.BLACK);
         for (int x = 0; x < pixmap.getWidth(); x++) {
             for (int y = 0; y < pixmap.getHeight(); y++) {
-                if (pixmap.getPixel(x,y) != WHITE_INTS) pixmap.drawPixel(x,y, BLACK_INTS);
+                if (pixmap.getPixel(x,y) != WHITE_INTS) pixmap.fillCircle(x,y, 0);
             }
         }
     }
