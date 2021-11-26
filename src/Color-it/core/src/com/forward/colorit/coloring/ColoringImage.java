@@ -9,12 +9,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.forward.colorit.Core;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 class ColoringImage extends Actor implements Disposable {
@@ -27,10 +31,19 @@ class ColoringImage extends Actor implements Disposable {
         sprite = new Sprite(texture);
 
         pixmap = new Pixmap(Gdx.files.internal(img));
+        pixmap.setBlending(Pixmap.Blending.None);
     }
 
     void color(ColoringMap map) {
         addAction(new FillingActon(map.getX(), map.getY(), Color.valueOf(map.getTargetColor())));
+    }
+
+    private void wbPixmap(){
+        for (int x = 0; x < pixmap.getWidth(); x++) {
+            for (int y = 0; y < pixmap.getHeight(); y++) {
+                if (pixmap.getPixel(x,y) != WHITE_INTS) pixmap.drawPixel(x,y, BLACK_INTS);
+            }
+        }
     }
 
     private void updateTexture() {
@@ -95,15 +108,21 @@ class ColoringImage extends Actor implements Disposable {
                 GridPoint2 p = fillStack.pop();
                 if (p.x <= 0 || p.y <= 0 || p.x >= pixmap.getWidth() || p.y >= pixmap.getHeight()) continue;
                 int pixel = pixmap.getPixel(p.x, p.y);
-                if (pixel == color.toIntBits() || pixel != WHITE_INTS) continue;//!= WHITE_INTS
-                else {
+                if (pixel != color.toIntBits() && pixel == WHITE_INTS) {
                     pixmap.setColor(color);
                     pixmap.fillCircle(p.x, p.y, 0);
-                    fillStack.push(new GridPoint2(p.x - 1, p.y));
-                    fillStack.push(new GridPoint2(p.x, p.y - 1));
-                    fillStack.push(new GridPoint2(p.x, p.y + 1));
-                    fillStack.push(new GridPoint2(p.x + 1, p.y));
-                }
+                    List<GridPoint2> nextPoints = Arrays.asList(
+                            new GridPoint2(p.x - 1, p.y),
+                            new GridPoint2(p.x, p.y - 1),
+                            new GridPoint2(p.x, p.y + 1),
+                            new GridPoint2(p.x + 1, p.y));
+                    Collections.shuffle(nextPoints, MathUtils.random);
+                    for (GridPoint2 nextPoint : nextPoints) {
+                        fillStack.push(nextPoint);
+                    }
+                }  //!= WHITE_INTS
+
+
             }
             updateTexture();
             return false;
