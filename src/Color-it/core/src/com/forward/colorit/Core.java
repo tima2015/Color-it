@@ -1,9 +1,10 @@
 package com.forward.colorit;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,15 +45,6 @@ public class Core extends Game {
 
 	public Core(){}
 
-	///////////////////////////////////////////////////////////////////
-	//////Вот это противное поле и конструктор, тут чисто для тестов///
-	private Screen current;                                         ///
-	public Core(Screen screen){                                     ///fixme
-		current = screen;                                           ///
-	}                                                               ///
-	///////////////////////////////////////////////////////////////////
-
-
 	private TextureAtlas textures;
 	private Texture background;
 	private SpriteBatch backgroundSpriteBatch;
@@ -67,32 +59,22 @@ public class Core extends Game {
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);// FIXME: 24.11.2021
+		Gdx.app.debug(TAG, "create() called");
 		manager = new AssetManager();
-		for (FileHandle f : Gdx.files.internal("sound/").list()) {
-			manager.load(f.path(), Sound.class);
-			Gdx.app.log(TAG, f.path() + " - was be marked to load.");
-		}
-		for (FileHandle f1 : Gdx.files.internal("coloring/").list()) {
-			if (f1.extension().equals("png")) {
-				manager.load(f1.path(), Texture.class);
-				Gdx.app.log(TAG, f1.path() + " - was be marked to load.");
-			}
-		}
-		manager.load("coloring/thumbnails.txt", TextureAtlas.class);
-
-		while (!manager.update()) {
-			//Gdx.app.debug(TAG, "FIXME!!!"); // FIXME: 24.11.2021 Нужно сделать экран загрузки
-		}
-		textures = new TextureAtlas("textures.atlas");
 		backgroundSpriteBatch = new SpriteBatch();
-		background = new Texture("background-1.jpg");
+		background = new Texture("background/backgroundForest.png");
+		setScreen(LoadingScreen.getInstance());
+	}
+
+	void initCore(){
+		Gdx.app.debug(TAG, "initCore() called");
+		textures = manager.get("textures.atlas", TextureAtlas.class);
 		ui = new Skin(Gdx.files.internal("ui.json"));
 		menuScreen = new MenuScreen();
 		initCursor();
 		settings = new Settings();
-		setStateToMenuScreen();
 		progressData = new ProgressData();
-		if (current != null) setScreen(current);// FIXME: 21.11.2021
+
 	}
 
 	private void initCursor(){
@@ -114,16 +96,17 @@ public class Core extends Game {
 
 	@Override
 	public void resize(int width, int height) {
+		Gdx.app.debug(TAG, "resize() called with: width = [" + width + "], height = [" + height + "]");
 		super.resize(width, height);
 		viewport.update(width, height);
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.app.debug(TAG, "dispose() called");
 		super.dispose();
 		background.dispose();
 		backgroundSpriteBatch.dispose();
-		textures.dispose();
 		cursor.dispose();
 		manager.dispose();
 	}
@@ -150,6 +133,8 @@ public class Core extends Game {
 	}
 
 	public void setStateToMenuScreen(){
+		Gdx.app.debug(TAG, "setStateToMenuScreen() called");
+		setBackground(manager.get("background/backgroundColorForest.png", Texture.class));
 		Screen old = getScreen();
 		setScreen(menuScreen);
 		if (old == null || old.equals(menuScreen)) return;

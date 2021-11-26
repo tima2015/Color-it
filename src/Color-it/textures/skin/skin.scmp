@@ -1004,13 +1004,13 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: ComicCAT_32
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
 						name: titleFontColor
 						optional: true
-						value: null
+						value: BLACK
 					}
 					stageBackground: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -3217,7 +3217,7 @@ preferences: {
 	}
 	last-import-export-path: {
 		class: java.lang.String
-		value: C:/Users/woodg/Desktop/Color-it/core/assets/ui.json
+		value: D:/Color-it/src/Color-it/core/assets/ui.json
 	}
 	resources-relative: {
 		class: java.lang.Boolean
@@ -3228,7 +3228,7 @@ preferences: {
 		value: 30
 	}
 }
-saveFile: C:/Users/woodg/Desktop/Color-it/textures/skin/skin.scmp
+saveFile: D:/Color-it/src/Color-it/textures/skin/skin.scmp
 version: 46
 sceneComposer: null
 }

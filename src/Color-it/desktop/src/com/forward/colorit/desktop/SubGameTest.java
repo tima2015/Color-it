@@ -13,12 +13,13 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.lines.LinesSubGame;
 
+@Deprecated
 public class SubGameTest extends ScreenAdapter {
     public static void main(String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = config.height = 500;
         config.resizable = true;
-        Core core = new Core(new SubGameTest());
+        Core core = new Core();
         new LwjglApplication(core, config);
     }
 

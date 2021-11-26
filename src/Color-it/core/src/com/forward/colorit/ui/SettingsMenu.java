@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.forward.colorit.Core;
 
-public class SettingsMenu extends Window {
+public class SettingsMenu extends Window {// TODO: 26.11.2021 сброс прогресса с подтверждением
 
     private static final int SPACE = 24;
     private static final int ROW_HEIGHT = 50;
