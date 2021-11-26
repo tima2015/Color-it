@@ -14,10 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 
+/**
+ * Класс экрана загрузки. Предотвращает ощущение зависания, при запуске приложения.
+ * Назначает зависимости для загрузки.
+ * Реализует паттерн Синглтон.
+ */
 class LoadingScreen extends ScreenAdapter {
 
     private static final LoadingScreen loadingScreen = new LoadingScreen();
 
+    /**
+     * @return экземпляр экрана загрузки
+     */
     static LoadingScreen getInstance() {
         return loadingScreen;
     }
@@ -26,6 +34,9 @@ class LoadingScreen extends ScreenAdapter {
         load();
     }
 
+    /**
+     * Назначение файлов, которые должен будет загрузить менеджер зависимостей
+     */
     private void load(){
         AssetManager am = Core.core().getManager();
         am.load("coloring/ankha.png", Texture.class);
