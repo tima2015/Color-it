@@ -15,6 +15,7 @@ import com.forward.colorit.ProgressData;
 import com.forward.colorit.coloring.ColoringGameScreen;
 import com.forward.colorit.coloring.ColoringLevelData;
 import com.forward.colorit.lines.LinesSubGame;
+import com.forward.colorit.ui.action.StageReplaceAction;
 
 public class PlayMenu extends Table {
     private final MainMenu mainMenu;
@@ -48,7 +49,7 @@ public class PlayMenu extends Table {
                 PlayMenu.this.setVisible(false);
                 getStage().getActors().removeValue(PlayMenu.this, true);
                 mainMenu.setVisible(true);
-                Core.core().setScreen(new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA));
+                mainMenu.getStage().addAction(new StageReplaceAction(Core.core().getStageScreen(), new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA), .75f));
             }
         });
         add(ankha);

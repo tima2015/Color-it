@@ -124,7 +124,6 @@ public class Core extends Game {
 	}
 
 	public void setBackground(Texture background) {
-		this.background.dispose();// TODO: 22.11.2021 replase witch assetManageer
 		this.background = background;
 	}
 
@@ -159,7 +158,7 @@ public class Core extends Game {
 		Gdx.app.debug(TAG, "setStateToMenuScreen() called");
 		Screen old = getStageScreen();
 		if (getStageScreen() != null) {
-			((StageScreenAdapter) old).getStage().addAction(new StageReplaceAction(((StageScreenAdapter) old), menuScreen, 2));
+			((StageScreenAdapter) old).getStage().addAction(new StageReplaceAction(((StageScreenAdapter) old), menuScreen, 0.75f));
 		} else {
 			old = getScreen();
 			setScreen(menuScreen);

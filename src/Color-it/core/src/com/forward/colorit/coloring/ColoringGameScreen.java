@@ -3,6 +3,7 @@ package com.forward.colorit.coloring;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -56,7 +57,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     @Override
     public void show() {
-
+        Core.core().setBackground(Core.core().getManager().get("background/backgroundColorGrass.png", Texture.class));
         initSubGame();
         initImage();
         initSubGameInfoActor();
@@ -179,8 +180,8 @@ public class ColoringGameScreen extends StageScreenAdapter {
     @Override
     public void render(float delta) {
         getStage().getViewport().apply();
-        getStage().act(delta);
         getStage().draw();
+        getStage().act(delta);
     }
 
     @Override
