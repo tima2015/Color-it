@@ -1,5 +1,8 @@
 package com.forward.colorit.lines;
 
+/**
+ * Перечисление направлений движений.
+ */
 enum Direction {
     DOWN(0, -1),
     LEFT(-1, 0),

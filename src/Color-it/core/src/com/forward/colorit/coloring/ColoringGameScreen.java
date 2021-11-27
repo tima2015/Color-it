@@ -62,7 +62,6 @@ public class ColoringGameScreen extends StageScreenAdapter {
         initImage();
         initSubGameInfoActor();
         initGameInfo();
-
         Gdx.input.setInputProcessor(getStage());
     }
 
@@ -73,7 +72,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
         subGame.setPosition(MARGINS, MARGINS);
         subGame.addListener(event -> {
             if (event instanceof ColoringEvent) {
-                ColoringEvent cEvent = (ColoringEvent) event;
+                ColoringEvent cEvent = (ColoringEvent) event;// TODO: 27.11.2021 закрашивание нескольких фрагментов и изменить количество закрашиваемых фрагментов от линий
                 for (int i = 0; i < data.getMap().length; i++) {
                     if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(cEvent.color)) {
                         image.color(data.getMap()[i]);

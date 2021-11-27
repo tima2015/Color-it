@@ -1,10 +1,32 @@
 package com.forward.colorit.coloring;
 
+/**
+ * Информаци о изображении уровня.
+ */
 public class ColoringLevelData {
+    /**
+     * Данные о местах заливки в изображении.
+     */
     private ColoringMap[] map;
+
+    /**
+     * Исходное изображение
+     */
     private String img;
+
+    /**
+     * Иконка исходного изображения
+     */
     private String img_thumbnail;
+
+    /**
+     * Раскрашенное изображение
+     */
     private String done;
+
+    /**
+     * Иконка раскрашенного изображения
+     */
     private String done_thumbnail;
 
     public ColoringLevelData(ColoringMap[] map, String img, String img_thumbnail, String done, String done_thumbnail) {
@@ -19,6 +41,7 @@ public class ColoringLevelData {
     }
 
     public ColoringMap[] getMap() {
+
         return map;
     }
 

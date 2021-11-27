@@ -8,11 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  */
 public class SubGameGroup extends Group {
 
-    /**
-     * Актёр содержащий какую либо информацию о текущей игре
-     */
     private Actor subGameInfoActor;
 
+    /**
+     * Актёр содержащий какую либо информацию о текущей игре.
+     * Может быть null.
+     */
     public Actor getSubGameInfoActor() {
         return subGameInfoActor;
     }

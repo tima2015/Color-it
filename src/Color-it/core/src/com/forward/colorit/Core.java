@@ -22,27 +22,40 @@ public class Core extends Game {
 
 	private static final String TAG = "Core";
 
+	//Константы стилей
 	public static final String TEXTBUTTON_STYLE_YELLOW = "yellow";
 	public static final String TEXTBUTTON_STYLE_GREEN = "green";
 	public static final String TEXTBUTTON_STYLE_RED = "red";
 	public static final String LABEL_STYLE_LARGE = "large";
 	public static final String LABEL_STYLE_SMALL = "small";
 	public static final String WINDOW_STYLE_PAUSE = "pause";
+
+	//Константы данных для формирования интерфейса
 	public static final float UI_PADDING = 8;
 	public static final float UI_PADDING_LARGE = UI_PADDING * 4;
 
+
+	/**
+	 * @return Возвращает объект класса Core текущей игры .
+	 */
 	public static Core core(){
 		return (Core) Gdx.app.getApplicationListener();
 	}
 
 	private static Settings settings;
 
+	/**
+	 * @return Настройки игры.
+	 */
 	public static Settings getSettings() {
 		return settings;
 	}
 
 	public static  ProgressData progressData;
 
+	/**
+	 * @return Данные о текущем прогрессе игрока.
+	 */
 	public static ProgressData getProgressData() {
 		return progressData;
 	}
@@ -52,7 +65,7 @@ public class Core extends Game {
 	private TextureAtlas textures;
 	private Texture background;
 	private SpriteBatch backgroundSpriteBatch;
-	private Viewport viewport = new ScreenViewport();
+	private final Viewport viewport = new ScreenViewport();
 	private Skin ui;
 	private MenuScreen menuScreen;
 	private AssetManager manager;// TODO: 24.11.2021 Создать экран загрузки и навести порядок в ядре
@@ -70,6 +83,11 @@ public class Core extends Game {
 		setScreen(LoadingScreen.getInstance());
 	}
 
+	/**
+	 * Инициализация ядра.
+	 * Должно быть вызвано после окончания загрузки основных зависимостей.
+	 * Метод предназначен для LoadingScreen.
+	 */
 	void initCore(){
 		Gdx.app.debug(TAG, "initCore() called");
 		textures = manager.get("textures.atlas", TextureAtlas.class);
@@ -81,9 +99,12 @@ public class Core extends Game {
 
 	}
 
+	/**
+	 * Инициализирует игровой курсор.
+	 */
 	private void initCursor(){
 		pixmapCursor = new Pixmap(Gdx.files.internal("brush.png"));
-		cursor = Gdx.graphics.newCursor(pixmapCursor, 1, 1);
+		cursor = Gdx.graphics.newCursor(pixmapCursor, 0, 0);
 	}
 
 	@Override
@@ -114,28 +135,40 @@ public class Core extends Game {
 		cursor.dispose();
 		manager.dispose();
 		menuScreen.dispose();
+		pixmapCursor.dispose();
 		LoadingScreen.getInstance().dispose();
 	}
 
+	/**
+	 * @return Основные текстуры миниигр.
+	 */
 	public TextureAtlas getTextures() {
 		return textures;
 	}
 
+	/**
+	 * @return Упаковщик текстур фона.
+	 */
 	public SpriteBatch getBackgroundSpriteBatch() {
 		return backgroundSpriteBatch;
 	}
 
+	/**
+	 * @param background - фоновое изображение.
+	 */
 	public void setBackground(Texture background) {
 		this.background = background;
 	}
 
+	/**
+	 * @return Окно просмотра фона.
+	 */
 	public Viewport getBackgroundViewport() {
 		return viewport;
 	}
 
-
 	/**
-	 * @return текущий экран. Если класс экрана не относится к StageScreenAdapter, вернёт null
+	 * @return Текущий экран. Если класс экрана не относится к StageScreenAdapter, вернёт null.
 	 */
 	public StageScreenAdapter getStageScreen() {
 		Screen screen = super.getScreen();
@@ -144,18 +177,30 @@ public class Core extends Game {
 		return null;
 	}
 
+	/**
+	 * @return Данные для визуализации пользовательского интерфейса.
+	 */
 	public Skin getUi() {
 		return ui;
 	}
 
+	/**
+	 * @return Внутриигровой курсор.
+	 */
 	public Cursor getCursor() {
 		return cursor;
 	}
 
+	/**
+	 * @return Менеджер зависимостей. Содержащий в себе все основные зависимости игры.
+	 */
 	public AssetManager getManager() {
 		return manager;
 	}
 
+	/**
+	 * Переводит игру в главное меню из какого либо другого экрана.
+	 */
 	public void setStateToMenuScreen(){
 		Gdx.app.debug(TAG, "setStateToMenuScreen() called");
 		Screen old = getStageScreen();

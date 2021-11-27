@@ -1,10 +1,12 @@
 package com.forward.colorit;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 
+/**
+ * Класс объект которого позволяет получить информацию о текущем прогрессе игрока.
+ */
 public class ProgressData {
-
-    private static final String progressPreferencesName = "save";
 
     public static final String LEVEL_ANKHA = "ankha";
     public static final String LEVEL_BUTTERFLY = "butterfly";
@@ -16,16 +18,32 @@ public class ProgressData {
     public static final String LEVEL_REI = "rei";
     public static final String LEVEL_SPRUCE = "spruce";
 
+    private static final Preferences save = Gdx.app.getPreferences("save");
+
+    ProgressData(){}
+
+    /**
+     * @param levelName Наименование уровня
+     * @return Истина, если уровень был пройден. Иначе, вернёт ложь.
+     */
     public boolean isLevelComplete(String levelName){
-        return Gdx.app.getPreferences(progressPreferencesName).getBoolean(levelName, false);
+        return save.getBoolean(levelName, false);
     }
 
+    /**
+     * Устанавливает уровень как пройденый.
+     * @param levelName Наименование уровня.
+     */
     public void setLevelComplete(String levelName){
-        Gdx.app.getPreferences(progressPreferencesName).putBoolean(levelName, true).flush();
+        save.putBoolean(levelName, true).flush();
     }
 
-    //todo
+
+    /**
+     * Сбрасывает прогресс пользователя
+     */
     public void resetSave(){
-        Gdx.app.getPreferences(progressPreferencesName).clear();
+        save.clear();
+        save.flush();
     }
 }

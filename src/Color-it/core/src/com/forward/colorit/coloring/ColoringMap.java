@@ -1,11 +1,20 @@
 package com.forward.colorit.coloring;
 
-import com.badlogic.gdx.graphics.Color;
-
+/**
+ * Данные о месте заливки в изображении.
+ */
 public class ColoringMap {
     private int x;
     private int y;
+
+    /**
+     * Цвет активации заливки.
+     */
     private String color;
+
+    /**
+     * Цвет которым будет проводиться заливка.
+     */
     private String targetColor;
 
     public ColoringMap() {

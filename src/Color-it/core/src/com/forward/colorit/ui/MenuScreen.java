@@ -9,22 +9,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 
+/**
+ * Экран меню.
+ */
 public class MenuScreen extends StageScreenAdapter {
 
+    /**
+     * Ширина окна просмотра для экрана меню
+     */
     private static final int VIEWPORT_WIDTH = 1200;
-    private static final int VIEWPORT_HEIGHT = 675;
-    private static final int SPACE = 24;
 
-    private MainMenu mainMenu = new MainMenu();
-    private Actor logo = new Label("Колорит", Core.core().getUi(), Core.LABEL_STYLE_LARGE);
+    /**
+     * Высота окна просмотра для экрана меню
+     */
+    private static final int VIEWPORT_HEIGHT = 675;
 
     public MenuScreen(){
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), false);
         getStage().setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
+        MainMenu mainMenu = new MainMenu();
         getStage().addActor(mainMenu);
+        Actor logo = new Label("Колорит", Core.core().getUi(), Core.LABEL_STYLE_LARGE);
         getStage().addActor(logo);
         mainMenu.setPosition((getStage().getWidth() - mainMenu.getWidth())*.5f, (getStage().getHeight() - mainMenu.getHeight())*.5f);
-        logo.setPosition((getStage().getWidth() - logo.getWidth())*.5f, mainMenu.getY() + mainMenu.getHeight() + SPACE);
+        logo.setPosition((getStage().getWidth() - logo.getWidth())*.5f, mainMenu.getY() + mainMenu.getHeight() + Core.UI_PADDING_LARGE);
     }
 
     @Override

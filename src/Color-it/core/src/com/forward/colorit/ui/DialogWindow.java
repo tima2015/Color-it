@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.forward.colorit.Core;
 
 /**
@@ -40,7 +41,7 @@ public class DialogWindow extends Window {
     private void initDialogWindow(Runnable onOk, Runnable onCancel){
         setMovable(false);
         setModal(false);
-
+        getTitleLabel().setAlignment(Align.center);
         ok = new SoundTextButton("Да", Core.core().getUi());
         ok.addListener(new ClickListener(){
             @Override
@@ -68,10 +69,16 @@ public class DialogWindow extends Window {
         pack();
     }
 
+    /**
+     * @return Кнопка положительного ответа.
+     */
     public TextButton getOk() {
         return ok;
     }
 
+    /**
+     * @return Кнопка отрицательного ответа.
+     */
     public TextButton getCancel() {
         return cancel;
     }

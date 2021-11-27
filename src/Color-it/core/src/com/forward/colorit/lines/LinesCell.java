@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-class LinesCell extends Actor {
+/**
+ * Ячейка в игре "Линии".
+ */
+class LinesCell extends Actor {// TODO: 27.11.2021 поменять с Actor на Group с двумя Image
 
     private boolean selected = false;
     private boolean visited = false;
@@ -29,19 +32,32 @@ class LinesCell extends Actor {
         sprite.setPosition(x, y);
     }
 
+    /**
+     * @param state - состояние ячейки.
+     */
     public void setState(CellTextureState state) {
         this.state = state;
         setSelected(selected);
     }
 
+    /**
+     * @return Состояние ячейки.
+     */
     public CellTextureState getState() {
         return state;
     }
 
+    /**
+     * @return Является ли данная ячейка выделенной.
+     */
     public boolean isSelected() {
         return selected;
     }
 
+    /**
+     * Устанавливает значение selected и меняет текстуру ячейки
+     * @param selected - является ли данная ячейка выделенной
+     */
     public void setSelected(boolean selected){
         this.selected = selected;
         if (selected) switch (state) {
@@ -74,10 +90,16 @@ class LinesCell extends Actor {
         sprite.setRegion(state.getRegion());
     }
 
-    public boolean isVisited() {
-        return visited;
+    /**
+     * @return посещена ли ячейка при обхде.
+     */
+    public boolean isNotVisited() {
+        return !visited;
     }
 
+    /**
+     * @param visited - значение о посещении ячейки.
+     */
     public void setVisited(boolean visited) {
         this.visited = visited;
     }

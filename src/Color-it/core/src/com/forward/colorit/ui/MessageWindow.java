@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.forward.colorit.Core;
 
 /**
@@ -19,9 +20,12 @@ public class MessageWindow extends Window {
     private TextButton ok;
     private Label message;
 
+    /**
+     * @param message Текст сообщения
+     */
     public MessageWindow(String title, Skin skin, String message) {
         super(title, skin);
-        this.message = new Label(message, Core.core().getUi());
+        this.message = new Label(message, Core.core().getUi(), Core.LABEL_STYLE_LARGE);
 
         initMessageWindow();
     }
@@ -41,6 +45,7 @@ public class MessageWindow extends Window {
     private void initMessageWindow(){
         setMovable(false);
         setModal(false);
+        getTitleLabel().setAlignment(Align.center);
 
         add(message).pad(Core.UI_PADDING);
         row();
@@ -56,5 +61,19 @@ public class MessageWindow extends Window {
         add(ok).pad(Core.UI_PADDING);
         pad(Core.UI_PADDING);
         pack();
+    }
+
+    /**
+     * @param message Текст сообщения.
+     */
+    public void setMessage(String message) {
+        this.message.setText(message);
+    }
+
+    /**
+     * @return Кнопка закрытия окна.
+     */
+    public TextButton getOk() {
+        return ok;
     }
 }

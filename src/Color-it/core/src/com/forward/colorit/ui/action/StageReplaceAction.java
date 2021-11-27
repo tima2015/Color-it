@@ -1,12 +1,8 @@
 package com.forward.colorit.ui.action;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.forward.colorit.Core;
 import com.forward.colorit.ui.StageScreenAdapter;
 
@@ -24,6 +20,11 @@ public class StageReplaceAction extends Action {
     private float timer;
     private ShaderProgram shader;
 
+    /**
+     * @param old экран из которого происходит переход
+     * @param current экран назначения
+     * @param duration длительность перехода
+     */
     public StageReplaceAction(StageScreenAdapter old, StageScreenAdapter current, float duration){
         Gdx.app.debug(TAG, "StageReplaceAction() called with: old = [" + old + "], current = [" + current + "], duration = [" + duration + "]");
         this.old = old;

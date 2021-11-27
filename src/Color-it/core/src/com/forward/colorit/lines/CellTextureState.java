@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Состояния ячеек
+ */
 public enum CellTextureState {
     EMPTY("empty_cell", Color.BLACK),
     RED("red", Color.RED),
@@ -29,10 +32,16 @@ public enum CellTextureState {
         this.color = color;
     }
 
+    /**
+     * @return Текстуру для текущего состояния.
+     */
     TextureRegion getRegion(){
         return Core.core().getTextures().findRegion(region);
     }
 
+    /**
+     * @return Случайное невыделеное и не пустое состояние.
+     */
     public static CellTextureState getRandomNotEmptyAndNotSelectedState(){
         List<CellTextureState> states = Arrays.asList(RED, BLUE, GREEN, YELLOW);
         Collections.shuffle(states, MathUtils.random);

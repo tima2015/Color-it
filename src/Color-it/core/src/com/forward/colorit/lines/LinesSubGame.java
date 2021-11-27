@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,44 +17,54 @@ import com.forward.colorit.coloring.ColoringEvent;
 import com.forward.colorit.coloring.GameEndEvent;
 
 /**
- * Класс реализующий мини игру "Линии"
+ * Класс реализующий мини игру "Линии".
  */
 public class LinesSubGame extends SubGameGroup {
     /**
-     * Длина стороны игрового поля в ячейках
+     * Длина стороны игрового поля в ячейках.
      */
     private final static int FIELD_SIZE = 9;
 
     /**
-     * Длина стороны одной ячейки
-     */
-    private final static int CELL_SIZE = 40;
-
-    /**
-     * Количество ячеек
+     * Количество ячеек.
      */
     private final static int CELL_COUNT = FIELD_SIZE * FIELD_SIZE;
 
     /**
-     * Количество шаров для вставки
+     * Количество шаров для вставки.
      */
     private final static int BALL_INSERT_COUNT = 3;
 
+    /**
+     * Сетка шаров.
+     */
     private final LinesCell[][] cells = new LinesCell[FIELD_SIZE][FIELD_SIZE];
+
+    /**
+     * Клетки, в которые будет произведенена вставка.
+     */
     private final LinesCell[] nextCells = new LinesCell[BALL_INSERT_COUNT];
+
+    /**
+     *  Значения, которые будут вставленны.
+     */
     private final CellTextureState[] nextCellTextureState = new CellTextureState[BALL_INSERT_COUNT];
+
+    /**
+     * Выделенная ячейка.
+     */
     private LinesCell selected;
 
     /**
-     * Актёр отображающий информацию о следующей вставке
+     * Актёр отображающий информацию о следующей вставке.
      */
     private final LinesSubGameInfoActor linesSubGameInfoActor = new LinesSubGameInfoActor();
 
     /**
-     * Инициализация мини-игры Lines
+     * Инициализация мини-игры Lines.
      * <p>
      *     Объявляются массив ячеек игрового поля и массив ячеек на следующем ходе,
-     *     устанавливается положение игрового поля
+     *     устанавливается положение игрового поля.
      * </p>
      */
     public LinesSubGame() {
@@ -65,14 +74,13 @@ public class LinesSubGame extends SubGameGroup {
                 cells[i][j].addListener(new LineSubGameClickListener());
                 addActor(cells[i][j]);
             }
-        setSize(FIELD_SIZE * CELL_SIZE, FIELD_SIZE * CELL_SIZE);
         initWithRandNextCells();
         insertNextCells();
         setDebug(Gdx.app.getLogLevel() == Application.LOG_DEBUG, true);
         setSubGameInfoActor(linesSubGameInfoActor);
     }
     /**
-     * Устанавливаются позиции ячеек игрового поля
+     * Устанавливаются позиции ячеек игрового поля.
      */
     @Override
     public void setSize(float width, float height) {
@@ -87,8 +95,8 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * проверка несовпадения сфер в NextCells
-     * @return "истина", если не совпадают, "ложь" - в противном случае
+     * Проверка несовпадения сфер в NextCells.
+     * @return "истина", если не совпадают, "ложь" - в противном случае.
      */
     private boolean isNextCellNotEquals() {
         return !(nextCells[0].equals(nextCells[1])
@@ -97,8 +105,8 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Проверка на "пустоту" NextCells
-     * @return "истина", если все ячейки NextCells пусты
+     * Проверка на "пустоту" NextCells.
+     * @return "истина", если все ячейки NextCells пусты.
      */
     private boolean isNextCellsEmpty() {
         return nextCells[0].getState() == CellTextureState.EMPTY
@@ -107,7 +115,7 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Назначение NextCells случайных значений
+     * Назначение NextCells случайных значений.
      */
     private void initWithRandNextCells() {
         for (int i = 0; i < BALL_INSERT_COUNT; i++)
@@ -116,7 +124,7 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Выбор BALL_INSERT_COUNT случайных клеток для вставки шаров
+     * Выбор BALL_INSERT_COUNT случайных клеток для вставки шаров.
      */
     private void insertNextCells() {
         do {
@@ -132,9 +140,9 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Получение координат ячейки игрового поля
-     * @param cell - ячейка игрового поля
-     * @return координаты ячейки игрового поля
+     * Получение координат ячейки игрового поля.
+     * @param cell - ячейка игрового поля.
+     * @return Координаты ячейки игрового поля.
      */
     private GridPoint2 getCellPosition(LinesCell cell) {
         for (int x = 0; x < cells.length; x++)
@@ -145,10 +153,10 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Поиск ячейки аналогичного состояния в заданном направлении
-     * @param pos - текущая позиция на игровом поле
-     * @param direction - направление поиска
-     * @return
+     * Поиск ячейки аналогичного состояния в заданном направлении.
+     * @param pos - текущая позиция на игровом поле.
+     * @param direction - направление поиска.
+     * @return Количество ячеек с аналогичным состоянием.
      */
     private int sameStatesInDirection(GridPoint2 pos, Direction direction) {
         try {
@@ -163,8 +171,8 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Поиск линий длины 5 и более
-     * @param cell - ячейка, от которой начинается поиск
+     * Поиск линий длины 5 и более.
+     * @param cell - ячейка, от которой начинается поиск.
      */
     private void findLines(LinesCell cell) {
         GridPoint2 pos = getCellPosition(cell);
@@ -206,14 +214,14 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * удаление линий
-     * @return "истина", если есть линия для удаления
+     * Удаление линий.
+     * @return "истина", если есть линия для удаления.
      */
     private boolean deleteLines() {
         boolean isDelete = false;
         for (LinesCell[] cell : cells)
             for (LinesCell linesCell : cell) {
-                if (!linesCell.isVisited()) continue;
+                if (linesCell.isNotVisited()) continue;
                 linesCell.setVisited(false);
                 linesCell.setState(CellTextureState.EMPTY);
                 isDelete = true;
@@ -222,9 +230,9 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Проверка игры после очередного хода игрока
-     * @param cell - последняя ячейка, по которой кликнул игрок
-     * @return состояние игры после хода игрока
+     * Проверка игры после очередного хода игрока.
+     * @param cell - последняя ячейка, по которой кликнул игрок.
+     * @return состояние игры после хода игрока.
      */
     private LinesState checkGame(LinesCell cell) {
         findLines(cell);
@@ -242,7 +250,7 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Удаление всех пометок с ячеек
+     * Удаление всех пометок с ячеек.
      */
     private void unmarkCells() {
         for (LinesCell[] cell : cells)
@@ -251,19 +259,19 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Поиск пути в заданном направлении
-     * @param direction - направление
-     * @param current - ячейка, от которой начинается поиск
-     * @param end - ячейка, в которой оканчивается путь
-     * @param queue - путь
-     * @return "истина", если существует путь от current до end
+     * Поиск пути в заданном направлении.
+     * @param direction - направление.
+     * @param current - ячейка, от которой начинается поиск.
+     * @param end - ячейка, в которой оканчивается путь.
+     * @param queue - путь.
+     * @return "истина", если существует путь от current до end.
      */
     private boolean checkingDirection(Direction direction, GridPoint2 current, GridPoint2 end, Queue<LinesCell> queue) {
         try {
             GridPoint2 next = new GridPoint2(current).add(direction.direction_x, direction.direction_y);
             LinesCell cell = cells[next.x][next.y];
             if (cell.getState() == CellTextureState.EMPTY)
-                if (!cell.isVisited()) {
+                if (cell.isNotVisited()) {
                     queue.addLast(cell);
                     cell.setVisited(true);
                     if (next.equals(end)) {
@@ -278,9 +286,9 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Поиск пути от "selected" до "to"
-     * @param to - ячейка, до которой нужно проложить путь
-     * @return "истина", если путь от "selected" до "to" существует
+     * Поиск пути от "selected" до "to".
+     * @param to - ячейка, до которой нужно проложить путь.
+     * @return "истина", если путь от "selected" до "to" существует.
      */
     private boolean isMovable(LinesCell to) {
         GridPoint2 end = getCellPosition(to);
@@ -311,11 +319,9 @@ public class LinesSubGame extends SubGameGroup {
     }
 
     /**
-     * Обработка клика мыши
+     * Обработка клика мыши.
      */
     private class LineSubGameClickListener extends ClickListener {
-
-        private static final String TAG = "LineSubGameClickListene";
 
         @Override
         public void clicked(InputEvent event, float x, float y) {
@@ -346,6 +352,9 @@ public class LinesSubGame extends SubGameGroup {
         }
     }
 
+    /**
+     * Класс актера, отображающего информацию о следующих вставленых сферах.
+     */
     private class LinesSubGameInfoActor extends Group {
         private final Label title = new Label("Следующая вставка", Core.core().getUi());
         private final Sprite[] sprites = new Sprite[nextCellTextureState.length];
@@ -355,6 +364,9 @@ public class LinesSubGame extends SubGameGroup {
             for (int i = 0; i < sprites.length; i++) sprites[i] = new Sprite(CellTextureState.EMPTY.getRegion());
         }
 
+        /**
+         * Обновление данных актёра с данными игры.
+         */
         public void update(){
             for (int i = 0; i < sprites.length; i++) sprites[i].setRegion(nextCellTextureState[i].getRegion());
         }
