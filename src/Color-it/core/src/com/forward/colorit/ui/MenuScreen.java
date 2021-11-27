@@ -43,6 +43,7 @@ public class MenuScreen extends StageScreenAdapter {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         getStage().getViewport().apply();
         getStage().act(delta);
         getStage().draw();

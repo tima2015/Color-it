@@ -33,34 +33,35 @@ public class SettingsMenu extends Window {
         initResetProgressButton();
         initCancel();
         initSave();
+        pad(Core.UI_PADDING_LARGE);
         pack();
     }
 
     private void initMusicVolume(){
         row();
-        add(new Label("Громкость музыки", Core.core().getUi()));
-        add(musicVolume);
+        add(new Label("Громкость музыки", Core.core().getUi())).padBottom(Core.UI_PADDING);
+        add(musicVolume).padBottom(Core.UI_PADDING).left();
         musicVolume.setValue(Core.getSettings().getMusicVolume());
     }
 
     private void initSoundVolume(){
         row();
-        add(new Label("Громкость звуков", Core.core().getUi()));
-        add(soundVolume);
+        add(new Label("Громкость звуков", Core.core().getUi())).padBottom(Core.UI_PADDING);
+        add(soundVolume).padBottom(Core.UI_PADDING).left();
         soundVolume.setValue(Core.getSettings().getSoundVolume());
     }
 
     private void initFullscreenCheckBox(){
         row();
-        add(new Label("Полноэкранный режим", Core.core().getUi()));
-        add(fullscreen);
+        add(new Label("Полноэкранный режим", Core.core().getUi())).padBottom(Core.UI_PADDING);
+        add(fullscreen).padBottom(Core.UI_PADDING).left();
         fullscreen.setChecked(Core.getSettings().isFullscreen());
     }
 
     private void initSystemCursorCheckBox(){
         row();
-        add(new Label("Системный курсор", Core.core().getUi()));
-        add(systemCursor);
+        add(new Label("Системный курсор", Core.core().getUi())).padBottom(Core.UI_PADDING);
+        add(systemCursor).padBottom(Core.UI_PADDING).left();
         systemCursor.setChecked(Core.getSettings().isSystemCursor());
     }
 
@@ -81,7 +82,7 @@ public class SettingsMenu extends Window {
                 dialogWindow.setPosition((getStage().getWidth() - dialogWindow.getWidth())*.5f, (getStage().getHeight() - dialogWindow.getHeight())*.5f);
             }
         });
-        add(b).fill();
+        add(b).pad(Core.UI_PADDING);
     }
 
     private void initCancel(){
@@ -95,7 +96,7 @@ public class SettingsMenu extends Window {
                 mainMenu.setVisible(true);
             }
         });
-        add(button);
+        add(button).pad(Core.UI_PADDING).padRight(Core.UI_PADDING);
     }
 
     private void initSave(){
@@ -112,7 +113,7 @@ public class SettingsMenu extends Window {
                         systemCursor.isChecked());
             }
         });
-        add(button);
+        add(button).padBottom(Core.UI_PADDING);
     }
 
 

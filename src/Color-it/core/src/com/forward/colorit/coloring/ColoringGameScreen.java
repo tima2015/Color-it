@@ -178,6 +178,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         getStage().getViewport().apply();
         getStage().draw();
         getStage().act(delta);

@@ -1,5 +1,7 @@
 package com.forward.colorit.ui;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -29,6 +31,11 @@ public class StageScreenAdapter extends ScreenAdapter {
      */
     public boolean isAutoDispose() {
         return autoDispose;
+    }
+
+    @Override
+    public void render(float delta) {
+        stage.setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
     }
 
     @Override

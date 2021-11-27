@@ -121,13 +121,14 @@ class LoadingScreen extends StageScreenAdapter {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         if (beginReplace && Core.core().getManager().update()) {
             Core.core().initCore();
             Core.core().setStateToMenuScreen();
             beginReplace = false;
         }
         progressLabel.setText(String.format("%d%%",(int)(100*Core.core().getManager().getProgress())));
-        getStage().act();
         getStage().draw();
+        getStage().act();
     }
 }
