@@ -1,5 +1,6 @@
 package com.forward.colorit;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Cursor;
@@ -67,11 +68,15 @@ public class Settings {
      * Обновление состояния игры с учётом настроек.
      */
     public void refreshSettings() {
+        if (Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS)
+            return;
         if (isSystemCursor())
             Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         else
             Gdx.graphics.setCursor(Core.core().getCursor());
         if (isFullscreen())
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        else
+            Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
     }
 }
