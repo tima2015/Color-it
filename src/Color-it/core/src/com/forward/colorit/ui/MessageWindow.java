@@ -56,6 +56,5 @@ public class MessageWindow extends Window {
         add(ok).pad(Core.UI_PADDING);
         pad(Core.UI_PADDING);
         pack();
-        setPosition((getStage().getWidth() - getWidth())*.5f, (getStage().getHeight() - getHeight())*.5f);
     }
 }

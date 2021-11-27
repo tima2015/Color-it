@@ -66,7 +66,6 @@ public class DialogWindow extends Window {
         add(cancel).pad(Core.UI_PADDING);
         pad(Core.UI_PADDING);
         pack();
-        setPosition((getStage().getWidth() - getWidth())*.5f, (getStage().getHeight() - getHeight())*.5f);
     }
 
     public TextButton getOk() {
