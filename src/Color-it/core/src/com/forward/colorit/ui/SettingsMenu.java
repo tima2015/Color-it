@@ -1,16 +1,18 @@
 package com.forward.colorit.ui;
 
-import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.forward.colorit.Core;
 
-public class SettingsMenu extends Window {// TODO: 26.11.2021 сброс прогресса с подтверждением
+/**
+ * Меню настроек.
+ * Позволяет пользователю редактировать настройки.
+ */
+public class SettingsMenu extends Window {
 
-    private static final int SPACE = 24;
-    private static final int ROW_HEIGHT = 50;
-    private static final int ROW_WIDTH = 200;
+    private static final String TAG = "SettingsMenu";
 
     private final MainMenu mainMenu;
 
@@ -24,11 +26,11 @@ public class SettingsMenu extends Window {// TODO: 26.11.2021 сброс про�
         this.mainMenu = mainMenu;
         setMovable(false);
         getTitleTable().center();
-        getTitleTable().pad(SPACE);
         initMusicVolume();
         initSoundVolume();
         initFullscreenCheckBox();
         initSystemCursorCheckBox();
+        initResetProgressButton();
         initCancel();
         initSave();
         pack();
@@ -43,7 +45,7 @@ public class SettingsMenu extends Window {// TODO: 26.11.2021 сброс про�
 
     private void initSoundVolume(){
         row();
-        add(new Label("Громкость звуков", Core.core().getUi()));// TODO: 24.11.2021 убрать повторяющийся код
+        add(new Label("Громкость звуков", Core.core().getUi()));
         add(soundVolume);
         soundVolume.setValue(Core.getSettings().getSoundVolume());
     }
@@ -60,6 +62,26 @@ public class SettingsMenu extends Window {// TODO: 26.11.2021 сброс про�
         add(new Label("Системный курсор", Core.core().getUi()));
         add(systemCursor);
         systemCursor.setChecked(Core.getSettings().isSystemCursor());
+    }
+
+    private void initResetProgressButton(){
+        row();
+        SoundTextButton b = new SoundTextButton("Сбросить прогресс", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        b.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                DialogWindow dialogWindow = new DialogWindow("Вы уверены?", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, () -> {
+                    Core.getProgressData().resetSave();
+                    Gdx.app.log(TAG, "Progress reset!");
+                    MessageWindow window = new MessageWindow("", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, "Прогресс сброшен!");
+                    getStage().addActor(window);
+                    window.setPosition((getStage().getWidth() - window.getWidth())*.5f, (getStage().getHeight() - window.getHeight())*.5f);
+                }, () -> {});
+                getStage().addActor(dialogWindow);
+                dialogWindow.setPosition((getStage().getWidth() - dialogWindow.getWidth())*.5f, (getStage().getHeight() - dialogWindow.getHeight())*.5f);
+            }
+        });
+        add(b).fill();
     }
 
     private void initCancel(){
