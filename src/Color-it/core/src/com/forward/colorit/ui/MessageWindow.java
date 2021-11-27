@@ -39,6 +39,9 @@ public class MessageWindow extends Window {
     }
 
     private void initMessageWindow(){
+        setMovable(false);
+        setModal(false);
+
         add(message).pad(Core.UI_PADDING);
         row();
         ok = new SoundTextButton("Да", Core.core().getUi());

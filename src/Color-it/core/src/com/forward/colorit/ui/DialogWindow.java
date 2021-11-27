@@ -38,6 +38,9 @@ public class DialogWindow extends Window {
     }
 
     private void initDialogWindow(Runnable onOk, Runnable onCancel){
+        setMovable(false);
+        setModal(false);
+
         ok = new SoundTextButton("Да", Core.core().getUi());
         ok.addListener(new ClickListener(){
             @Override
