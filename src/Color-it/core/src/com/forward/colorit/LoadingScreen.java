@@ -32,7 +32,7 @@ class LoadingScreen extends StageScreenAdapter {
     }
 
     private LoadingScreen(){
-        super(new Stage(Core.core().getBackgroundViewport()), false);
+        super(new Stage(Core.core().getBackgroundStage().getViewport()), false);
         load();
     }
 

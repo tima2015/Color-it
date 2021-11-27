@@ -36,7 +36,7 @@ public class StageReplaceAction extends Action {
         if (!shader.isCompiled())
             Gdx.app.error(TAG, "StageReplaceAction: " + shader.getLog());
         old.getStage().getBatch().setShader(shader);
-        Core.core().getBackgroundSpriteBatch().setShader(shader);
+        Core.core().getBackgroundStage().getBatch().setShader(shader);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class StageReplaceAction extends Action {
             if (timer >= half_duration){
                 Gdx.app.debug(TAG, "act: StageReplaceAction finished!");
                 current.getStage().getBatch().setShader(null);
-                Core.core().getBackgroundSpriteBatch().setShader(null);
+                Core.core().getBackgroundStage().getBatch().setShader(null);
 
                 shader.dispose();
                 return true;

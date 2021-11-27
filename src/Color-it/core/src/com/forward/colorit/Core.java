@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -61,23 +64,27 @@ public class Core extends Game {
     }
 
     private TextureAtlas textures;
-    private Texture background;
-    private SpriteBatch backgroundSpriteBatch;
-    private final Viewport viewport = new ScreenViewport();
     private Skin ui;
     private MenuScreen menuScreen;
-    private AssetManager manager;// TODO: 24.11.2021 Создать экран загрузки и навести порядок в ядре
+    private AssetManager manager;
 
     private Cursor cursor;
     private Pixmap pixmapCursor;
 
+    private Stage backgroundStage;
+    private Texture defBackground;
+    private Image backgroundImage;
+
     @Override
     public void create() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);// FIXME: 24.11.2021
         Gdx.app.debug(TAG, "create() called");
         manager = new AssetManager();
-        backgroundSpriteBatch = new SpriteBatch();
-        background = new Texture("background/backgroundForest.png");
+        backgroundStage = new Stage(new ScreenViewport());
+        defBackground = new Texture("background/backgroundForest.png");
+        backgroundImage = new Image(defBackground);
+        backgroundStage.addActor(backgroundImage);
+        initCursor();
+        settings = new Settings();
         setScreen(LoadingScreen.getInstance());
     }
 
@@ -91,10 +98,7 @@ public class Core extends Game {
         textures = manager.get("textures.atlas", TextureAtlas.class);
         ui = new Skin(Gdx.files.internal("ui.json"));
         menuScreen = new MenuScreen();
-        initCursor();
-        settings = new Settings();
         progressData = new ProgressData();
-
     }
 
     /**
@@ -108,34 +112,36 @@ public class Core extends Game {
     @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0, 1);
-        viewport.apply();
-        backgroundSpriteBatch.setProjectionMatrix(viewport.getCamera().projection);
-        backgroundSpriteBatch.begin();
-        int size = Math.max(viewport.getScreenWidth(), viewport.getScreenHeight());
-        backgroundSpriteBatch.draw(background, -size * .5f, -size * .5f, size, size);
-        backgroundSpriteBatch.end();
+        backgroundStage.getViewport().apply();
+        backgroundStage.act(Gdx.graphics.getDeltaTime());
+        backgroundStage.draw();
         super.render();
         switchDebug();
     }
 
     private void switchDebug() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             Gdx.app.setLogLevel(Gdx.app.getLogLevel() == Application.LOG_DEBUG ? Application.LOG_ERROR : Application.LOG_DEBUG);
+            backgroundStage.setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         Gdx.app.debug(TAG, "resize() called with: width = [" + width + "], height = [" + height + "]");
         super.resize(width, height);
-        viewport.update(width, height);
+        backgroundStage.getViewport().update(width, height);
+        int size = Math.max(backgroundStage.getViewport().getScreenWidth(),
+                backgroundStage.getViewport().getScreenHeight());
+        backgroundImage.setSize(size, size);
     }
 
     @Override
     public void dispose() {
         Gdx.app.debug(TAG, "dispose() called");
         super.dispose();
-        background.dispose();
-        backgroundSpriteBatch.dispose();
+        defBackground.dispose();
+        backgroundStage.dispose();
         cursor.dispose();
         manager.dispose();
         menuScreen.dispose();
@@ -151,24 +157,17 @@ public class Core extends Game {
     }
 
     /**
-     * @return Упаковщик текстур фона.
-     */
-    public SpriteBatch getBackgroundSpriteBatch() {
-        return backgroundSpriteBatch;
-    }
-
-    /**
      * @param background - фоновое изображение.
      */
     public void setBackground(Texture background) {
-        this.background = background;
+        backgroundImage.setDrawable(new TextureRegionDrawable(defBackground));
     }
 
     /**
-     * @return Окно просмотра фона.
+     * @return Фоновую сцену.
      */
-    public Viewport getBackgroundViewport() {
-        return viewport;
+    public Stage getBackgroundStage() {
+        return backgroundStage;
     }
 
     /**
