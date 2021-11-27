@@ -28,6 +28,8 @@ public class Core extends Game {
 	public static final String LABEL_STYLE_LARGE = "large";
 	public static final String LABEL_STYLE_SMALL = "small";
 	public static final String WINDOW_STYLE_PAUSE = "pause";
+	public static final float UI_PADDING = 8;
+	public static final float UI_PADDING_LARGE = UI_PADDING * 4;
 
 	public static Core core(){
 		return (Core) Gdx.app.getApplicationListener();
