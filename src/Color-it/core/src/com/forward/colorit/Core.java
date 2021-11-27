@@ -160,7 +160,7 @@ public class Core extends Game {
      * @param background - фоновое изображение.
      */
     public void setBackground(Texture background) {
-        backgroundImage.setDrawable(new TextureRegionDrawable(defBackground));
+        backgroundImage.setDrawable(new TextureRegionDrawable(background));
     }
 
     /**

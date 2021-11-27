@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.ui.action.CloudFlyAction;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * Экран меню.
  */
@@ -27,7 +30,8 @@ public class MenuScreen extends StageScreenAdapter {
      */
     private static final int VIEWPORT_HEIGHT = 675;
 
-    private static final float cloudSpawnChance = 0.001f;
+    private static final float cloudSpawnChance = 0.1f;
+    private final ArrayList<CloudFlyAction> clouds = new ArrayList<>();
 
     public MenuScreen(){
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), false);
@@ -49,13 +53,19 @@ public class MenuScreen extends StageScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
-        if (MathUtils.random(0f, 1f) < cloudSpawnChance){
-            CloudFlyAction action = new CloudFlyAction(Core.core().getBackgroundStage());
-            Core.core().getBackgroundStage().addAction(action);
-        }
+        updateClouds();
         getStage().getViewport().apply();
         getStage().act(delta);
         getStage().draw();
+    }
+
+    private void updateClouds(){
+        if (MathUtils.random(0f, 1f) < cloudSpawnChance/Math.pow(10, clouds.size())){
+            CloudFlyAction action = new CloudFlyAction(Core.core().getBackgroundStage());
+            clouds.add(action);
+            Core.core().getBackgroundStage().addAction(action);
+        }
+        clouds.removeIf(CloudFlyAction::isFinished);
     }
 
     @Override

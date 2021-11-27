@@ -18,6 +18,7 @@ public class CloudFlyAction extends Action {
     private final Stage stage;
     private final Image cloud;
     private final float cloudSpeed;
+    private boolean finished = false;
 
     public CloudFlyAction(Stage stage){
         this.stage = stage;
@@ -33,9 +34,14 @@ public class CloudFlyAction extends Action {
     public boolean act(float delta) {
         if (cloud.getX() > stage.getWidth()) {
             stage.getActors().removeValue(cloud, true);
+            finished = true;
             return true;
         }
         cloud.setX(cloud.getX() + delta*cloudSpeed);
         return false;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }
