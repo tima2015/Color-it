@@ -40,34 +40,35 @@ public class SettingsMenu extends Window {
     private void initMusicVolume(){
         row();
         add(new Label("Громкость музыки", Core.core().getUi())).padBottom(Core.UI_PADDING);
-        add(musicVolume).padBottom(Core.UI_PADDING).left();
+        add(musicVolume).padBottom(Core.UI_PADDING);
         musicVolume.setValue(Core.getSettings().getMusicVolume());
     }
 
     private void initSoundVolume(){
         row();
         add(new Label("Громкость звуков", Core.core().getUi())).padBottom(Core.UI_PADDING);
-        add(soundVolume).padBottom(Core.UI_PADDING).left();
+        add(soundVolume).padBottom(Core.UI_PADDING);
         soundVolume.setValue(Core.getSettings().getSoundVolume());
     }
 
     private void initFullscreenCheckBox(){
         row();
         add(new Label("Полноэкранный режим", Core.core().getUi())).padBottom(Core.UI_PADDING);
-        add(fullscreen).padBottom(Core.UI_PADDING).left();
+        add(fullscreen).padBottom(Core.UI_PADDING);
         fullscreen.setChecked(Core.getSettings().isFullscreen());
     }
 
     private void initSystemCursorCheckBox(){
         row();
         add(new Label("Системный курсор", Core.core().getUi())).padBottom(Core.UI_PADDING);
-        add(systemCursor).padBottom(Core.UI_PADDING).left();
+        add(systemCursor).padBottom(Core.UI_PADDING);
         systemCursor.setChecked(Core.getSettings().isSystemCursor());
     }
 
     private void initResetProgressButton(){
         row();
-        SoundTextButton b = new SoundTextButton("Сбросить прогресс", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        add(new Label("Сброс прогресса", Core.core().getUi())).padBottom(Core.UI_PADDING);
+        SoundTextButton b = new SoundTextButton("Сбросить прогресс!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
         b.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -82,7 +83,7 @@ public class SettingsMenu extends Window {
                 dialogWindow.setPosition((getStage().getWidth() - dialogWindow.getWidth())*.5f, (getStage().getHeight() - dialogWindow.getHeight())*.5f);
             }
         });
-        add(b).pad(Core.UI_PADDING);
+        add(b).padBottom(Core.UI_PADDING).center();
     }
 
     private void initCancel(){
@@ -96,7 +97,7 @@ public class SettingsMenu extends Window {
                 mainMenu.setVisible(true);
             }
         });
-        add(button).pad(Core.UI_PADDING).padRight(Core.UI_PADDING);
+        add(button).pad(Core.UI_PADDING);
     }
 
     private void initSave(){
@@ -113,7 +114,7 @@ public class SettingsMenu extends Window {
                         systemCursor.isChecked());
             }
         });
-        add(button).padBottom(Core.UI_PADDING);
+        add(button).pad(Core.UI_PADDING);
     }
 
 
