@@ -3,11 +3,14 @@ package com.forward.colorit.ui;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
+import com.forward.colorit.ui.action.CloudFlyAction;
 
 /**
  * Экран меню.
@@ -23,6 +26,8 @@ public class MenuScreen extends StageScreenAdapter {
      * Высота окна просмотра для экрана меню
      */
     private static final int VIEWPORT_HEIGHT = 675;
+
+    private static final float cloudSpawnChance = 0.001f;
 
     public MenuScreen(){
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), false);
@@ -44,6 +49,10 @@ public class MenuScreen extends StageScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
+        if (MathUtils.random(0f, 1f) < cloudSpawnChance){
+            CloudFlyAction action = new CloudFlyAction(Core.core().getBackgroundStage());
+            Core.core().getBackgroundStage().addAction(action);
+        }
         getStage().getViewport().apply();
         getStage().act(delta);
         getStage().draw();
