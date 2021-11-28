@@ -28,11 +28,11 @@ public class ColoringGameScreen extends StageScreenAdapter {
     private static final int MARGINS = 24;
     private static final int PADDING = 12;
 
-    private SubGameGroup subGame;
-    private ColoringLevelData data;
-    private ColoringImage image;
+    private final SubGameGroup subGame;
+    private final ColoringLevelData data;
+    private final ColoringImage image;
     private final String levelName;
-    private final Window gameInfo;
+    private final Window gameInfo = new Window("", Core.core().getUi());
     private final Hashtable<Color, Integer> uncoloredFragmentsCounts = new Hashtable<>();
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
@@ -42,7 +42,15 @@ public class ColoringGameScreen extends StageScreenAdapter {
         this.data = data;
         this.image = new ColoringImage(data.getImg());
         this.levelName = levelName;
-        gameInfo = new Window("", Core.core().getUi());
+        initLevelData();
+        addMusicsToPlayer();
+        initSubGame();
+        initImage();
+        initSubGameInfoActor();
+        initGameInfo();
+    }
+
+    private void initLevelData(){
         for (ColoringMap map : data.getMap()) {
             Color key = Color.valueOf(map.getColor());
             uncoloredFragmentsCounts.put(key, uncoloredFragmentsCounts.getOrDefault(key, 0) + 1);
@@ -54,7 +62,6 @@ public class ColoringGameScreen extends StageScreenAdapter {
             uncoloredFragmentsCountLabels.add(label);
             label.setUserObject(key);
         }
-        addMusicsToPlayer();
     }
 
     private void addMusicsToPlayer(){
@@ -64,15 +71,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
     }
 
     // TODO: 28.11.2021 Добавить музыку зависящую от миниигры
-    // TODO разбить крупные методы на подметоды
 
     @Override
     public void show() {
         Core.core().setBackground(Core.core().getManager().get("background/backgroundColorGrass.png", Texture.class));
-        initSubGame();
-        initImage();
-        initSubGameInfoActor();
-        initGameInfo();
         getMusicPlayer().setVolume(Core.getSettings().getMusicVolume());
         getMusicPlayer().start();
         Gdx.input.setInputProcessor(getStage());
@@ -83,35 +85,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
         float subGameSize = VIEWPORT_HEIGHT - 2 * MARGINS;
         subGame.setSize(subGameSize, subGameSize);
         subGame.setPosition(MARGINS, MARGINS);
-        subGame.addListener(event -> {
-            if (event instanceof ColoringEvent) {
-                ColoringEvent cEvent = (ColoringEvent) event;// TODO: 27.11.2021 закрашивание нескольких фрагментов и изменить количество закрашиваемых фрагментов от линий
-                for (int i = 0; i < data.getMap().length; i++) {
-                    if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(cEvent.color)) {
-                        image.color(data.getMap()[i]);
-                        data.getMap()[i] = null;
-                        uncoloredFragmentsCounts.put(cEvent.color, uncoloredFragmentsCounts.getOrDefault(cEvent.color, 0) - 1);
-                        updateUncoloredFragmentsCountLabels();
-                        Enumeration<Color> keys = uncoloredFragmentsCounts.keys();
-                        boolean win = true;
-                        while (keys.hasMoreElements()) {
-                            Color key = keys.nextElement();
-                            if (uncoloredFragmentsCounts.get(key) != 0)
-                                win = false;
-                        }
-                        if (win){
-                            Core.getProgressData().setLevelComplete(levelName);
-                            initGameEndWindow("Вы выйграли!");
-                        }
-                        return true;
-                    }
-                }
-            }
-            if (event instanceof GameEndEvent) {
-                initGameEndWindow("Вы проиграли.");
-            }
-            return false;
-        });
+        subGame.addListener(new SubGameEventListener());
     }
 
     private void initGameEndWindow(String title){
@@ -171,13 +145,6 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     }
 
-    void updateUncoloredFragmentsCountLabels(){
-        for (Label label : uncoloredFragmentsCountLabels) {
-            label.setText(getLocalizedColorName((Color) label.getUserObject()) + ": "
-                    + uncoloredFragmentsCounts.getOrDefault((Color)label.getUserObject(), 0));
-        }
-    }
-
     private String getLocalizedColorName(Color color){
         if (color.equals(Color.BLUE))
             return "Голубой";
@@ -209,6 +176,59 @@ public class ColoringGameScreen extends StageScreenAdapter {
     public void dispose() {
         super.dispose();
         image.dispose();
+    }
+
+    private class SubGameEventListener implements EventListener {
+
+        @Override
+        public boolean handle(Event event) {
+            if (event instanceof ColoringEvent) return handleColoringEvent((ColoringEvent) event);
+            if (event instanceof GameEndEvent) return handleGameEndEvent((GameEndEvent) event);
+            return false;
+        }
+
+        private boolean handleColoringEvent(ColoringEvent event){
+            // TODO: 27.11.2021 закрашивание нескольких фрагментов и изменить количество закрашиваемых фрагментов от линий
+            for (int i = 0; i < data.getMap().length; i++) {
+                if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(event.color)) {
+                    image.color(data.getMap()[i]);
+                    data.getMap()[i] = null;
+                    uncoloredFragmentsCounts.put(event.color, uncoloredFragmentsCounts.getOrDefault(event.color, 0) - 1);
+                    updateUncoloredFragmentsCountLabels();
+                    checkWin();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean handleGameEndEvent(GameEndEvent event){
+            initGameEndWindow("Вы проиграли.");
+            return true;
+        }
+
+        private void updateUncoloredFragmentsCountLabels(){
+            for (Label label : uncoloredFragmentsCountLabels) {
+                label.setText(getLocalizedColorName((Color) label.getUserObject()) + ": "
+                        + uncoloredFragmentsCounts.getOrDefault((Color)label.getUserObject(), 0));
+            }
+        }
+
+        private void checkWin() {
+            Enumeration<Color> keys = uncoloredFragmentsCounts.keys();
+            boolean win = true;
+
+            while (keys.hasMoreElements()) {
+                Color key = keys.nextElement();
+                if (uncoloredFragmentsCounts.get(key) != 0)
+                    win = false;
+            }
+
+            if (win){
+                Core.getProgressData().setLevelComplete(levelName);
+                initGameEndWindow("Вы выйграли!");
+            }
+        }
     }
 
     private static class PauseButtonClickListener extends ClickListener {
