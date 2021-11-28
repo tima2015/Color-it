@@ -2,6 +2,7 @@ package com.forward.colorit;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -63,11 +64,9 @@ class LoadingScreen extends StageScreenAdapter {
         am.load("coloring/thumbnails.txt", TextureAtlas.class);
 
         am.load("sound/click1.ogg", Sound.class);
-        am.load("sound/click2.ogg", Sound.class);
         am.load("sound/rollover1.ogg", Sound.class);
-        am.load("sound/rollover2.ogg", Sound.class);
+        am.load("sound/switch1.ogg", Sound.class);
         am.load("sound/switch2.ogg", Sound.class);
-        am.load("sound/switch3.ogg", Sound.class);
 
         am.load("background/backgroundColorDesert.png", Texture.class);
         am.load("background/backgroundColorFall.png", Texture.class);
@@ -78,6 +77,18 @@ class LoadingScreen extends StageScreenAdapter {
         am.load("brush.png", Texture.class);
         am.load("ui.json", Skin.class);
         am.load("textures.atlas", TextureAtlas.class);
+
+        am.load("music/AcousticShuffle.mp3", Music.class);
+        am.load("music/Folk Bed.mp3", Music.class);
+        am.load("music/Hoedown.mp3", Music.class);
+        am.load("music/NiceAndEasy.mp3", Music.class);
+        am.load("music/OneFineDay.mp3", Music.class);
+        am.load("music/menu/AcousticGuitar1.mp3", Music.class);
+        am.load("music/menu/BridesBallad.mp3", Music.class);
+        am.load("music/menu/CryinInMyBeer.mp3", Music.class);
+        am.load("music/menu/GreenLeaves.mp3", Music.class);
+        am.load("music/menu/HappyStrummin.mp3", Music.class);
+        am.load("music/menu/MountainSun.mp3", Music.class);
     }
 
     private BitmapFont font;

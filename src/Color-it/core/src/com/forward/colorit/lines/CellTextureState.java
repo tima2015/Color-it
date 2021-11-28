@@ -14,15 +14,15 @@ import java.util.List;
  * Состояния ячеек
  */
 public enum CellTextureState {
-    EMPTY("empty_cell", Color.BLACK),
-    RED("red", Color.RED),
-    BLUE("blue", Color.BLUE),
-    GREEN("green", Color.GREEN),
-    YELLOW("yellow", Color.YELLOW),
-    RED_SELECTED("red_selected", Color.RED),
-    BLUE_SELECTED("blue_selected", Color.BLUE),
-    GREEN_SELECTED("green_selected", Color.GREEN),
-    YELLOW_SELECTED("yellow_selected", Color.YELLOW);
+    EMPTY("lines_cell", Color.BLACK),
+    RED("lines_red", Color.RED),
+    BLUE("lines_blue", Color.BLUE),
+    GREEN("lines_green", Color.GREEN),
+    YELLOW("lines_yellow", Color.YELLOW),
+    RED_SELECTED("lines_red", Color.RED),
+    BLUE_SELECTED("lines_blue", Color.BLUE),
+    GREEN_SELECTED("lines_green", Color.GREEN),
+    YELLOW_SELECTED("lines_yellow", Color.YELLOW);
 
     private String region;
     public final Color color;

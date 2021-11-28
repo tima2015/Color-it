@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_sliderDown.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_sliderDown.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -22,7 +22,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_sliderRight.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_sliderRight.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -41,7 +41,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_sliderDown.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_sliderDown.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -60,7 +60,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_sliderHorizontal.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_sliderHorizontal.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -79,7 +79,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_sliderRight.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_sliderRight.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -98,7 +98,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_sliderVertical.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_sliderVertical.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -155,7 +155,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_button02.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button02.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -174,7 +174,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_button03.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button03.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -193,7 +193,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_button13.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button13.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -212,7 +212,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_button00.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button00.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -231,7 +231,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_boxCross.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_boxCross.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -250,7 +250,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_boxCheckmark.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_boxCheckmark.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -269,7 +269,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_boxCheckmark.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_boxCheckmark.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -288,7 +288,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_boxCross.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_boxCross.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -326,7 +326,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/brush-V.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/brush-V.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -345,7 +345,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/brush.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/brush.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -364,7 +364,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_panel.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_panel.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -383,7 +383,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_box.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_box.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -402,7 +402,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_tick.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_tick.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -421,7 +421,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_button10.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button10.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -440,7 +440,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/grey_button05.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_button05.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -497,7 +497,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/blue_panel.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_panel.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -535,7 +535,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/yellow_button00.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/yellow_button00.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -554,7 +554,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/yellow_button02.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/yellow_button02.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -573,7 +573,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/yellow_button03.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/yellow_button03.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -592,7 +592,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/yellow_button13.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/yellow_button13.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -611,7 +611,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/red_button11.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/red_button11.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -630,7 +630,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/red_button13.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/red_button13.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -649,7 +649,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/green_button00.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/green_button00.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -668,7 +668,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/green_button02.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/green_button02.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -687,7 +687,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/green_button03.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/green_button03.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -706,7 +706,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/green_button13.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/green_button13.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -725,7 +725,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/red_button00.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/red_button00.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -744,7 +744,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/drawable/red_button10.png
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/red_button10.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -765,7 +765,7 @@ atlasData: {
 	]
 	fontDrawables: [
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_8.png
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_8.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -784,7 +784,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_16.png
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_16.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -803,7 +803,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_32.png
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_32.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -940,17 +940,17 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: ComicCAT_16
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_16.fnt
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_16.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: ComicCAT_32
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_32.fnt
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_32.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: ComicCAT_8
-			file: C:/Users/woodg/Desktop/Color-it/textures/skin/Comic CAT/ComicCAT_8.fnt
+			file: D:/Color-it/src/Color-it/textures/skin/Comic CAT/ComicCAT_8.fnt
 		}
 	]
 	freeTypeFonts: []
