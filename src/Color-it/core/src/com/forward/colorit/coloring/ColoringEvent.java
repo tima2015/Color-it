@@ -22,4 +22,12 @@ public class ColoringEvent extends Event {
         this.color = color;
         setBubbles(true);
     }
+
+    @Override
+    public String toString() {
+        return "ColoringEvent{" +
+                "coloringCount=" + coloringCount +
+                ", color=" + color +
+                '}';
+    }
 }
