@@ -7,7 +7,7 @@ import com.forward.colorit.Core;
 import com.forward.colorit.ui.StageScreenAdapter;
 
 /**
- * Эффект для перехода между экранами. Затемнение
+ * Эффект для перехода между экранами. Затемнение и заглушение музыки
  */
 public class StageReplaceAction extends Action {
 
@@ -15,56 +15,92 @@ public class StageReplaceAction extends Action {
 
     private final StageScreenAdapter old;
     private final StageScreenAdapter current;
-    private final float half_duration;
-    private boolean screenReplaced = false;
-    private float timer;
-    private ShaderProgram shader;
+    private final ShaderProgram shader;
+    private final float state_duration;
+    private float timer = 0;
+    private State state = State.BEGIN;
 
     /**
-     * @param old экран из которого происходит переход
-     * @param current экран назначения
+     * @param old      экран из которого происходит переход
+     * @param current  экран назначения
      * @param duration длительность перехода
      */
-    public StageReplaceAction(StageScreenAdapter old, StageScreenAdapter current, float duration){
+    public StageReplaceAction(StageScreenAdapter old, StageScreenAdapter current, float duration) {
         Gdx.app.debug(TAG, "StageReplaceAction() called with: old = [" + old + "], current = [" + current + "], duration = [" + duration + "]");
         this.old = old;
         this.current = current;
-        this.half_duration = duration*.5f;
-        timer = duration*.5f;
+        this.state_duration = duration / 3f;
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shader/alpha.vert"), Gdx.files.internal("shader/alpha.frag"));
         if (!shader.isCompiled())
             Gdx.app.error(TAG, "StageReplaceAction: " + shader.getLog());
-        old.getStage().getBatch().setShader(shader);
-        Core.core().getBackgroundStage().getBatch().setShader(shader);
     }
 
     @Override
     public boolean act(float delta) {
-        float da = timer/half_duration;
-        shader.setAttributef("alpha_color", 1,1,1,da);
-        if (screenReplaced){
-            timer += delta;
-            if (timer >= half_duration){
-                Gdx.app.debug(TAG, "act: StageReplaceAction finished!");
-                current.getStage().getBatch().setShader(null);
-                Core.core().getBackgroundStage().getBatch().setShader(null);
+        timer += delta;
+        State tmp = state;
+        state.act(this);
+        if (tmp != state) return false;
+        return state == State.END;
+    }
 
-                shader.dispose();
-                return true;
+    private void setState(State state) {
+        Gdx.app.debug(TAG, "setState() called with: state = [" + state + "]");
+        timer = 0;
+        this.state = state;
+    }
+
+    private enum State {
+        BEGIN {
+            @Override
+            void act(StageReplaceAction action) {
+                action.old.getStage().getBatch().setShader(action.shader);
+                Core.core().getBackgroundStage().getBatch().setShader(action.shader);
+                action.current.getStage().getBatch().setShader(action.shader);
+                action.setState(OLD);
             }
-        } else {
-            timer -= delta;
-            if (timer <= 0){
-                screenReplaced = true;
-                timer = 0;
-                Core.core().setScreen(current);
-                old.getStage().getBatch().setShader(null);
-                current.getStage().getBatch().setShader(shader);
-                current.getStage().addAction(this);
-                if (old.isAutoDispose()) old.dispose();
+        }, OLD {
+            @Override
+            void act(StageReplaceAction action) {
+                float delta = 1f - action.timer / action.state_duration;
+                action.shader.setAttributef("alpha_color", 1, 1, 1, delta);
+                action.old.getMusicPlayer().setVolume(delta);
+                if (action.timer >= action.state_duration) {
+                    action.setState(SPACE);
+                    Core.core().setScreen(null);
+                }
             }
-        }
-        return false;
+        }, SPACE {
+            @Override
+            void act(StageReplaceAction action) {
+                action.shader.setAttributef("alpha_color", 1, 1, 1, 0);
+                if (action.timer >= action.state_duration) {
+                    action.setState(CURRENT);
+                    Core.core().setScreen(action.current);
+                }
+            }
+        }, CURRENT {
+            @Override
+            void act(StageReplaceAction action) {
+                float delta = action.timer / action.state_duration;
+                action.shader.setAttributef("alpha_color", 1, 1, 1, delta);
+                action.current.getMusicPlayer().setVolume(delta);
+                if (action.timer >= action.state_duration) action.setState(END);
+            }
+        }, END {
+            @Override
+            void act(StageReplaceAction action) {
+                action.old.getStage().getBatch().setShader(null);
+                Core.core().getBackgroundStage().getBatch().setShader(null);
+                action.current.getStage().getBatch().setShader(null);
+                action.old.getMusicPlayer().setVolume(Core.getSettings().getMusicVolume());
+                action.current.getMusicPlayer().setVolume(Core.getSettings().getMusicVolume());
+                action.shader.dispose();
+                if (action.old.isAutoDispose()) action.old.dispose();
+            }
+        };
+
+        abstract void act(StageReplaceAction action);
     }
 }
