@@ -42,7 +42,7 @@ public class DialogWindow extends Window {
         setMovable(false);
         setModal(false);
         getTitleLabel().setAlignment(Align.center);
-        ok = new SoundTextButton("Да", Core.core().getUi());
+        ok = new TextButton("Да", Core.core().getUi());
         ok.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -52,9 +52,10 @@ public class DialogWindow extends Window {
                 getStage().getActors().removeValue(DialogWindow.this, true);
             }
         });
+        ok.addListener(SoundClickListener.getInstance());
         add(ok).pad(Core.UI_PADDING);
 
-        cancel = new SoundTextButton("Нет", Core.core().getUi());
+        cancel = new TextButton("Нет", Core.core().getUi());
         cancel.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -64,6 +65,7 @@ public class DialogWindow extends Window {
                 getStage().getActors().removeValue(DialogWindow.this, true);
             }
         });
+        cancel.addListener(SoundClickListener.getInstance());
         add(cancel).pad(Core.UI_PADDING);
         pad(Core.UI_PADDING);
         pack();

@@ -2,6 +2,7 @@ package com.forward.colorit.ui;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
+import com.forward.colorit.tool.MusicPlayer;
 import com.forward.colorit.ui.action.CloudFlyAction;
 
 import java.util.ArrayList;
@@ -42,12 +44,28 @@ public class MenuScreen extends StageScreenAdapter {
         getStage().addActor(logo);
         mainMenu.setPosition((getStage().getWidth() - mainMenu.getWidth())*.5f, (getStage().getHeight() - mainMenu.getHeight())*.5f);
         logo.setPosition((getStage().getWidth() - logo.getWidth())*.5f, mainMenu.getY() + mainMenu.getHeight() + Core.UI_PADDING_LARGE);
+        addMusicsToPlayer();
+    }
+
+    private void addMusicsToPlayer(){
+        AssetManager manager = Core.core().getManager();
+        MusicPlayer player = getMusicPlayer();
+        player.addMusic(manager.get("music/menu/AcousticGuitar1.mp3"));
+        player.addMusic(manager.get("music/menu/BridesBallad.mp3"));
+        player.addMusic(manager.get("music/menu/CryinInMyBeer.mp3"));
+        player.addMusic(manager.get("music/menu/GreenLeaves.mp3"));
+        player.addMusic(manager.get("music/menu/HappyStrummin.mp3"));
+        player.addMusic(manager.get("music/menu/MountainSun.mp3"));
+        player.shuffle();
     }
 
     @Override
     public void show() {
         Core.core().setBackground(Core.core().getManager().get("background/backgroundColorForest.png", Texture.class));
         Gdx.input.setInputProcessor(getStage());
+
+        getMusicPlayer().setVolume(Core.getSettings().getMusicVolume());
+        getMusicPlayer().start();
     }
 
     @Override
@@ -59,6 +77,12 @@ public class MenuScreen extends StageScreenAdapter {
         getStage().draw();
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        getMusicPlayer().stop();
+    }
+
     private void updateClouds(){
         if (MathUtils.random(0f, 1f) < cloudSpawnChance/Math.pow(10, clouds.size())){
             CloudFlyAction action = new CloudFlyAction(Core.core().getBackgroundStage());
@@ -66,11 +90,6 @@ public class MenuScreen extends StageScreenAdapter {
             Core.core().getBackgroundStage().addAction(action);
         }
         clouds.removeIf(CloudFlyAction::isFinished);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        getStage().getViewport().update(width, height);
     }
 
 }

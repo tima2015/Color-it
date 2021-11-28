@@ -68,6 +68,9 @@ public class Settings {
      * Обновление состояния игры с учётом настроек.
      */
     public void refreshSettings() {
+        if (Core.core().getStageScreen() != null)
+            Core.core().getStageScreen().getMusicPlayer().setVolume(getMusicVolume());
+
         if (Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS)
             return;
         if (isSystemCursor())

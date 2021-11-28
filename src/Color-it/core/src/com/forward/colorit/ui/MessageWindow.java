@@ -49,7 +49,7 @@ public class MessageWindow extends Window {
 
         add(message).pad(Core.UI_PADDING);
         row();
-        ok = new SoundTextButton("Да", Core.core().getUi());
+        ok = new TextButton("Да", Core.core().getUi());
         ok.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -58,6 +58,7 @@ public class MessageWindow extends Window {
                 getStage().getActors().removeValue(MessageWindow.this, true);
             }
         });
+        ok.addListener(SoundClickListener.getInstance());
         add(ok).pad(Core.UI_PADDING);
         pad(Core.UI_PADDING);
         pack();

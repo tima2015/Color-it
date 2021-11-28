@@ -49,7 +49,7 @@ public class PlayMenu extends Table {
                 PlayMenu.this.setVisible(false);
                 getStage().getActors().removeValue(PlayMenu.this, true);
                 mainMenu.setVisible(true);
-                mainMenu.getStage().addAction(new StageReplaceAction(Core.core().getStageScreen(), new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA), .75f));
+                Core.core().getBackgroundStage().addAction(new StageReplaceAction(Core.core().getStageScreen(), new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA), .75f));
             }
         });
         add(ankha);
@@ -69,7 +69,7 @@ public class PlayMenu extends Table {
 
     private void initGoBack(){
         row();
-        TextButton button = new SoundTextButton("Назад", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        TextButton button = new TextButton("Назад", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
         button.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -78,6 +78,7 @@ public class PlayMenu extends Table {
                 mainMenu.setVisible(true);
             }
         });
+        button.addListener(SoundClickListener.getInstance());
         add(button);
     }
 

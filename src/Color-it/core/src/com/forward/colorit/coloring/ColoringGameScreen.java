@@ -1,18 +1,20 @@
 package com.forward.colorit.coloring;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
-import com.forward.colorit.ui.SoundTextButton;
+import com.forward.colorit.lines.LinesSubGame;
+import com.forward.colorit.ui.SoundClickListener;
 import com.forward.colorit.ui.StageScreenAdapter;
 
 import java.util.ArrayList;
@@ -52,8 +54,17 @@ public class ColoringGameScreen extends StageScreenAdapter {
             uncoloredFragmentsCountLabels.add(label);
             label.setUserObject(key);
         }
-        getStage().setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
+        addMusicsToPlayer();
     }
+
+    private void addMusicsToPlayer(){
+        if (subGame instanceof LinesSubGame){
+            getMusicPlayer().addMusic(Core.core().getManager().get("music/Hoedown.mp3", Music.class));
+        }
+    }
+
+    // TODO: 28.11.2021 Добавить музыку зависящую от миниигры
+    // TODO разбить крупные методы на подметоды
 
     @Override
     public void show() {
@@ -62,6 +73,8 @@ public class ColoringGameScreen extends StageScreenAdapter {
         initImage();
         initSubGameInfoActor();
         initGameInfo();
+        getMusicPlayer().setVolume(Core.getSettings().getMusicVolume());
+        getMusicPlayer().start();
         Gdx.input.setInputProcessor(getStage());
     }
 
@@ -108,13 +121,14 @@ public class ColoringGameScreen extends StageScreenAdapter {
         window.setMovable(false);
         getStage().addActor(window);
 
-        SoundTextButton mainMenuButton = new SoundTextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        TextButton mainMenuButton = new TextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Core.core().setStateToMenuScreen();
             }
         });
+        mainMenuButton.addListener(SoundClickListener.getInstance());
         window.add(mainMenuButton);
 
         window.pad(PADDING);
@@ -148,8 +162,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
             gameInfo.add(label).padBottom(PADDING);
         }
         gameInfo.row();
-        SoundTextButton pauseButton = new SoundTextButton("Пауза", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
+        TextButton pauseButton = new TextButton("Пауза", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
         pauseButton.addListener(new PauseButtonClickListener());
+        pauseButton.addListener(SoundClickListener.getInstance());
         gameInfo.add(pauseButton).expand().bottom();
         gameInfo.pack();
         gameInfo.setSize(image.getWidth(), (subGame.getSubGameInfoActor() == null ? image.getY() : subGame.getSubGameInfoActor().getY()) - MARGINS - PADDING);
@@ -185,8 +200,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
     }
 
     @Override
-    public void resize(int width, int height) {
-        getStage().getViewport().update(width, height);
+    public void hide() {
+        super.hide();
+        getMusicPlayer().stop();
     }
 
     @Override
@@ -204,7 +220,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
             window.setMovable(false);
             event.getListenerActor().getStage().addActor(window);
             Stage stage = event.getListenerActor().getStage();
-            SoundTextButton resumeButton = new SoundTextButton("Продолжить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
+            TextButton resumeButton = new TextButton("Продолжить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
             resumeButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -212,15 +228,17 @@ public class ColoringGameScreen extends StageScreenAdapter {
                     window.getStage().getActors().removeValue(window, true);
                 }
             });
+            resumeButton.addListener(SoundClickListener.getInstance());
             window.row();
             window.add(resumeButton).padBottom(PADDING);
-            SoundTextButton mainMenuButton = new SoundTextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+            TextButton mainMenuButton = new TextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
             mainMenuButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     Core.core().setStateToMenuScreen();
                 }
             });
+            mainMenuButton.addListener(SoundClickListener.getInstance());
             window.row();
             window.add(mainMenuButton);
             window.pad(PADDING);

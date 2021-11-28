@@ -14,10 +14,10 @@ import com.forward.colorit.Core;
  */
 class MainMenu extends Window {
 
-    private final TextButton playButton = new SoundTextButton("Играть!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
-    private final TextButton settingsButton = new SoundTextButton("Настройки", Core.core().getUi());
-    private final TextButton aboutButton = new SoundTextButton("О разработчиках", Core.core().getUi());
-    private final TextButton exitButton = new SoundTextButton("Выход", Core.core().getUi());
+    private final TextButton playButton = new TextButton("Играть!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
+    private final TextButton settingsButton = new TextButton("Настройки", Core.core().getUi());
+    private final TextButton aboutButton = new TextButton("О разработчиках", Core.core().getUi());
+    private final TextButton exitButton = new TextButton("Выход", Core.core().getUi());
 
     MainMenu() {
         super("", Core.core().getUi());
@@ -39,6 +39,7 @@ class MainMenu extends Window {
         row();
         add(button).padBottom(Core.UI_PADDING);
         button.addListener(listener);
+        button.addListener(SoundClickListener.getInstance());
     }
 
     /**
