@@ -78,7 +78,7 @@ class ColoringImage extends Actor implements Disposable {
     /**
      * Количество итераций заливки за акт
      */
-    private static final int FILLING_ITERATION = 320;
+    private static final int FILLING_ITERATION = 400;
 
     /**
      * Класс действия, реализующий анимированую заливку методом волны

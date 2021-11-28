@@ -18,11 +18,7 @@ public enum CellTextureState {
     RED("lines_red", Color.RED),
     BLUE("lines_blue", Color.BLUE),
     GREEN("lines_green", Color.GREEN),
-    YELLOW("lines_yellow", Color.YELLOW),
-    RED_SELECTED("lines_red", Color.RED),
-    BLUE_SELECTED("lines_blue", Color.BLUE),
-    GREEN_SELECTED("lines_green", Color.GREEN),
-    YELLOW_SELECTED("lines_yellow", Color.YELLOW);
+    YELLOW("lines_yellow", Color.YELLOW);
 
     private String region;
     public final Color color;

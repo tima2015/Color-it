@@ -6,10 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
@@ -19,7 +25,7 @@ import com.forward.colorit.coloring.GameEndEvent;
 /**
  * Класс реализующий мини игру "Линии".
  */
-public class LinesSubGame extends SubGameGroup {
+public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Длина стороны игрового поля в ячейках.
      */
@@ -68,30 +74,30 @@ public class LinesSubGame extends SubGameGroup {
      * </p>
      */
     public LinesSubGame() {
-        for (int i = 0; i < cells.length; i++)
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = new LinesCell();
-                cells[i][j].addListener(new LineSubGameClickListener());
-                addActor(cells[i][j]);
+        for (int y = 0; y < FIELD_SIZE; y++){
+            for (int x = 0; x < FIELD_SIZE; x++){
+                cells[x][y] = new LinesCell();
+                cells[x][y].addListener(new LineSubGameClickListener());
+                add(cells[x][y]);
             }
+            row();
+        }
+        pack();
         initWithRandNextCells();
         insertNextCells();
         setDebug(Gdx.app.getLogLevel() == Application.LOG_DEBUG, true);
-        setSubGameInfoActor(linesSubGameInfoActor);
     }
     /**
      * Устанавливаются позиции ячеек игрового поля.
      */
     @Override
     public void setSize(float width, float height) {
+        super.setSize(width, height);
         float nCellSizeH = width/(float) FIELD_SIZE;
         float nCellSizeV = height/(float) FIELD_SIZE;
-        for (int i = 0; i < cells.length; i++)
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j].setPosition(i * nCellSizeH, j * nCellSizeV);
-                cells[i][j].setSize(nCellSizeH, nCellSizeV);
-            }
-        super.setSize(width, height);
+        for (LinesCell[] cell : cells)
+            for (LinesCell linesCell : cell)
+                linesCell.setSize(nCellSizeH, nCellSizeV);
     }
 
     /**
@@ -181,7 +187,7 @@ public class LinesSubGame extends SubGameGroup {
         int s2 = sameStatesInDirection(pos, Direction.RIGHT);
         if (s1 + s2 > BALL_INSERT_COUNT) {
             for (int x = pos.x - s1; x <= pos.x + s2; x++) cells[x][pos.y].setVisited(true);
-            fire(new ColoringEvent(s1 + s2 + 1, cells[pos.x][pos.y].getState().color));
+            fire(new ColoringEvent(s1 + s2 - BALL_INSERT_COUNT, cells[pos.x][pos.y].getState().color));
         }
 
         //Вертикаль
@@ -189,7 +195,7 @@ public class LinesSubGame extends SubGameGroup {
         s2 = sameStatesInDirection(pos, Direction.UP);
         if (s1 + s2 > BALL_INSERT_COUNT) {
             for (int y = pos.y - s1; y <= pos.y + s2; y++) cells[pos.x][y].setVisited(true);
-            fire(new ColoringEvent(s1 + s2 + 1, cells[pos.x][pos.y].getState().color));
+            fire(new ColoringEvent(s1 + s2 - BALL_INSERT_COUNT, cells[pos.x][pos.y].getState().color));
         }
 
         //Диагональ /
@@ -199,7 +205,7 @@ public class LinesSubGame extends SubGameGroup {
             for (int x = pos.x - s1; x <= pos.x + s2; x++)
                 for (int y = pos.y - s1; y <= pos.y + s2; y++)
                     cells[x][y].setVisited(true);
-            fire(new ColoringEvent(s1 + s2 + 1, cells[pos.x][pos.y].getState().color));
+            fire(new ColoringEvent(s1 + s2 - BALL_INSERT_COUNT, cells[pos.x][pos.y].getState().color));
         }
 
         //Диагональ \
@@ -209,7 +215,7 @@ public class LinesSubGame extends SubGameGroup {
             for (int x = pos.x - s2; x <= pos.x + s1; x++)
                 for (int y = pos.y - s1; y <= pos.y + s2; y++)
                     cells[x][y].setVisited(true);
-            fire(new ColoringEvent(s1 + s2 + 1, cells[pos.x][pos.y].getState().color));
+            fire(new ColoringEvent(s1 + s2 - BALL_INSERT_COUNT, cells[pos.x][pos.y].getState().color));
         }
     }
 
@@ -318,6 +324,11 @@ public class LinesSubGame extends SubGameGroup {
         return false;
     }
 
+    @Override
+    public Actor getSubGameInfoActor() {
+        return linesSubGameInfoActor;
+    }
+
     /**
      * Обработка клика мыши.
      */
@@ -355,45 +366,25 @@ public class LinesSubGame extends SubGameGroup {
     /**
      * Класс актера, отображающего информацию о следующих вставленых сферах.
      */
-    private class LinesSubGameInfoActor extends Group {
-        private final Label title = new Label("Следующая вставка", Core.core().getUi());
-        private final Sprite[] sprites = new Sprite[nextCellTextureState.length];
+    private class LinesSubGameInfoActor extends Window {
+        private final Image[] images = new Image[BALL_INSERT_COUNT];
 
         public LinesSubGameInfoActor() {
-            addActor(title);
-            for (int i = 0; i < sprites.length; i++) sprites[i] = new Sprite(CellTextureState.EMPTY.getRegion());
+            super("Следующая вставка", Core.core().getUi());
+            getTitleLabel().setAlignment(Align.center);
+            for (int i = 0; i < images.length; i++) {
+                images[i] = new Image();
+                add(images[i]).expand().center().pad(Core.UI_PADDING*.5f);
+            }
+            pad(Core.UI_PADDING*.5f);
+            pack();
         }
 
         /**
          * Обновление данных актёра с данными игры.
          */
         public void update(){
-            for (int i = 0; i < sprites.length; i++) sprites[i].setRegion(nextCellTextureState[i].getRegion());
-        }
-
-        @Override
-        public void draw(Batch batch, float parentAlpha) {
-            super.draw(batch, parentAlpha);
-            for (Sprite sprite : sprites) {
-                sprite.draw(batch, parentAlpha);
-            }
-        }
-
-        @Override
-        public void setSize(float width, float height) {
-            super.setSize(width, height);
-            title.setPosition((width - title.getWidth())*.5f, height - title.getHeight());
-            float size = width / sprites.length;
-            for (int i = 0; i < sprites.length; i++) {
-                sprites[i].setSize(size, size);
-                sprites[i].setPosition(getX() + i*size, getY());
-            }
-        }
-
-        @Override
-        public void setPosition(float x, float y) {
-            super.setPosition(x, y);
-            for (int i = 0; i < sprites.length; i++) sprites[i].setPosition(x + i * sprites[i].getWidth(), y);
+            for (int i = 0; i < images.length; i++) images[i].setDrawable(new TextureRegionDrawable(nextCellTextureState[i].getRegion()));
         }
     }
 }

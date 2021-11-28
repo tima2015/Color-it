@@ -30,7 +30,8 @@ public class ColoringGameScreen extends StageScreenAdapter {
     private static final int MARGINS = 24;
     private static final int PADDING = 12;
 
-    private final SubGameGroup subGame;
+    private final SubGameGroup subGameGroup;
+    private final Actor subGame;
     private final ColoringLevelData data;
     private final ColoringImage image;
     private final String levelName;
@@ -38,9 +39,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
     private final Hashtable<Color, Integer> uncoloredFragmentsCounts = new Hashtable<>();
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
-    public ColoringGameScreen(SubGameGroup subGame, ColoringLevelData data, String levelName) {
+    public ColoringGameScreen(Actor subGame, ColoringLevelData data, String levelName) {
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), true);
         this.subGame = subGame;
+        subGameGroup = subGame instanceof SubGameGroup ? (SubGameGroup) subGame : null;
         this.data = data;
         this.image = new ColoringImage(data.getImg());
         this.levelName = levelName;
@@ -118,8 +120,8 @@ public class ColoringGameScreen extends StageScreenAdapter {
     }
 
     private void initSubGameInfoActor() {
-        Actor infoActor = subGame.getSubGameInfoActor();
-        if (infoActor == null) return;
+        if (subGameGroup == null) return;
+        Actor infoActor = subGameGroup.getSubGameInfoActor();
         getStage().addActor(infoActor);
         infoActor.setSize(image.getWidth(), image.getHeight() * .5f);
         infoActor.setPosition(image.getX(), image.getY() - infoActor.getHeight() - PADDING);
@@ -141,7 +143,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
         pauseButton.addListener(SoundClickListener.getInstance());
         gameInfo.add(pauseButton).expand().bottom();
         gameInfo.pack();
-        gameInfo.setSize(image.getWidth(), (subGame.getSubGameInfoActor() == null ? image.getY() : subGame.getSubGameInfoActor().getY()) - MARGINS - PADDING);
+        gameInfo.setSize(image.getWidth(), (subGameGroup == null ? image.getY() : subGameGroup.getSubGameInfoActor().getY()) - MARGINS - PADDING);
 
     }
 
