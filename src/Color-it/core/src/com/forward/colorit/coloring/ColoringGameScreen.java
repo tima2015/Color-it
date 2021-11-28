@@ -23,6 +23,8 @@ import java.util.Hashtable;
 
 public class ColoringGameScreen extends StageScreenAdapter {
 
+    private static final String TAG = "ColoringGameScreen";
+
     private static final int VIEWPORT_WIDTH = 1000;
     private static final int VIEWPORT_HEIGHT = 750;
     private static final int MARGINS = 24;
@@ -50,7 +52,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
         initGameInfo();
     }
 
-    private void initLevelData(){
+    private void initLevelData() {
         for (ColoringMap map : data.getMap()) {
             Color key = Color.valueOf(map.getColor());
             uncoloredFragmentsCounts.put(key, uncoloredFragmentsCounts.getOrDefault(key, 0) + 1);
@@ -64,13 +66,11 @@ public class ColoringGameScreen extends StageScreenAdapter {
         }
     }
 
-    private void addMusicsToPlayer(){
-        if (subGame instanceof LinesSubGame){
+    private void addMusicsToPlayer() {
+        if (subGame instanceof LinesSubGame) {
             getMusicPlayer().addMusic(Core.core().getManager().get("music/Hoedown.mp3", Music.class));
         }
     }
-
-    // TODO: 28.11.2021 Добавить музыку зависящую от миниигры
 
     @Override
     public void show() {
@@ -88,7 +88,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
         subGame.addListener(new SubGameEventListener());
     }
 
-    private void initGameEndWindow(String title){
+    private void initGameEndWindow(String title) {
         Window window = new Window(title, Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
         window.setModal(true);
         window.getTitleLabel().setAlignment(Align.center);
@@ -107,7 +107,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
         window.pad(PADDING);
         window.pack();
-        window.setPosition((getStage().getWidth() - window.getWidth())*.5f, (getStage().getHeight() - window.getHeight())*.5f);
+        window.setPosition((getStage().getWidth() - window.getWidth()) * .5f, (getStage().getHeight() - window.getHeight()) * .5f);
     }
 
     private void initImage() {
@@ -117,11 +117,11 @@ public class ColoringGameScreen extends StageScreenAdapter {
         image.setPosition(subGame.getX() + subGame.getWidth() + PADDING, VIEWPORT_HEIGHT - imageSize - MARGINS);
     }
 
-    private void initSubGameInfoActor(){
+    private void initSubGameInfoActor() {
         Actor infoActor = subGame.getSubGameInfoActor();
         if (infoActor == null) return;
         getStage().addActor(infoActor);
-        infoActor.setSize(image.getWidth(),  image.getHeight()*.5f);
+        infoActor.setSize(image.getWidth(), image.getHeight() * .5f);
         infoActor.setPosition(image.getX(), image.getY() - infoActor.getHeight() - PADDING);
     }
 
@@ -145,7 +145,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     }
 
-    private String getLocalizedColorName(Color color){
+    private String getLocalizedColorName(Color color) {
         if (color.equals(Color.BLUE))
             return "Голубой";
         else if (color.equals(Color.RED))
@@ -187,30 +187,33 @@ public class ColoringGameScreen extends StageScreenAdapter {
             return false;
         }
 
-        private boolean handleColoringEvent(ColoringEvent event){
-            // TODO: 27.11.2021 закрашивание нескольких фрагментов и изменить количество закрашиваемых фрагментов от линий
-            for (int i = 0; i < data.getMap().length; i++) {
-                if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(event.color)) {
-                    image.color(data.getMap()[i]);
-                    data.getMap()[i] = null;
-                    uncoloredFragmentsCounts.put(event.color, uncoloredFragmentsCounts.getOrDefault(event.color, 0) - 1);
-                    updateUncoloredFragmentsCountLabels();
-                    checkWin();
-                    return true;
+        private boolean handleColoringEvent(ColoringEvent event) {
+            Gdx.app.debug(TAG, "handleColoringEvent() called with: event = [" + event + "]");
+            boolean result = false;
+            for (int j = 0; j < event.coloringCount; j++)
+                for (int i = 0; i < data.getMap().length; i++) {
+                    if (data.getMap()[i] != null && Color.valueOf(data.getMap()[i].getColor()).equals(event.color)) {
+                        image.color(data.getMap()[i]);
+                        data.getMap()[i] = null;
+                        uncoloredFragmentsCounts.put(event.color, uncoloredFragmentsCounts.getOrDefault(event.color, 0) - 1);
+                        updateUncoloredFragmentsCountLabels();
+                        checkWin();
+                        result = true;
+                        break;
+                    }
                 }
-            }
-            return false;
+            return result;
         }
 
-        private boolean handleGameEndEvent(GameEndEvent event){
+        private boolean handleGameEndEvent(GameEndEvent event) {
             initGameEndWindow("Вы проиграли.");
             return true;
         }
 
-        private void updateUncoloredFragmentsCountLabels(){
+        private void updateUncoloredFragmentsCountLabels() {
             for (Label label : uncoloredFragmentsCountLabels) {
                 label.setText(getLocalizedColorName((Color) label.getUserObject()) + ": "
-                        + uncoloredFragmentsCounts.getOrDefault((Color)label.getUserObject(), 0));
+                        + uncoloredFragmentsCounts.getOrDefault((Color) label.getUserObject(), 0));
             }
         }
 
@@ -224,7 +227,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
                     win = false;
             }
 
-            if (win){
+            if (win) {
                 Core.getProgressData().setLevelComplete(levelName);
                 initGameEndWindow("Вы выйграли!");
             }
@@ -263,7 +266,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
             window.add(mainMenuButton);
             window.pad(PADDING);
             window.pack();
-            window.setPosition((stage.getWidth() - window.getWidth())*.5f, (stage.getHeight() - window.getHeight())*.5f);
+            window.setPosition((stage.getWidth() - window.getWidth()) * .5f, (stage.getHeight() - window.getHeight()) * .5f);
         }
     }
 }
