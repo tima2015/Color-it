@@ -65,7 +65,7 @@ public class StageReplaceAction extends Action {
             void act(StageReplaceAction action) {
                 float delta = 1f - action.timer / action.state_duration;
                 action.shader.setAttributef("alpha_color", 1, 1, 1, delta);
-                action.old.getMusicPlayer().setVolume(delta);
+                action.old.getMusicPlayer().setVolume(Math.min(delta, Core.getSettings().getMusicVolume()));
                 if (action.timer >= action.state_duration) {
                     action.setState(SPACE);
                     Core.core().setScreen(null);
@@ -85,7 +85,7 @@ public class StageReplaceAction extends Action {
             void act(StageReplaceAction action) {
                 float delta = action.timer / action.state_duration;
                 action.shader.setAttributef("alpha_color", 1, 1, 1, delta);
-                action.current.getMusicPlayer().setVolume(delta);
+                action.current.getMusicPlayer().setVolume(Math.min(delta, Core.getSettings().getMusicVolume()));
                 if (action.timer >= action.state_duration) action.setState(END);
             }
         }, END {

@@ -1,21 +1,10 @@
 package com.forward.colorit.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Json;
 import com.forward.colorit.Core;
-import com.forward.colorit.ProgressData;
-import com.forward.colorit.coloring.ColoringGameScreen;
-import com.forward.colorit.coloring.ColoringLevelData;
-import com.forward.colorit.lines.LinesSubGame;
-import com.forward.colorit.ui.action.StageReplaceAction;
+import com.forward.colorit.tool.StartGameType;
 
 public class PlayMenu extends Table {
     private final MainMenu mainMenu;
@@ -23,54 +12,46 @@ public class PlayMenu extends Table {
     public PlayMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
         initTitles();
-        init1ButtonRow();
+        initLevelFragments();
         initGoBack();
+        pack();
     }
 
-    private void initTitles(){
-        add(new Label("Линии", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).expand();
-        add(new Label("Три в ряд", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).expand();
-        add(new Label("Змейка", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).expand();
+    private void initTitles() {
+        add(new Label("Линии", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).pad(Core.UI_PADDING).expand();
+        add(new Label("Три в ряд", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).pad(Core.UI_PADDING).expand();
+        add(new Label("Змейка", Core.core().getUi(), Core.LABEL_STYLE_LARGE)).pad(Core.UI_PADDING).expand();
     }
 
-    private void init1ButtonRow(){
+    private void initLevelFragments() {
         row();
-        Json json = new Json();
-        final ColoringLevelData ankhaData = json.fromJson(ColoringLevelData.class, Gdx.files.internal("coloring/ankha.json").readString());
-        ImageButton.ImageButtonStyle style =
-                new ImageButton.ImageButtonStyle(Core.core().getUi().get(ImageButton.ImageButtonStyle.class));
-        TextureAtlas thumbnails = Core.core().getManager().get("coloring/thumbnails.txt", TextureAtlas.class);
-        style.imageUp = new TextureRegionDrawable(thumbnails.findRegion(
-                Core.getProgressData().isLevelComplete(ProgressData.LEVEL_ANKHA) ? "ankha_done_thumbnail" : "ankha_thumbnail"));
-        ImageButton ankha = new ImageButton(style);
-        ankha.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                PlayMenu.this.setVisible(false);
-                getStage().getActors().removeValue(PlayMenu.this, true);
-                mainMenu.setVisible(true);
-                Core.core().getBackgroundStage().addAction(new StageReplaceAction(Core.core().getStageScreen(), new ColoringGameScreen(new LinesSubGame(), ankhaData, ProgressData.LEVEL_ANKHA), .75f));
-            }
-        });
-        add(ankha);
 
-        //todo ColoringLevelData data = json.fromJson(ColoringLevelData.class, Gdx.files.internal("coloring/spruce.json").readString());
-        style = new ImageButton.ImageButtonStyle(style);
-        style.imageUp = new TextureRegionDrawable(thumbnails.findRegion(
-                Core.getProgressData().isLevelComplete(ProgressData.LEVEL_SPRUCE) ? "spruce_done_thumbnail" : "spruce_thumbnail"));
-        add(new ImageButton(style));
+        Table levelFragmentsTable = new Table();
 
-        //todo ColoringLevelData data = json.fromJson(ColoringLevelData.class, Gdx.files.internal("coloring/rei.json").readString());
-        style = new ImageButton.ImageButtonStyle(style);
-        style.imageUp = new TextureRegionDrawable(thumbnails.findRegion(
-                Core.getProgressData().isLevelComplete(ProgressData.LEVEL_REI) ? "rei_done_thumbnail" : "rei_thumbnail"));
-        add(new ImageButton(style));
+        float height = levelFragmentsTable.add(new LevelFragment("00", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING).getPrefHeight();
+        levelFragmentsTable.add(new LevelFragment("00", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.add(new LevelFragment("20", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);// FIXME: 29.11.2021
+
+        levelFragmentsTable.row();
+        levelFragmentsTable.add(new LevelFragment("01", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.add(new LevelFragment("01", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.add(new LevelFragment("01", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+
+        levelFragmentsTable.row();
+        levelFragmentsTable.add(new LevelFragment("02", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.add(new LevelFragment("02", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.add(new LevelFragment("02", StartGameType.LINES, mainMenu)).pad(Core.UI_PADDING);
+        levelFragmentsTable.pack();
+
+        ScrollPane pane = new ScrollPane(levelFragmentsTable, Core.core().getUi());
+        add(pane).colspan(3).expand().size(levelFragmentsTable.getWidth(), height*1.5f);
+        pane.setSize(200, 300);
     }
 
-    private void initGoBack(){
+    private void initGoBack() {
         row();
         TextButton button = new TextButton("Назад", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
-        button.addListener(new ClickListener(){
+        button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 PlayMenu.this.setVisible(false);

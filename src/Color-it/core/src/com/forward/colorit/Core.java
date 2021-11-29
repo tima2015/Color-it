@@ -29,6 +29,7 @@ public class Core extends Game {
     public static final String LABEL_STYLE_LARGE = "large";
     public static final String LABEL_STYLE_SMALL = "small";
     public static final String WINDOW_STYLE_PAUSE = "pause";
+    public static final String IMAGEBUTTON_PLAY = "play";
 
     //Константы данных для формирования интерфейса
     public static final float UI_PADDING = 8;
@@ -215,6 +216,5 @@ public class Core extends Game {
             if (old == null || old.equals(menuScreen) || old.equals(LoadingScreen.getInstance())) return;
             old.dispose();
         }
-
     }
 }

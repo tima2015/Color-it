@@ -29,13 +29,17 @@ public class ColoringLevelData {
      */
     private String done_thumbnail;
 
-    public ColoringLevelData(ColoringMap[] map, String img, String img_thumbnail, String done, String done_thumbnail) {
-        this.map = map;
-        this.img = img;
-        this.img_thumbnail = img_thumbnail;
-        this.done = done;
-        this.done_thumbnail = done_thumbnail;
-    }
+    /**
+     * Название уровня
+     */
+    private String name;
+
+    /**
+     * Идентификатор уровня
+     */
+    private String id;
+
+    private String prev;
 
     public ColoringLevelData() {
     }
@@ -79,5 +83,29 @@ public class ColoringLevelData {
 
     public void setDone_thumbnail(String done_thumbnail) {
         this.done_thumbnail = done_thumbnail;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPrev() {
+        return prev;
+    }
+
+    public void setPrev(String prev) {
+        this.prev = prev;
     }
 }

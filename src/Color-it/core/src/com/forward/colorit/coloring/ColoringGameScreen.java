@@ -39,13 +39,13 @@ public class ColoringGameScreen extends StageScreenAdapter {
     private final Hashtable<Color, Integer> uncoloredFragmentsCounts = new Hashtable<>();
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
-    public ColoringGameScreen(Actor subGame, ColoringLevelData data, String levelName) {
+    public ColoringGameScreen(Actor subGame, ColoringLevelData data) {
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), true);
         this.subGame = subGame;
         subGameGroup = subGame instanceof SubGameGroup ? (SubGameGroup) subGame : null;
         this.data = data;
         this.image = new ColoringImage(data.getImg());
-        this.levelName = levelName;
+        this.levelName = data.getId();
         initLevelData();
         addMusicsToPlayer();
         initSubGame();
