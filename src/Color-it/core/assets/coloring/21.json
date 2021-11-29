@@ -1,0 +1,162 @@
+{
+  "map": [
+    {
+      "x": 850,
+      "y": 1500,
+      "color": "#0000FF",
+      "targetColor": "#8ecdf6"
+    },{
+      "x": 1200,
+      "y": 1600,
+      "color": "#0000FF",
+      "targetColor": "#88a3d6"
+    },{
+      "x": 2100,
+      "y": 2000,
+      "color": "#0000FF",
+      "targetColor": "#3eb5f1"
+    },{
+      "x": 2280,
+      "y": 1985,
+      "color": "#0000FF",
+      "targetColor": "#6ac0f3"
+    },{
+      "x": 1800,
+      "y": 1600,
+      "color": "#00FF00",
+      "targetColor": "#93cac4"
+    },
+    {
+      "x": 2550,
+      "y": 1700,
+      "color": "#00FF00",
+      "targetColor": "#93cac4"
+    },{
+      "x": 2200,
+      "y": 1850,
+      "color": "#00FF00",
+      "targetColor": "#52ac62"
+    },{
+      "x": 2200,
+      "y": 1730,
+      "color": "#00FF00",
+      "targetColor": "#b2d179"
+    },
+    {
+      "x": 1000,
+      "y": 2175,
+      "color": "#FFFF00",
+      "targetColor": "#e08860"
+    },{
+      "x": 1000,
+      "y": 2100,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 1000,
+      "y": 1815,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 2175,
+      "y": 2120,
+      "color": "#FFFF00",
+      "targetColor": "#d86a43"
+    },{
+      "x": 2125,
+      "y": 1800,
+      "color": "#FFFF00",
+      "targetColor": "#fff343"
+    },{
+      "x": 1945,
+      "y": 1370,
+      "color": "#FFFF00",
+      "targetColor": "#7f401d"
+    },
+    {
+      "x": 950,
+      "y": 1900,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 1000,
+      "y": 1650,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 1500,
+      "y": 1600,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 600,
+      "y": 1440,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 835,
+      "y": 1320,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 1000,
+      "y": 1250,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 1110,
+      "y": 1300,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    },
+    {
+      "x": 1200,
+      "y": 1275,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    }, {
+      "x": 1050,
+      "y": 1450,
+      "color": "#FF0000",
+      "targetColor": "#cc3333"
+    }, {
+      "x": 975,
+      "y": 1380,
+      "color": "#FF0000",
+      "targetColor": "#cc6666"
+    }, {
+      "x": 2210,
+      "y": 1900,
+      "color": "#FF0000",
+      "targetColor": "#d24a43"
+    }, {
+      "x": 2200,
+      "y": 1350,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }, {
+      "x": 1950,
+      "y": 985,
+      "color": "#7f7f7f",
+      "targetColor": "#e8e8e8"
+    }, {
+      "x": 2050,
+      "y": 1150,
+      "color": "#7f7f7f",
+      "targetColor": "#e8e8e8"
+    }
+  ],
+  "img": "coloring/210.png",
+  "img_thumbnail": "210_thumbnail",
+  "done": "coloring/211.png",
+  "done_thumbnail": "211_thumbnail",
+  "name": "Тортик",
+  "id" : "21",
+  "prev" : "20"
+}

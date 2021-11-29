@@ -1,0 +1,163 @@
+{
+  "map": [
+    {
+      "x": 2050,
+      "y": 490,
+      "color": "#0000FF",
+      "targetColor": "#CCFFFF"
+    },
+    {
+      "x": 2200,
+      "y": 600,
+      "color": "#0000FF",
+      "targetColor": "#CCFFFF"
+    },
+    {
+      "x": 2300,
+      "y": 580,
+      "color": "#0000FF",
+      "targetColor": "#99FFFF"
+    },
+    {
+      "x": 760,
+      "y": 400,
+      "color": "#0000FF",
+      "targetColor": "#E5FFFF"
+    },
+    {
+      "x": 900,
+      "y": 400,
+      "color": "#0000FF",
+      "targetColor": "#E5FFFF"
+    },
+    {
+      "x": 1100,
+      "y": 400,
+      "color": "#0000FF",
+      "targetColor": "#E5FFFF"
+    },
+    {
+      "x": 990,
+      "y": 280,
+      "color": "#0000FF",
+      "targetColor": "#E5FFFF"
+    },
+    {
+      "x": 1660,
+      "y": 1865,
+      "color": "#00FF00",
+      "targetColor": "#66CC00"
+    },
+    {
+      "x": 645,
+      "y": 1050,
+      "color": "#00FF00",
+      "targetColor": "#CCFFCC"
+    },
+    {
+      "x": 850,
+      "y": 1265,
+      "color": "#00FF00",
+      "targetColor": "#CCFFCC"
+    },
+    {
+      "x": 625,
+      "y": 1150,
+      "color": "#00FF00",
+      "targetColor": "#99FF99"
+    },
+    {
+      "x": 1725,
+      "y": 1200,
+      "color": "#FFFF00",
+      "targetColor": "#FFFF33"
+    },
+    {
+      "x": 1500,
+      "y": 1200,
+      "color": "#FFFF00",
+      "targetColor": "#FFFF99"
+    },
+    {
+      "x": 900,
+      "y": 845,
+      "color": "#FFFF00",
+      "targetColor": "#FF9933"
+    },
+    {
+      "x": 980,
+      "y": 730,
+      "color": "#FFFF00",
+      "targetColor": "#FF9933"
+    },
+    {
+      "x": 1060,
+      "y": 650,
+      "color": "#FFFF00",
+      "targetColor": "#FF9933"
+    },
+    {
+      "x": 1100,
+      "y": 630,
+      "color": "#FFFF00",
+      "targetColor": "#FF9933"
+    }, {
+      "x": 920,
+      "y": 750,
+      "color": "#FFFF00",
+      "targetColor": "#996633"
+    }, {
+      "x": 1000,
+      "y": 650,
+      "color": "#FFFF00",
+      "targetColor": "#996633"
+    }, {
+      "x": 1300,
+      "y": 1600,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1300,
+      "y": 1300,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1300,
+      "y": 1100,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1900,
+      "y": 850,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1900,
+      "y": 1000,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1900,
+      "y": 1300,
+      "color": "#FF0000",
+      "targetColor": "#CC3333"
+    }, {
+      "x": 1130,
+      "y": 530,
+      "color": "#FF0000",
+      "targetColor": "#996633"
+    }, {
+      "x": 1220,
+      "y": 500,
+      "color": "#FF0000",
+      "targetColor": "#996633"
+    }
+  ],
+  "img": "coloring/010.png",
+  "img_thumbnail": "010_thumbnail",
+  "done": "coloring/011.png",
+  "done_thumbnail": "011_thumbnail",
+  "name": "Цветочек",
+  "id" : "01",
+  "prev" : "00"
+}
