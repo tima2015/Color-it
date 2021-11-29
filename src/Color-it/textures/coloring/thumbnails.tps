@@ -181,16 +181,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">ankha_done_thumbnail.png</key>
-            <key type="filename">ankha_thumbnail.png</key>
-            <key type="filename">butterfly_thumbnail.png</key>
-            <key type="filename">cake_thumbnail.png</key>
-            <key type="filename">fish_thumbnail.png</key>
-            <key type="filename">flower_thumbnail.png</key>
-            <key type="filename">kitty_thumbnail.png</key>
-            <key type="filename">rat_thumbnail.png</key>
-            <key type="filename">rei_thumbnail.png</key>
-            <key type="filename">spruce_thumbnail.png</key>
+            <key type="filename">thumbnails/000_thumbnail.png</key>
+            <key type="filename">thumbnails/001_thumbnail.png</key>
+            <key type="filename">thumbnails/010_thumbnail.png</key>
+            <key type="filename">thumbnails/020_thumbnail.png</key>
+            <key type="filename">thumbnails/021_thumbnail.png</key>
+            <key type="filename">thumbnails/200_thumbnail.png</key>
+            <key type="filename">thumbnails/201_thumbnail.png</key>
+            <key type="filename">thumbnails/210_thumbnail.png</key>
+            <key type="filename">thumbnails/211_thumbnail.png</key>
+            <key type="filename">thumbnails/butterfly_thumbnail.png</key>
+            <key type="filename">thumbnails/kitty_thumbnail.png</key>
+            <key type="filename">thumbnails/rei_thumbnail.png</key>
+            <key type="filename">thumbnails/spruce_thumbnail.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -203,19 +206,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">thumbnails/011_thumbnail.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>75,75,150,150</rect>
+                <key>scale9Paddings</key>
+                <rect>75,75,150,150</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>spruce_thumbnail.png</filename>
-            <filename>ankha_done_thumbnail.png</filename>
-            <filename>ankha_thumbnail.png</filename>
-            <filename>butterfly_thumbnail.png</filename>
-            <filename>cake_thumbnail.png</filename>
-            <filename>fish_thumbnail.png</filename>
-            <filename>flower_thumbnail.png</filename>
-            <filename>kitty_thumbnail.png</filename>
-            <filename>rat_thumbnail.png</filename>
-            <filename>rei_thumbnail.png</filename>
+            <filename>thumbnails</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
