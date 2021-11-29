@@ -42,20 +42,20 @@ class LoadingScreen extends StageScreenAdapter {
      */
     private void load(){
         AssetManager am = Core.core().getManager();
-        am.load("coloring/ankha.png", Texture.class);
-        am.load("coloring/ankha_done.png", Texture.class);
+        am.load("coloring/000.png", Texture.class);
+        am.load("coloring/001.png", Texture.class);
+        am.load("coloring/010.png", Texture.class);
+        am.load("coloring/011.png", Texture.class);
+        am.load("coloring/020.png", Texture.class);
+        am.load("coloring/021.png", Texture.class);
+        am.load("coloring/200.png", Texture.class);
+        am.load("coloring/201.png", Texture.class);
+		am.load("coloring/210.png", Texture.class);
+		am.load("coloring/211.png", Texture.class);
         am.load("coloring/butterfly.png", Texture.class);
         //todo am.load("coloring/butterfly_done.png", Texture.class);
-        am.load("coloring/cake.png", Texture.class);
-        //todo am.load("coloring/cake_done.png", Texture.class);
-        am.load("coloring/fish.png", Texture.class);
-        //todo am.load("coloring/fish_done.png", Texture.class);
-        am.load("coloring/flower.png", Texture.class);
-        //todo am.load("coloring/flower_done.png", Texture.class);
         am.load("coloring/kitty.png", Texture.class);
         //todo am.load("coloring/kitty_done.png", Texture.class);
-        am.load("coloring/rat.png", Texture.class);
-        //todo am.load("coloring/rat_done.png", Texture.class);
         am.load("coloring/rei.png", Texture.class);
         //todo am.load("coloring/rei_done.png", Texture.class);
         am.load("coloring/spruce.png", Texture.class);
