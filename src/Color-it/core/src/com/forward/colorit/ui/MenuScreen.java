@@ -25,12 +25,12 @@ public class MenuScreen extends StageScreenAdapter {
     /**
      * Ширина окна просмотра для экрана меню
      */
-    private static final int VIEWPORT_WIDTH = 1600;
+    private static final int VIEWPORT_WIDTH = 800;
 
     /**
      * Высота окна просмотра для экрана меню
      */
-    private static final int VIEWPORT_HEIGHT = 900;
+    private static final int VIEWPORT_HEIGHT = 450;
 
     private static final float cloudSpawnChance = 0.1f;
     private final ArrayList<CloudFlyAction> clouds = new ArrayList<>();
@@ -89,7 +89,13 @@ public class MenuScreen extends StageScreenAdapter {
             clouds.add(action);
             Core.core().getBackgroundStage().addAction(action);
         }
-        clouds.removeIf(CloudFlyAction::isFinished);
+        Iterator<CloudFlyAction> iterator = clouds.iterator();
+        while (iterator.hasNext()) {
+            CloudFlyAction next = iterator.next();
+            if (next.isFinished()) {
+                iterator.remove();
+            }
+        }// TODO: 30.11.2021 set sourceCompatibility
     }
 
 }
