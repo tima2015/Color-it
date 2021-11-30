@@ -17,8 +17,8 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.mygdx.game"
-        minSdkVersion 14
+        applicationId "com.forward.colorit"
+        minSdkVersion 28
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -86,7 +86,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.forward.colorit/com.forward.colorit.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
