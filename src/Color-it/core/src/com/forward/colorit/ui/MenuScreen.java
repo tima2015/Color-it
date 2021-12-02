@@ -25,12 +25,12 @@ public class MenuScreen extends StageScreenAdapter {
     /**
      * Ширина окна просмотра для экрана меню
      */
-    private static final int VIEWPORT_WIDTH = 800;
+    public static final int VIEWPORT_WIDTH = 1080;
 
     /**
      * Высота окна просмотра для экрана меню
      */
-    private static final int VIEWPORT_HEIGHT = 450;
+    public static final int VIEWPORT_HEIGHT = 1920;
 
     private static final float cloudSpawnChance = 0.1f;
     private final ArrayList<CloudFlyAction> clouds = new ArrayList<>();
@@ -40,10 +40,7 @@ public class MenuScreen extends StageScreenAdapter {
         getStage().setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
         MainMenu mainMenu = new MainMenu();
         getStage().addActor(mainMenu);
-        Actor logo = new Label("Колорит", Core.core().getUi(), Core.LABEL_STYLE_LARGE);
-        getStage().addActor(logo);
         mainMenu.setPosition((getStage().getWidth() - mainMenu.getWidth())*.5f, (getStage().getHeight() - mainMenu.getHeight())*.5f);
-        logo.setPosition((getStage().getWidth() - logo.getWidth())*.5f, getStage().getHeight() - logo.getHeight() - Core.UI_PADDING_LARGE);
         addMusicsToPlayer();
     }
 

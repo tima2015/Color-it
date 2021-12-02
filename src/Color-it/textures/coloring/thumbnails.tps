@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../core/assets/coloring/thumbnails.txt</filename>
+                <filename>../../android/assets/coloring/thumbnails.txt</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -192,7 +192,10 @@
             <key type="filename">thumbnails/211_thumbnail.png</key>
             <key type="filename">thumbnails/butterfly_thumbnail.png</key>
             <key type="filename">thumbnails/kitty_thumbnail.png</key>
+            <key type="filename">thumbnails/lines_thumbnail.png</key>
+            <key type="filename">thumbnails/mt_thumbnail.png</key>
             <key type="filename">thumbnails/rei_thumbnail.png</key>
+            <key type="filename">thumbnails/snake_thumbnail.png</key>
             <key type="filename">thumbnails/spruce_thumbnail.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

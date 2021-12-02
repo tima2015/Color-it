@@ -30,6 +30,11 @@ public class Core extends Game {
     public static final String LABEL_STYLE_SMALL = "small";
     public static final String WINDOW_STYLE_PAUSE = "pause";
     public static final String IMAGEBUTTON_PLAY = "play";
+    public static final String MAIN_MENU_BUTTON_PLAY = "play";
+    public static final String MAIN_MENU_BUTTON_SETTINGS = "settings";
+    public static final String MAIN_MENU_BUTTON_CREDITS = "credits";
+    public static final String MAIN_MENU_BUTTON_EXIT = "exit";
+
 
     //Константы данных для формирования интерфейса
     public static final float UI_PADDING = 8;

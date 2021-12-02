@@ -75,6 +75,7 @@ class LoadingScreen extends StageScreenAdapter {
         am.load("background/clouds.txt", TextureAtlas.class);
 
         am.load("brush.png", Texture.class);
+        am.load("mainmenu_panel.png", Texture.class);
         am.load("ui.json", Skin.class);
         am.load("textures.atlas", TextureAtlas.class);
 

@@ -1,33 +1,35 @@
 package com.forward.colorit.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.forward.colorit.Core;
 
 /**
  * Окно главного меню
  */
-class MainMenu extends Window {
+class MainMenu extends Group {
 
-    private final TextButton playButton = new TextButton("Играть!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_YELLOW);
-    private final TextButton settingsButton = new TextButton("Настройки", Core.core().getUi());
-    private final TextButton aboutButton = new TextButton("О разработчиках", Core.core().getUi());
-    private final TextButton exitButton = new TextButton("Выход", Core.core().getUi());
+    private final Button playButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_PLAY);
+    private final Button settingsButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_SETTINGS);
+    private final Button aboutButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_CREDITS);
+    private final Button exitButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_EXIT);
+    private final Actor panel = new Image(Core.core().getManager().get("mainmenu_panel.png", Texture.class));
 
     MainMenu() {
-        super("", Core.core().getUi());
-        setMovable(false);
-        initButton(playButton, new PlayClickListener());
-        initButton(settingsButton, new SettingsClickListener());
-        initButton(aboutButton, new AboutClickListener());
-        initButton(exitButton, new ExitClickListener());
-        pad(Core.UI_PADDING_LARGE);
-        pack();
+        setSize(panel.getWidth(), panel.getHeight());
+        addActor(panel);
+
+        initButton(exitButton, new ExitClickListener(), 488, 189);
+        initButton(aboutButton, new AboutClickListener(), 535, 421);
+        initButton(settingsButton, new SettingsClickListener(), 445, 636);
+        initButton(playButton, new PlayClickListener(), 289, 752);
+
     }
 
     /**
@@ -35,11 +37,11 @@ class MainMenu extends Window {
      * @param button
      * @param listener
      */
-    private void initButton(TextButton button, ClickListener listener){
-        row();
-        add(button).padBottom(Core.UI_PADDING);
+    private void initButton(Button button, ClickListener listener, float x, float y){
+        addActor(button);
         button.addListener(listener);
         button.addListener(SoundClickListener.getInstance());
+        button.setPosition(x,y);
     }
 
     /**

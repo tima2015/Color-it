@@ -6,7 +6,7 @@ import com.forward.colorit.coloring.ColoringLevelData;
 import com.forward.colorit.lines.LinesSubGame;
 import com.forward.colorit.ui.action.StageReplaceAction;
 
-public enum StartGameType {
+public enum SubGameStarters {
     LINES{
         @Override
         public void run(ColoringLevelData data) {
