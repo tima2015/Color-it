@@ -13,7 +13,7 @@ import com.forward.colorit.Core;
 /**
  * Окно главного меню
  */
-class MainMenu extends Group {
+public class MainMenu extends Group {
 
     private final Button playButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_PLAY);
     private final Button settingsButton = new Button(Core.core().getUi(), Core.MAIN_MENU_BUTTON_SETTINGS);
@@ -86,10 +86,10 @@ class MainMenu extends Group {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             MainMenu.this.setVisible(false);
-            PlayMenu playMenu = new PlayMenu(MainMenu.this);
+            SelectSubGameMenu selectSubGameMenu = new SelectSubGameMenu(MainMenu.this);
             Stage stage = getStage();
-            stage.addActor(playMenu);
-            playMenu.setPosition((stage.getWidth() - playMenu.getWidth())*.5f, (stage.getHeight() - playMenu.getHeight())*.5f);
+            stage.addActor(selectSubGameMenu);
+            selectSubGameMenu.setPosition((stage.getWidth() - selectSubGameMenu.getWidth())*.5f, (stage.getHeight() - selectSubGameMenu.getHeight())*.5f);
         }
     }
 }

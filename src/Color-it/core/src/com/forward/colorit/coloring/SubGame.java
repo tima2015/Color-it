@@ -3,6 +3,7 @@ package com.forward.colorit.coloring;
 public class SubGame {
     private String[] levels;
     private String thumbnail;
+    private String starter;
 
     public SubGame() {
     }
@@ -21,5 +22,13 @@ public class SubGame {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getStarter() {
+        return starter;
+    }
+
+    public void setStarter(String starter) {
+        this.starter = starter;
     }
 }

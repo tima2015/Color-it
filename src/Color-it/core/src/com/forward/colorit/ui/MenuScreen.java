@@ -35,10 +35,12 @@ public class MenuScreen extends StageScreenAdapter {
     private static final float cloudSpawnChance = 0.1f;
     private final ArrayList<CloudFlyAction> clouds = new ArrayList<>();
 
+    private final MainMenu mainMenu;
+
     public MenuScreen(){
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), false);
         getStage().setDebugAll(Gdx.app.getLogLevel() == Application.LOG_DEBUG);
-        MainMenu mainMenu = new MainMenu();
+        mainMenu = new MainMenu();
         getStage().addActor(mainMenu);
         mainMenu.setPosition((getStage().getWidth() - mainMenu.getWidth())*.5f, (getStage().getHeight() - mainMenu.getHeight())*.5f);
         addMusicsToPlayer();
@@ -86,13 +88,10 @@ public class MenuScreen extends StageScreenAdapter {
             clouds.add(action);
             Core.core().getBackgroundStage().addAction(action);
         }
-        Iterator<CloudFlyAction> iterator = clouds.iterator();
-        while (iterator.hasNext()) {
-            CloudFlyAction next = iterator.next();
-            if (next.isFinished()) {
-                iterator.remove();
-            }
-        }// TODO: 30.11.2021 set sourceCompatibility
+        clouds.removeIf(CloudFlyAction::isFinished);
     }
 
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
 }

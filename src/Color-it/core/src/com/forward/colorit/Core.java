@@ -37,7 +37,7 @@ public class Core extends Game {
 
 
     //Константы данных для формирования интерфейса
-    public static final float UI_PADDING = 8;
+    public static final float UI_PADDING = 16;
     public static final float UI_PADDING_LARGE = UI_PADDING * 4;
 
 
@@ -212,6 +212,7 @@ public class Core extends Game {
      */
     public void setStateToMenuScreen() {
         Gdx.app.debug(TAG, "setStateToMenuScreen() called");
+        menuScreen.getMainMenu().setVisible(true);
         Screen old = getStageScreen();
         if (getStageScreen() != null) {
             backgroundStage.addAction(new StageReplaceAction(((StageScreenAdapter) old), menuScreen, 0.75f));

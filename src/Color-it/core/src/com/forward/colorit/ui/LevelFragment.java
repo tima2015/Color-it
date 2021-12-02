@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.forward.colorit.Core;
 import com.forward.colorit.coloring.ColoringLevelData;
 
+@Deprecated
 public class LevelFragment extends Table {
 
     private final ColoringLevelData data;
