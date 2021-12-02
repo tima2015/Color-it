@@ -25,12 +25,12 @@ public class MenuScreen extends StageScreenAdapter {
     /**
      * Ширина окна просмотра для экрана меню
      */
-    public static final int VIEWPORT_WIDTH = 1080;
+    public static final int VIEWPORT_WIDTH = 1920;
 
     /**
      * Высота окна просмотра для экрана меню
      */
-    public static final int VIEWPORT_HEIGHT = 1920;
+    public static final int VIEWPORT_HEIGHT = 1080;
 
     private static final float cloudSpawnChance = 0.1f;
     private final ArrayList<CloudFlyAction> clouds = new ArrayList<>();
