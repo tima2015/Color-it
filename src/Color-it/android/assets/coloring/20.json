@@ -1,0 +1,145 @@
+{
+  "map": [
+    {
+      "x": 1350,
+      "y": 850,
+      "color": "#00FF00",
+      "targetColor": "#74B65F"
+    },
+    {
+      "x": 1700,
+      "y": 960,
+      "color": "#00FF00",
+      "targetColor": "#74B65F"
+    },
+    {
+      "x": 650,
+      "y": 1600,
+      "color": "#FFFF00",
+      "targetColor": "#fff573"
+    },{
+      "x": 650,
+      "y": 2100,
+      "color": "#FFFF00",
+      "targetColor": "#fff573"
+    },{
+      "x": 350,
+      "y": 2050,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 600,
+      "y": 1925,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 805,
+      "y": 1605,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 970,
+      "y": 2115,
+      "color": "#FFFF00",
+      "targetColor": "#fff798"
+    },{
+      "x": 1205,
+      "y": 1455,
+      "color": "#FFFF00",
+      "targetColor": "#fff573"
+    },{
+      "x": 1285,
+      "y": 1455,
+      "color": "#FFFF00",
+      "targetColor": "#fff573"
+    },
+    {
+      "x": 1400,
+      "y": 1400,
+      "color": "#FF0000",
+      "targetColor": "#e2907a"
+    }, {
+      "x": 1600,
+      "y": 1465,
+      "color": "#FF0000",
+      "targetColor": "#da6f5b"
+    }, {
+      "x": 1000,
+      "y": 1500,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 1100,
+      "y": 1025,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 2000,
+      "y": 1245,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 1050,
+      "y": 450,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    }, {
+      "x": 2600,
+      "y": 1100,
+      "color": "#FF0000",
+      "targetColor": "#e296bf"
+    }, {
+      "x": 1300,
+      "y": 385,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 2250,
+      "y": 900,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 565,
+      "y": 2300,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 625,
+      "y": 2245,
+      "color": "#FF0000",
+      "targetColor": "#e2939a"
+    }, {
+      "x": 2000,
+      "y": 2500,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }, {
+      "x": 1650,
+      "y": 600,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }, {
+      "x": 1500,
+      "y": 565,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }, {
+      "x": 1500,
+      "y": 425,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }, {
+      "x": 1905,
+      "y": 445,
+      "color": "#7f7f7f",
+      "targetColor": "#c4c4c4"
+    }
+  ],
+  "img": "coloring/200.png",
+  "img_thumbnail": "200_thumbnail",
+  "done": "coloring/201.png",
+  "done_thumbnail": "201_thumbnail",
+  "name": "Крыска",
+  "id" : "20",
+  "prev" : ""
+}
