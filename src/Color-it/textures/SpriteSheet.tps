@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../core/assets/textures.atlas</filename>
+                <filename>../android/assets/textures.atlas</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,15 +181,23 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">lines/blue.png</key>
-            <key type="filename">lines/blue_selected.png</key>
-            <key type="filename">lines/empty_cell.png</key>
-            <key type="filename">lines/green.png</key>
-            <key type="filename">lines/green_selected.png</key>
-            <key type="filename">lines/red.png</key>
-            <key type="filename">lines/red_selected.png</key>
-            <key type="filename">lines/yellow.png</key>
-            <key type="filename">lines/yellow_selected.png</key>
+            <key type="filename">lines/lines_blue.png</key>
+            <key type="filename">lines/lines_green.png</key>
+            <key type="filename">lines/lines_red.png</key>
+            <key type="filename">lines/lines_yellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,24,23</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,24,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lines/lines_cell.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -202,6 +210,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">lines/lines_selector.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">match-three/blue_gem.png</key>
             <key type="filename">match-three/cyan_gem.png</key>
             <key type="filename">match-three/green_gem.png</key>
@@ -210,14 +231,8 @@
             <key type="filename">match-three/red_gem.png</key>
             <key type="filename">match-three/yellow_gem.png</key>
             <key type="filename">snake/blue_food.png</key>
-            <key type="filename">snake/cyan_food.png</key>
             <key type="filename">snake/green_food.png</key>
-            <key type="filename">snake/orange_food.png</key>
-            <key type="filename">snake/pink_food.png</key>
-            <key type="filename">snake/purple_food.png</key>
-            <key type="filename">snake/red_foodl.png</key>
             <key type="filename">snake/snake_grid_cell.png</key>
-            <key type="filename">snake/yellow_food.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -227,6 +242,24 @@
                 <rect>64,64,128,128</rect>
                 <key>scale9Paddings</key>
                 <rect>64,64,128,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">snake/body.png</key>
+            <key type="filename">snake/gray_food.png</key>
+            <key type="filename">snake/head.png</key>
+            <key type="filename">snake/red_food.png</key>
+            <key type="filename">snake/tail.png</key>
+            <key type="filename">snake/turn.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

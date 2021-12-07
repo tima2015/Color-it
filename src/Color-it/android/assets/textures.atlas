@@ -1,158 +1,158 @@
 textures-0.png
-size: 774, 1612
+size: 1160, 904
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 blue_food
   rotate: false
-  xy: 1, 323
-  size: 256, 256
-  orig: 256, 256
+  xy: 1031, 1
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 blue_gem
   rotate: false
-  xy: 1, 581
+  xy: 515, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-cyan_food
+body
   rotate: false
-  xy: 1, 839
-  size: 256, 256
-  orig: 256, 256
+  xy: 1031, 131
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 cyan_gem
   rotate: false
-  xy: 1, 1097
+  xy: 773, 1
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+gray_food
+  rotate: false
+  xy: 1031, 261
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 green_food
   rotate: false
-  xy: 1, 1355
-  size: 256, 256
-  orig: 256, 256
+  xy: 1031, 391
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 green_gem
   rotate: false
-  xy: 259, 323
+  xy: 515, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
+head
+  rotate: false
+  xy: 323, 775
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 lines_blue
   rotate: false
-  xy: 323, 259
+  xy: 1, 837
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
   index: -1
 lines_cell
   rotate: false
-  xy: 1, 1
+  xy: 1, 515
   size: 320, 320
   orig: 320, 320
   offset: 0, 0
   index: -1
 lines_green
   rotate: false
-  xy: 373, 259
+  xy: 839, 517
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
   index: -1
 lines_red
   rotate: false
-  xy: 423, 259
+  xy: 839, 565
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
   index: -1
 lines_selector
   rotate: false
-  xy: 523, 259
+  xy: 51, 837
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
   index: -1
 lines_yellow
   rotate: false
-  xy: 473, 259
+  xy: 839, 613
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
   index: -1
 match_three_grid_cell
   rotate: false
-  xy: 323, 1
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-orange_food
-  rotate: false
-  xy: 259, 581
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-pink_food
-  rotate: false
-  xy: 259, 839
+  xy: 773, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 pink_gem
   rotate: false
-  xy: 259, 1097
+  xy: 323, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-purple_food
+red_food
   rotate: false
-  xy: 259, 1355
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-red_foodl
-  rotate: false
-  xy: 517, 307
-  size: 256, 256
-  orig: 256, 256
+  xy: 453, 775
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 red_gem
   rotate: false
-  xy: 517, 565
+  xy: 581, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 snake_grid_cell
   rotate: false
-  xy: 517, 823
-  size: 256, 256
-  orig: 256, 256
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
-yellow_food
+tail
   rotate: false
-  xy: 517, 1081
-  size: 256, 256
-  orig: 256, 256
+  xy: 713, 775
+  size: 127, 128
+  orig: 128, 128
+  offset: 1, 0
+  index: -1
+turn
+  rotate: false
+  xy: 583, 775
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 yellow_gem
   rotate: false
-  xy: 517, 1339
+  xy: 889, 521
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
