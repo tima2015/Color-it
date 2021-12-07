@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>libgdx</string>
         <key>textureFileName</key>
-        <filename>../core/assets/textures-{n}.png</filename>
+        <filename>../android/assets/textures-{n}.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -245,12 +245,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">snake/body.png</key>
             <key type="filename">snake/gray_food.png</key>
-            <key type="filename">snake/head.png</key>
             <key type="filename">snake/red_food.png</key>
-            <key type="filename">snake/tail.png</key>
-            <key type="filename">snake/turn.png</key>
+            <key type="filename">snake/snake_body.png</key>
+            <key type="filename">snake/snake_head.png</key>
+            <key type="filename">snake/snake_tail.png</key>
+            <key type="filename">snake/snake_turn.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

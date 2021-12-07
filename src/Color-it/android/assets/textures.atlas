@@ -17,13 +17,6 @@ blue_gem
   orig: 256, 256
   offset: 0, 0
   index: -1
-body
-  rotate: false
-  xy: 1031, 131
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 cyan_gem
   rotate: false
   xy: 773, 1
@@ -33,14 +26,14 @@ cyan_gem
   index: -1
 gray_food
   rotate: false
-  xy: 1031, 261
+  xy: 1031, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 green_food
   rotate: false
-  xy: 1031, 391
+  xy: 1031, 261
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -50,13 +43,6 @@ green_gem
   xy: 515, 259
   size: 256, 256
   orig: 256, 256
-  offset: 0, 0
-  index: -1
-head
-  rotate: false
-  xy: 323, 775
-  size: 128, 128
-  orig: 128, 128
   offset: 0, 0
   index: -1
 lines_blue
@@ -117,7 +103,7 @@ pink_gem
   index: -1
 red_food
   rotate: false
-  xy: 453, 775
+  xy: 1031, 391
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -129,6 +115,13 @@ red_gem
   orig: 256, 256
   offset: 0, 0
   index: -1
+snake_body
+  rotate: false
+  xy: 323, 775
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 snake_grid_cell
   rotate: false
   xy: 1, 1
@@ -136,14 +129,21 @@ snake_grid_cell
   orig: 512, 512
   offset: 0, 0
   index: -1
-tail
+snake_head
+  rotate: false
+  xy: 453, 775
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+snake_tail
   rotate: false
   xy: 713, 775
   size: 127, 128
   orig: 128, 128
   offset: 1, 0
   index: -1
-turn
+snake_turn
   rotate: false
   xy: 583, 775
   size: 128, 128
