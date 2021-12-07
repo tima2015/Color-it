@@ -2,15 +2,11 @@ package com.forward.colorit.lines;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -21,6 +17,7 @@ import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
 import com.forward.colorit.coloring.ColoringEvent;
 import com.forward.colorit.coloring.GameEndEvent;
+import com.forward.colorit.tool.Direction;
 
 /**
  * Класс реализующий мини игру "Линии".
