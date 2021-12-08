@@ -26,12 +26,12 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Длина стороны игрового поля в ячейках.
      */
-    private final static int FIELD_SIZE = 9;
+    public final static int FIELD_SIZE = 9;
 
     /**
      * Количество ячеек.
      */
-    private final static int CELL_COUNT = FIELD_SIZE * FIELD_SIZE;
+    public final static int CELL_COUNT = FIELD_SIZE * FIELD_SIZE;
 
     /**
      * Количество шаров для вставки.
@@ -61,7 +61,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Актёр отображающий информацию о следующей вставке.
      */
-    private final LinesSubGameInfoActor linesSubGameInfoActor = new LinesSubGameInfoActor();
+    private LinesSubGameInfoActor linesSubGameInfoActor;
 
     /**
      * Инициализация мини-игры Lines.
@@ -101,7 +101,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * Проверка несовпадения сфер в NextCells.
      * @return "истина", если не совпадают, "ложь" - в противном случае.
      */
-    private boolean isNextCellNotEquals() {
+    public boolean isNextCellNotEquals() {
         return !(nextCells[0].equals(nextCells[1])
                 || nextCells[1].equals(nextCells[2])
                 || nextCells[0].equals(nextCells[2]));
@@ -111,7 +111,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * Проверка на "пустоту" NextCells.
      * @return "истина", если все ячейки NextCells пусты.
      */
-    private boolean isNextCellsEmpty() {
+    public  boolean isNextCellsEmpty() {
         return nextCells[0].getState() == CellTextureState.EMPTY
                 && nextCells[1].getState() == CellTextureState.EMPTY
                 && nextCells[2].getState() == CellTextureState.EMPTY;
@@ -123,7 +123,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
     private void initWithRandNextCells() {
         for (int i = 0; i < BALL_INSERT_COUNT; i++)
             nextCellTextureState[i] = CellTextureState.getRandomNotEmptyAndNotSelectedState();
-        linesSubGameInfoActor.update();
+        if (linesSubGameInfoActor != null) linesSubGameInfoActor.update();
     }
 
     /**
@@ -147,7 +147,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @param cell - ячейка игрового поля.
      * @return Координаты ячейки игрового поля.
      */
-    private GridPoint2 getCellPosition(LinesCell cell) {
+    public GridPoint2 getCellPosition(LinesCell cell) {
         for (int x = 0; x < cells.length; x++)
             for (int y = 0; y < cells[x].length; y++)
                 if (cells[x][y].equals(cell))
@@ -323,7 +323,29 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     @Override
     public Actor getSubGameInfoActor() {
+        if (linesSubGameInfoActor == null)
+            linesSubGameInfoActor = new LinesSubGameInfoActor();
         return linesSubGameInfoActor;
+    }
+
+    public LinesCell getNextCell(int i) {
+        return nextCells[i];
+    }
+
+    LinesCell[] getNextCells() {
+        return nextCells;
+    }
+
+    public int getNextCellsCount() {
+        return nextCells.length;
+    }
+
+    public LinesCell getCell(int i, int j){
+        return cells[i][j];
+    }
+
+    LinesCell[][] getSubGameCells() {
+        return cells;
     }
 
     /**
@@ -363,12 +385,10 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Класс актера, отображающего информацию о следующих вставленых сферах.
      */
-    private class LinesSubGameInfoActor extends Window {
+    private class LinesSubGameInfoActor extends Table {
         private final Image[] images = new Image[BALL_INSERT_COUNT];
 
         public LinesSubGameInfoActor() {
-            super("Следующая вставка", Core.core().getUi());
-            getTitleLabel().setAlignment(Align.center);
             for (int i = 0; i < images.length; i++) {
                 images[i] = new Image();
                 add(images[i]).expand().center().pad(Core.UI_PADDING*.5f);

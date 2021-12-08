@@ -147,7 +147,7 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     }
 
-    private String getLocalizedColorName(Color color) {
+    static String getLocalizedColorName(Color color) {
         if (color.equals(Color.BLUE))
             return "Голубой";
         else if (color.equals(Color.RED))

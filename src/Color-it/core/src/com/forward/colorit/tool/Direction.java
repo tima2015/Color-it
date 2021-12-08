@@ -1,5 +1,7 @@
 package com.forward.colorit.tool;
 
+import com.badlogic.gdx.utils.Array;
+
 /**
  * Перечисление направлений движений.
  */
@@ -20,5 +22,11 @@ public enum Direction {
         this.direction_x = direction_x;
         this.direction_y = direction_y;
         this.degree = degree;
+    }
+
+    public static Direction getRandomUpDownLeftOrRightDirection(){
+        Array<Direction> directions = new Array<>(new Direction[]{UP,DOWN, RIGHT, LEFT});
+        directions.shuffle();
+        return directions.get(0);
     }
 }
