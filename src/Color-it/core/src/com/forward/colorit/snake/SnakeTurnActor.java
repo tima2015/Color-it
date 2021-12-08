@@ -9,12 +9,15 @@ import com.badlogic.gdx.utils.Align;
 import com.forward.colorit.Core;
 
 public class SnakeTurnActor extends Image {
-    private final Animation<TextureRegion> animation;
+    private final TurnPoint point;
+    //private final Animation<TextureRegion> animation;
 
     private float dt;
 
     public SnakeTurnActor(TurnPoint point) {
-        animation = new Animation<>(1 / 60f, Core.core().getTextures().findRegions("snakeTurn"), Animation.PlayMode.LOOP);
+        super(Core.core().getTextures().findRegion("snake_turn"));
+        this.point = point;
+        //animation = new Animation<>(1 / 60f, Core.core().getTextures().findRegions("snakeTurn"), Animation.PlayMode.LOOP);
         setDt(0);
         setOrigin(Align.center);
         setRotation(new Vector2(point.getDirection().direction_x, point.getDirection().direction_y).angleDeg());
@@ -28,6 +31,10 @@ public class SnakeTurnActor extends Image {
 
     public void setDt(float dt) {
         this.dt = dt;
-        setDrawable(new TextureRegionDrawable(animation.getKeyFrame(dt)));
+        //setDrawable(new TextureRegionDrawable(animation.getKeyFrame(dt)));
+    }
+
+    public TurnPoint getPoint() {
+        return point;
     }
 }

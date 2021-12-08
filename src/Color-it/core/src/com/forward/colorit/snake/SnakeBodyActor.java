@@ -11,27 +11,18 @@ import com.forward.colorit.Core;
 import com.forward.colorit.tool.Direction;
 
 public class SnakeBodyActor extends Image {
-    private final Animation<TextureRegion> animation;
+    //private final Animation<TextureRegion> animation;
     private Point a;
     private Point b;
 
     private float dt;
 
     public SnakeBodyActor(Point a, Point b) {
+        super(Core.core().getTextures().findRegion("snake_body"));
         this.a = a;
         this.b = b;
-        animation = new Animation<TextureRegion>(1 / 60f, Core.core().getTextures().findRegions("snakeBody"), Animation.PlayMode.LOOP);
-        setDt(0);
-        setOrigin(a.getDirection().equals(Direction.UP) ? Align.bottom :
-                a.getDirection().equals(Direction.DOWN) ? Align.top : a.getDirection().equals(Direction.LEFT) ? Align.right : Align.left);
-        setRotation(new Vector2(a.getDirection().direction_x, a.getDirection().direction_y).angleDeg());
-        setPosition(a.getPos().x, a.getPos().y);
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-
+        //animation = new Animation<TextureRegion>(1 / 60f, Core.core().getTextures().findRegions("snakeBody"), Animation.PlayMode.LOOP);
+        setOrigin(Align.center);
     }
 
     public float getDt() {
@@ -40,7 +31,7 @@ public class SnakeBodyActor extends Image {
 
     public void setDt(float dt) {
         this.dt = dt;
-        setDrawable(new TiledDrawable(animation.getKeyFrame(dt)));
+        //setDrawable(new TiledDrawable(animation.getKeyFrame(dt)));
     }
 
     public Point getA() {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.forward.colorit.Core;
 import com.forward.colorit.coloring.SubGame;
+import com.forward.colorit.tool.SubGameStarters;
 
 public class SelectSubGameMenu extends Table {
 
@@ -52,6 +53,8 @@ public class SelectSubGameMenu extends Table {
     private class SubGameActorClickListener extends ClickListener {
         @Override
         public void clicked(InputEvent event, float x, float y) {
+            SubGame subGame = (SubGame) event.getListenerActor().getUserObject();
+            if (!subGame.getStarter().equals("LINES")) return;// FIXME: 08.12.2021
             SelectSubGameMenu.this.setVisible(false);
             PlayMenu pm = new PlayMenu(menu, SelectSubGameMenu.this, (SubGame) event.getListenerActor().getUserObject());
             getStage().addActor(pm);
