@@ -255,6 +255,7 @@ grey_panel
   xy: 388, 1630
   size: 100, 100
   split: 7, 7, 7, 6
+  pad: 7, 7, 21, 6
   orig: 100, 100
   offset: 0, 0
   index: -1

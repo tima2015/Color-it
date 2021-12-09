@@ -152,6 +152,7 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 		checkboxOnDisabled: grey_boxCheckmark
 		checkboxOffDisabled: grey_boxCross
 		font: ComicCAT_16
+		fontColor: BLACK
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {

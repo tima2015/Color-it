@@ -60,7 +60,14 @@ public class MainMenu extends Group {
      * При нажатии открывает меню с информацией о проекте.
      */
     private class AboutClickListener extends ClickListener{
-        // TODO: 27.11.2021
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            MainMenu.this.setVisible(false);
+            CreditsMenu creditsMenu = new CreditsMenu(MainMenu.this);
+            Stage stage = getStage();
+            stage.addActor(creditsMenu);
+            creditsMenu.setPosition((stage.getWidth() - creditsMenu.getWidth())*.5f, (stage.getHeight() - creditsMenu.getHeight())*.5f);
+        }
     }
 
     /**

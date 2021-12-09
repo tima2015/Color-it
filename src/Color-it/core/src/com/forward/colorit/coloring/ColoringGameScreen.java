@@ -52,6 +52,14 @@ public class ColoringGameScreen extends StageScreenAdapter {
         initImage();
         initSubGameInfoActor();
         initGameInfo();
+        if (Core.getSettings().isShowInstruction() && subGame instanceof SubGameGroup) {
+            Gdx.app.debug(TAG, "ColoringGameScreen: show instruction");
+            Actor actor = ((SubGameGroup) subGame).getSubGameInstructionActor();
+            getStage().addActor(actor);
+            actor.setHeight(getStage().getHeight() - Core.UI_PADDING_LARGE*2);
+            actor.setWidth(getStage().getWidth() - Core.UI_PADDING_LARGE*2);
+            actor.setPosition((getStage().getWidth() - actor.getWidth())*.5f, (getStage().getHeight() - actor.getHeight())*.5f);
+        }
     }
 
     private void initLevelData() {

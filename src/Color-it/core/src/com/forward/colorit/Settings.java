@@ -13,6 +13,7 @@ public class Settings {
     private static float defaultMusicVolume = 1;
     private static boolean defaultFullscreen = false;
     private static boolean defaultSystemCursor = false;
+    private static boolean defaultShowInstruction = true;
 
     private static final Preferences pref = Gdx.app.getPreferences("pref");
 
@@ -34,6 +35,10 @@ public class Settings {
                 .putBoolean("system_cursor", systemCursor)
                 .flush();
         refreshSettings();
+    }
+
+    public void saveInstructionShowPreference(boolean flag){
+        pref.putBoolean("instructionShow", flag).flush();
     }
 
     /**
@@ -62,6 +67,10 @@ public class Settings {
      */
     public boolean isSystemCursor() {
         return pref.getBoolean("system_cursor", defaultSystemCursor);
+    }
+
+    public boolean isShowInstruction() {
+        return pref.getBoolean("instructionShow", defaultShowInstruction);
     }
 
     /**

@@ -14,4 +14,6 @@ public interface SubGameGroup {
      * Может быть null.
      */
     Actor getSubGameInfoActor();
+
+    Actor getSubGameInstructionActor();
 }

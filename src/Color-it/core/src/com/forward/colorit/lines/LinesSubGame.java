@@ -61,7 +61,12 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Актёр отображающий информацию о следующей вставке.
      */
-    private LinesSubGameInfoActor linesSubGameInfoActor;
+    private final LinesSubGameInfoActor linesSubGameInfoActor = new LinesSubGameInfoActor();
+
+    /**
+     * Актёр отоброжающий инструкцию к игре
+     */
+    private final LinesInstructionActor linesInstructionActor = new LinesInstructionActor();
 
     /**
      * Инициализация мини-игры Lines.
@@ -323,9 +328,12 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     @Override
     public Actor getSubGameInfoActor() {
-        if (linesSubGameInfoActor == null)
-            linesSubGameInfoActor = new LinesSubGameInfoActor();
         return linesSubGameInfoActor;
+    }
+
+    @Override
+    public Actor getSubGameInstructionActor() {
+        return linesInstructionActor;
     }
 
     public LinesCell getNextCell(int i) {
@@ -385,10 +393,12 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Класс актера, отображающего информацию о следующих вставленых сферах.
      */
-    private class LinesSubGameInfoActor extends Table {
+    private class LinesSubGameInfoActor extends Window {
         private final Image[] images = new Image[BALL_INSERT_COUNT];
 
         public LinesSubGameInfoActor() {
+            super("Следующая вставка", Core.core().getUi());
+            setMovable(false);
             for (int i = 0; i < images.length; i++) {
                 images[i] = new Image();
                 add(images[i]).expand().center().pad(Core.UI_PADDING*.5f);

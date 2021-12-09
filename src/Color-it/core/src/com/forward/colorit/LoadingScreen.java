@@ -78,6 +78,7 @@ class LoadingScreen extends StageScreenAdapter {
         am.load("mainmenu_panel.png", Texture.class);
         am.load("ui.json", Skin.class);
         am.load("textures.atlas", TextureAtlas.class);
+        am.load("instruction/lines.txt", TextureAtlas.class);
 
         am.load("music/AcousticShuffle.mp3", Music.class);
         am.load("music/Folk Bed.mp3", Music.class);
