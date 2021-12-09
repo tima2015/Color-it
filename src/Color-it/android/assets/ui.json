@@ -325,6 +325,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: grey_panel
 		titleFont: ComicCAT_16
+		titleFontColor: BLACK
 	}
 	pause: {
 		parent: default

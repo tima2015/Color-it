@@ -212,25 +212,6 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button00.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: blue_button00
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: TEXTURE
-			hidden: false
-		}
-		{
 			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_boxCross.png
 			bgColor: {
 				r: 0
@@ -355,25 +336,6 @@ atlasData: {
 			tint: null
 			tintName: null
 			name: brush
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: TEXTURE
-			hidden: false
-		}
-		{
-			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_panel.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: grey_panel
 			tiled: false
 			minWidth: -1
 			minHeight: -1
@@ -1102,6 +1064,44 @@ atlasData: {
 			customized: false
 			tenPatchData: null
 			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/grey_panel.9.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: grey_panel
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: NINE_PATCH
+			hidden: false
+		}
+		{
+			file: D:/Color-it/src/Color-it/textures/skin/drawable/blue_button00.9.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: blue_button00
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: NINE_PATCH
 			hidden: false
 		}
 	]
@@ -1954,7 +1954,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: titleFontColor
 						optional: true
-						value: null
+						value: BLACK
 					}
 					stageBackground: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
