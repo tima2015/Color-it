@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -147,14 +148,47 @@ public class Core extends Game {
     public void dispose() {
         Gdx.app.debug(TAG, "dispose() called");
         super.dispose();
-        defBackground.dispose();
-        backgroundStage.dispose();
-        manager.dispose();
-        menuScreen.dispose();
-        LoadingScreen.getInstance().dispose();
-        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
-            cursor.dispose();
+        disposeScreens();
+        disposeResources();
         System.exit(0);
+    }
+
+    /**
+     * Освобождение ресурсов игры
+     */
+    private void disposeResources(){
+        Gdx.app.debug(TAG, "disposeResources() called");
+        safeDispose(defBackground);
+        safeDispose(backgroundStage);
+        safeDispose(cursor);
+        safeDispose(manager);
+    }
+
+    /**
+     * Освобождение ресурсов экранов
+     */
+    private void disposeScreens(){
+        Gdx.app.debug(TAG, "disposeScreens() called");
+        safeDispose(menuScreen);
+        safeDispose(LoadingScreen.getInstance());
+    }
+
+    /**
+     * Безопасное освобождение ресурсов, предотвращает NullPointerException
+     * @param disposable ресур, память которого требуется освободить
+     */
+    private void safeDispose(Disposable disposable){
+        Gdx.app.debug(TAG, "safeDispose() called with: disposable = [" + disposable + "]");
+        if (disposable != null) disposable.dispose();
+    }
+
+    /**
+     * Безопасное освобождение ресурсов, предотвращает NullPointerException
+     * @param screen экран, память ресурсов еоторого требуется освободить
+     */
+    private void safeDispose(Screen screen){
+        Gdx.app.debug(TAG, "safeDispose() called with: screen = [" + screen + "]");
+        if (screen != null) screen.dispose();
     }
 
     /**
