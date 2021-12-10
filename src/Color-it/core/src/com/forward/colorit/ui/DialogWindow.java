@@ -40,7 +40,7 @@ public class DialogWindow extends Window {
 
     private void initDialogWindow(Runnable onOk, Runnable onCancel){
         setMovable(false);
-        setModal(false);
+        setModal(true);
         getTitleLabel().setAlignment(Align.center);
         ok = new TextButton("Да", Core.core().getUi());
         ok.addListener(new ClickListener(){

@@ -44,7 +44,7 @@ public class MessageWindow extends Window {
 
     private void initMessageWindow(){
         setMovable(false);
-        setModal(false);
+        setModal(true);
         getTitleLabel().setAlignment(Align.center);
 
         add(message).pad(Core.UI_PADDING);
