@@ -89,9 +89,10 @@ public class Core extends Game {
         defBackground = new Texture("background/backgroundForest.png");
         backgroundImage = new Image(defBackground);
         backgroundStage.addActor(backgroundImage);
-        initCursor();
         settings = new Settings();
         setScreen(LoadingScreen.getInstance());
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+            initCursor();
     }
 
     /**
@@ -148,11 +149,12 @@ public class Core extends Game {
         super.dispose();
         defBackground.dispose();
         backgroundStage.dispose();
-        cursor.dispose();
         manager.dispose();
         menuScreen.dispose();
         pixmapCursor.dispose();
         LoadingScreen.getInstance().dispose();
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop)
+            cursor.dispose();
     }
 
     /**
