@@ -75,7 +75,6 @@ public class Core extends Game {
     private AssetManager manager;
 
     private Cursor cursor;
-    private Pixmap pixmapCursor;
 
     private Stage backgroundStage;
     private Texture defBackground;
@@ -112,8 +111,9 @@ public class Core extends Game {
      * Инициализирует игровой курсор.
      */
     private void initCursor() {
-        pixmapCursor = new Pixmap(Gdx.files.internal("brush.png"));
+        Pixmap pixmapCursor = new Pixmap(Gdx.files.internal("brush.png"));
         cursor = Gdx.graphics.newCursor(pixmapCursor, 0, 0);
+        pixmapCursor.dispose();
     }
 
     @Override
@@ -151,10 +151,10 @@ public class Core extends Game {
         backgroundStage.dispose();
         manager.dispose();
         menuScreen.dispose();
-        pixmapCursor.dispose();
         LoadingScreen.getInstance().dispose();
         if (Gdx.app.getType() == Application.ApplicationType.Desktop)
             cursor.dispose();
+        System.exit(0);
     }
 
     /**
