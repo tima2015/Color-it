@@ -49,7 +49,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
     private final LinesCell[] nextCells = new LinesCell[BALL_INSERT_COUNT];
 
     /**
-     *  Значения, которые будут вставленны.
+     * Значения, которые будут вставленны.
      */
     private final CellTextureState[] nextCellTextureState = new CellTextureState[BALL_INSERT_COUNT];
 
@@ -71,13 +71,13 @@ public class LinesSubGame extends Table implements SubGameGroup {
     /**
      * Инициализация мини-игры Lines.
      * <p>
-     *     Объявляются массив ячеек игрового поля и массив ячеек на следующем ходе,
-     *     устанавливается положение игрового поля.
+     * Объявляются массив ячеек игрового поля и массив ячеек на следующем ходе,
+     * устанавливается положение игрового поля.
      * </p>
      */
     public LinesSubGame() {
-        for (int y = 0; y < FIELD_SIZE; y++){
-            for (int x = 0; x < FIELD_SIZE; x++){
+        for (int y = 0; y < FIELD_SIZE; y++) {
+            for (int x = 0; x < FIELD_SIZE; x++) {
                 cells[x][y] = new LinesCell();
                 cells[x][y].addListener(new LineSubGameClickListener());
                 add(cells[x][y]);
@@ -89,14 +89,15 @@ public class LinesSubGame extends Table implements SubGameGroup {
         insertNextCells();
         setDebug(Gdx.app.getLogLevel() == Application.LOG_DEBUG, true);
     }
+
     /**
      * Устанавливаются позиции ячеек игрового поля.
      */
     @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
-        float nCellSizeH = width/(float) FIELD_SIZE;
-        float nCellSizeV = height/(float) FIELD_SIZE;
+        float nCellSizeH = width / (float) FIELD_SIZE;
+        float nCellSizeV = height / (float) FIELD_SIZE;
         for (LinesCell[] cell : cells)
             for (LinesCell linesCell : cell)
                 linesCell.setSize(nCellSizeH, nCellSizeV);
@@ -104,6 +105,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Проверка несовпадения сфер в NextCells.
+     *
      * @return "истина", если не совпадают, "ложь" - в противном случае.
      */
     public boolean isNextCellNotEquals() {
@@ -114,9 +116,10 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Проверка на "пустоту" NextCells.
+     *
      * @return "истина", если все ячейки NextCells пусты.
      */
-    public  boolean isNextCellsEmpty() {
+    public boolean isNextCellsEmpty() {
         return nextCells[0].getState() == CellTextureState.EMPTY
                 && nextCells[1].getState() == CellTextureState.EMPTY
                 && nextCells[2].getState() == CellTextureState.EMPTY;
@@ -149,6 +152,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Получение координат ячейки игрового поля.
+     *
      * @param cell - ячейка игрового поля.
      * @return Координаты ячейки игрового поля.
      */
@@ -162,7 +166,8 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Поиск ячейки аналогичного состояния в заданном направлении.
-     * @param pos - текущая позиция на игровом поле.
+     *
+     * @param pos       - текущая позиция на игровом поле.
      * @param direction - направление поиска.
      * @return Количество ячеек с аналогичным состоянием.
      */
@@ -180,6 +185,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Поиск линий длины 5 и более.
+     *
      * @param cell - ячейка, от которой начинается поиск.
      */
     private void findLines(LinesCell cell) {
@@ -223,6 +229,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Удаление линий.
+     *
      * @return "истина", если есть линия для удаления.
      */
     private boolean deleteLines() {
@@ -239,18 +246,25 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Проверка игры после очередного хода игрока.
+     *
      * @param cell - последняя ячейка, по которой кликнул игрок.
      * @return состояние игры после хода игрока.
      */
     private LinesState checkGame(LinesCell cell) {
         findLines(cell);
-        if (deleteLines()) return LinesState.LINE_DELETED;
 
         int empty = 0;
         for (LinesCell[] linesCells : cells)
             for (LinesCell linesCell : linesCells)
                 if (linesCell.getState() == CellTextureState.EMPTY)
                     empty++;
+
+        if (deleteLines()) {
+            for (LinesCell[] linesCells : cells)
+                for (LinesCell linesCell : linesCells)
+                    if (linesCell.getState() != CellTextureState.EMPTY) return LinesState.LINE_DELETED;
+            return LinesState.DO_INSERT;
+        }
 
         if (empty < 4)
             return LinesState.GRID_FULL;
@@ -268,10 +282,11 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Поиск пути в заданном направлении.
+     *
      * @param direction - направление.
-     * @param current - ячейка, от которой начинается поиск.
-     * @param end - ячейка, в которой оканчивается путь.
-     * @param queue - путь.
+     * @param current   - ячейка, от которой начинается поиск.
+     * @param end       - ячейка, в которой оканчивается путь.
+     * @param queue     - путь.
      * @return "истина", если существует путь от current до end.
      */
     private boolean checkingDirection(Direction direction, GridPoint2 current, GridPoint2 end, Queue<LinesCell> queue) {
@@ -295,6 +310,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
 
     /**
      * Поиск пути от "selected" до "to".
+     *
      * @param to - ячейка, до которой нужно проложить путь.
      * @return "истина", если путь от "selected" до "to" существует.
      */
@@ -348,7 +364,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
         return nextCells.length;
     }
 
-    public LinesCell getCell(int i, int j){
+    public LinesCell getCell(int i, int j) {
         return cells[i][j];
     }
 
@@ -401,17 +417,18 @@ public class LinesSubGame extends Table implements SubGameGroup {
             setMovable(false);
             for (int i = 0; i < images.length; i++) {
                 images[i] = new Image();
-                add(images[i]).expand().center().pad(Core.UI_PADDING*.5f);
+                add(images[i]).expand().center().pad(Core.UI_PADDING * .5f);
             }
-            pad(Core.UI_PADDING*.5f);
+            pad(Core.UI_PADDING * .5f);
             pack();
         }
 
         /**
          * Обновление данных актёра с данными игры.
          */
-        public void update(){
-            for (int i = 0; i < images.length; i++) images[i].setDrawable(new TextureRegionDrawable(nextCellTextureState[i].getRegion()));
+        public void update() {
+            for (int i = 0; i < images.length; i++)
+                images[i].setDrawable(new TextureRegionDrawable(nextCellTextureState[i].getRegion()));
         }
     }
 }
