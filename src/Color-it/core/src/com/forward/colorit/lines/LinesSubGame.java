@@ -253,19 +253,19 @@ public class LinesSubGame extends Table implements SubGameGroup {
     private LinesState checkGame(LinesCell cell) {
         findLines(cell);
 
-        int empty = 0;
-        for (LinesCell[] linesCells : cells)
-            for (LinesCell linesCell : linesCells)
-                if (linesCell.getState() == CellTextureState.EMPTY)
-                    empty++;
-
         if (deleteLines()) {
             for (LinesCell[] linesCells : cells)
                 for (LinesCell linesCell : linesCells)
                     if (linesCell.getState() != CellTextureState.EMPTY) return LinesState.LINE_DELETED;
             return LinesState.DO_INSERT;
-        }
-
+        }        
+        
+        int empty = 0;
+        for (LinesCell[] linesCells : cells)
+            for (LinesCell linesCell : linesCells)
+                if (linesCell.getState() == CellTextureState.EMPTY)
+                    empty++;
+        
         if (empty < 4)
             return LinesState.GRID_FULL;
         return LinesState.DO_INSERT;
