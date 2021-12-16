@@ -89,10 +89,10 @@ public class Core extends Game {
         defBackground = new Texture("background/backgroundForest.png");
         backgroundImage = new Image(defBackground);
         backgroundStage.addActor(backgroundImage);
-        settings = new Settings();
         setScreen(LoadingScreen.getInstance());
         if (Gdx.app.getType() == Application.ApplicationType.Desktop)
             initCursor();
+        settings = new Settings();
     }
 
     /**
