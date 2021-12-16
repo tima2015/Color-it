@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -89,10 +90,10 @@ public class Core extends Game {
         defBackground = new Texture("background/backgroundForest.png");
         backgroundImage = new Image(defBackground);
         backgroundStage.addActor(backgroundImage);
-        settings = new Settings();
         setScreen(LoadingScreen.getInstance());
         if (Gdx.app.getType() == Application.ApplicationType.Desktop)
             initCursor();
+        settings = new Settings();
     }
 
     /**
@@ -138,10 +139,11 @@ public class Core extends Game {
     public void resize(int width, int height) {
         Gdx.app.debug(TAG, "resize() called with: width = [" + width + "], height = [" + height + "]");
         super.resize(width, height);
-        backgroundStage.getViewport().update(width, height);
-        int size = Math.max(backgroundStage.getViewport().getScreenWidth(),
-                backgroundStage.getViewport().getScreenHeight());
+        backgroundStage.getViewport().update(width, height, true);// TODO: 11.12.2021 Посмотреть более подходящий viewport
+        float size = Math.max(backgroundStage.getWidth(),
+                backgroundStage.getHeight());
         backgroundImage.setSize(size, size);
+        backgroundImage.setPosition(0, 0);
     }
 
     @Override

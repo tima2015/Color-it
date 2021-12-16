@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.forward.colorit.Core;
+import com.forward.colorit.tool.RunnableClickListener;
 
 /**
  * Меню настроек.
@@ -76,20 +77,7 @@ public class SettingsMenu extends Window {
         row();
         add(new Label("Сброс прогресса", Core.core().getUi())).padBottom(Core.UI_PADDING);
         TextButton b = new TextButton("Сбросить прогресс!", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
-        b.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                DialogWindow dialogWindow = new DialogWindow("Вы уверены?", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, () -> {
-                    Core.getProgressData().resetSave();
-                    Gdx.app.log(TAG, "Progress reset!");
-                    MessageWindow window = new MessageWindow("", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, "Прогресс сброшен!");
-                    getStage().addActor(window);
-                    window.setPosition((getStage().getWidth() - window.getWidth())*.5f, (getStage().getHeight() - window.getHeight())*.5f);
-                }, () -> {});
-                getStage().addActor(dialogWindow);
-                dialogWindow.setPosition((getStage().getWidth() - dialogWindow.getWidth())*.5f, (getStage().getHeight() - dialogWindow.getHeight())*.5f);
-            }
-        });
+        b.addListener(new RunnableClickListener(this::resetSettings));
         b.addListener(SoundClickListener.getInstance());
         add(b).padBottom(Core.UI_PADDING).center();
     }
@@ -127,7 +115,17 @@ public class SettingsMenu extends Window {
         add(button).pad(Core.UI_PADDING);
     }
 
-
+    private void resetSettings(){
+        DialogWindow dialogWindow = new DialogWindow("Вы уверены?", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, () -> {
+            Core.getProgressData().resetSave();
+            Gdx.app.log(TAG, "Progress reset!");
+            MessageWindow window = new MessageWindow("", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE, "Прогресс сброшен!");
+            getStage().addActor(window);
+            window.setPosition((getStage().getWidth() - window.getWidth())*.5f, (getStage().getHeight() - window.getHeight())*.5f);
+        }, () -> {});
+        getStage().addActor(dialogWindow);
+        dialogWindow.setPosition((getStage().getWidth() - dialogWindow.getWidth())*.5f, (getStage().getHeight() - dialogWindow.getHeight())*.5f);
+    }
 
 
 
