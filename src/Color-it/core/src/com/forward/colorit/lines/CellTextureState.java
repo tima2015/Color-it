@@ -38,7 +38,10 @@ public enum CellTextureState {
     /**
      * @return Случайное невыделеное и не пустое состояние.
      */
-    public static CellTextureState getRandomNotEmptyAndNotSelectedState(){
+    private static final String TAG = "CellTextureState";
+
+    public static CellTextureState getRandomNotEmptyAndNotSelectedState() {
+        Gdx.app.debug(TAG, "getRandomNotEmptyAndNotSelectedState() called");
         List<CellTextureState> states = Arrays.asList(RED, BLUE, GREEN, YELLOW);
         Collections.shuffle(states, MathUtils.random);
         return states.get(0);
