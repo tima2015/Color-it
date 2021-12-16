@@ -1,5 +1,6 @@
 package com.forward.colorit.lines;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,6 +15,8 @@ import java.util.List;
  * Состояния ячеек
  */
 public enum CellTextureState {
+
+
     EMPTY("lines_cell", Color.BLACK),
     RED("lines_red", Color.RED),
     BLUE("lines_blue", Color.BLUE),
@@ -23,7 +26,7 @@ public enum CellTextureState {
     private String region;
     public final Color color;
 
-    CellTextureState(String region, Color color){
+    CellTextureState(String region, Color color) {
         this.region = region;
         this.color = color;
     }
@@ -31,7 +34,7 @@ public enum CellTextureState {
     /**
      * @return Текстуру для текущего состояния.
      */
-    TextureRegion getRegion(){
+    TextureRegion getRegion() {
         return Core.core().getTextures().findRegion(region);
     }
 

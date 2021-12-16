@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 
 public class LinesInstructionActor extends Window {
 
+    private static final String TAG = "LinesInstructionActor";
+
     private final Array<TextureAtlas.AtlasRegion> regions = Core.core().getManager().get("instruction/lines.txt", TextureAtlas.class).findRegions("lines");
     private final Table table = new Table();
     private final CheckBox checkBox = new CheckBox("  Больше не показывать", Core.core().getUi());
@@ -24,13 +26,13 @@ public class LinesInstructionActor extends Window {
         setModal(true);
         setMovable(false);
 
-        initBlock1();
+        initLabelBlock(Gdx.files.internal("instruction/lines_0.txt").readString(StandardCharsets.UTF_8.toString()));
         initBlock2();
-        initBlock3();
+        initLabelBlock(Gdx.files.internal("instruction/lines_1.txt").readString(StandardCharsets.UTF_8.toString()));
         initBlock4();
-        initBlock5();
+        initLabelBlock(Gdx.files.internal("instruction/lines_2.txt").readString(StandardCharsets.UTF_8.toString()));
         initBlock6();
-        initBlock7();
+        initLabelBlock(Gdx.files.internal("instruction/lines_3.txt").readString(StandardCharsets.UTF_8.toString()));
         initBlock8();// FIXME: 09.12.2021 тут куча дублирующегося кода
         initBlock9();
 
@@ -44,23 +46,11 @@ public class LinesInstructionActor extends Window {
 
     }
 
-    private void initBlock1(){
-        table.row();
-        Label developers = new Label(Gdx.files.internal("instruction/lines_0.txt").readString(StandardCharsets.UTF_8.toString()), Core.core().getUi());
-        table.add(developers).expand().left();
-    }
-
     private void initBlock2(){
         table.row();
         Image image = new Image(regions.get(0));
         table.add(image).size(400, 216).center();
         image.setSize(200, 108);
-    }
-
-    private void initBlock3(){
-        table.row();
-        Label developers = new Label(Gdx.files.internal("instruction/lines_1.txt").readString(StandardCharsets.UTF_8.toString()), Core.core().getUi());
-        table.add(developers).expand().left();
     }
 
     private void initBlock4(){
@@ -69,22 +59,18 @@ public class LinesInstructionActor extends Window {
         table.add(image).expand().center();
     }
 
-    private void initBlock5(){
+    private void initLabelBlock(String text){
+        Gdx.app.debug(TAG, "initLabelBlock() called with: text = [" + text + "]");
         table.row();
-        Label developers = new Label(Gdx.files.internal("instruction/lines_2.txt").readString(StandardCharsets.UTF_8.toString()), Core.core().getUi());
+        Label developers = new Label(text , Core.core().getUi());
         table.add(developers).expand().left();
+
     }
 
     private void initBlock6(){
         table.row();
         Image image = new Image(regions.get(2));
         table.add(image).width(600).center();
-    }
-
-    private void initBlock7(){
-        table.row();
-        Label developers = new Label(Gdx.files.internal("instruction/lines_3.txt").readString(StandardCharsets.UTF_8.toString()), Core.core().getUi());
-        table.add(developers).expand().left();
     }
 
     private void initBlock8(){
