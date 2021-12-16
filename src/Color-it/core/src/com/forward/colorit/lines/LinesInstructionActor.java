@@ -16,25 +16,28 @@ public class LinesInstructionActor extends Window {
 
     private static final String TAG = "LinesInstructionActor";
 
-    private final Array<TextureAtlas.AtlasRegion> regions = Core.core().getManager().get("instruction/lines.txt", TextureAtlas.class).findRegions("lines");
     private final Table table = new Table();
     private final CheckBox checkBox = new CheckBox("  Больше не показывать", Core.core().getUi());
 
 
     public LinesInstructionActor() {
         super("", Core.core().getUi());
+        Gdx.app.debug(TAG, "LinesInstructionActor() called");
         setModal(true);
         setMovable(false);
 
+        Array<TextureAtlas.AtlasRegion> regions = Core.core().getManager()
+                .get("instruction/lines.txt", TextureAtlas.class).findRegions("lines");
+
         initLabelBlock(Gdx.files.internal("instruction/lines_0.txt").readString(StandardCharsets.UTF_8.toString()));
-        initBlock2();
+        initImageBlock(regions.get(0));
         initLabelBlock(Gdx.files.internal("instruction/lines_1.txt").readString(StandardCharsets.UTF_8.toString()));
-        initBlock4();
+        initImageBlock(regions.get(1));
         initLabelBlock(Gdx.files.internal("instruction/lines_2.txt").readString(StandardCharsets.UTF_8.toString()));
-        initBlock6();
+        initImageBlock(regions.get(2));
         initLabelBlock(Gdx.files.internal("instruction/lines_3.txt").readString(StandardCharsets.UTF_8.toString()));
-        initBlock8();// FIXME: 09.12.2021 тут куча дублирующегося кода
-        initBlock9();
+        initImageBlock(regions.get(3));
+        initCheckBoxBlock();
 
         table.pad(Core.UI_PADDING);
         table.pack();
@@ -43,51 +46,43 @@ public class LinesInstructionActor extends Window {
         add(pane);
         initOk();
         pack();
-
     }
 
-    private void initBlock2(){
-        table.row();
-        Image image = new Image(regions.get(0));
-        table.add(image).size(400, 216).center();
-        image.setSize(200, 108);
-    }
-
-    private void initBlock4(){
-        table.row();
-        Image image = new Image(regions.get(1));
-        table.add(image).expand().center();
-    }
-
-    private void initLabelBlock(String text){
+    /**
+     * инициализация текстового блока
+     * @param text текст блока
+     */
+    private void initLabelBlock(String text) {
         Gdx.app.debug(TAG, "initLabelBlock() called with: text = [" + text + "]");
         table.row();
-        Label developers = new Label(text , Core.core().getUi());
+        Label developers = new Label(text, Core.core().getUi());
         table.add(developers).expand().left();
 
     }
 
-    private void initBlock6(){
+    /**
+     * инициализация блока изображения
+     * @param region изображение блока
+     */
+    private void initImageBlock(TextureRegion region){
+        Gdx.app.debug(TAG, "initImageBlock() called with: region = [" + region + "]");
         table.row();
-        Image image = new Image(regions.get(2));
+        Image image = new Image(region);
         table.add(image).width(600).center();
     }
 
-    private void initBlock8(){
-        table.row();
-        Image image = new Image(regions.get(3));
-        table.add(image).expand().center();
-    }
-
-    private void initBlock9(){
+    /**
+     * Инициализация чекбокса "Больше не показывать"
+     */
+    private void initCheckBoxBlock() {
         table.row();
         table.add(checkBox).left();
     }
 
-    private void initOk(){
+    private void initOk() {
         row();
         TextButton button = new TextButton("Назад", Core.core().getUi());
-        button.addListener(new ClickListener(){
+        button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 LinesInstructionActor.this.setVisible(false);
