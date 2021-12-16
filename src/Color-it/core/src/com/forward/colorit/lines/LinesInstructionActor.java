@@ -12,6 +12,9 @@ import com.forward.colorit.ui.SoundClickListener;
 
 import java.nio.charset.StandardCharsets;
 
+import static com.forward.colorit.tool.TableBlockUtils.initImageBlock;
+import static com.forward.colorit.tool.TableBlockUtils.initLabelBlock;
+
 public class LinesInstructionActor extends Window {
 
     private static final String TAG = "LinesInstructionActor";
@@ -29,14 +32,14 @@ public class LinesInstructionActor extends Window {
         Array<TextureAtlas.AtlasRegion> regions = Core.core().getManager()
                 .get("instruction/lines.txt", TextureAtlas.class).findRegions("lines");
 
-        initLabelBlock(Gdx.files.internal("instruction/lines_0.txt").readString(StandardCharsets.UTF_8.toString()));
-        initImageBlock(regions.get(0));
-        initLabelBlock(Gdx.files.internal("instruction/lines_1.txt").readString(StandardCharsets.UTF_8.toString()));
-        initImageBlock(regions.get(1));
-        initLabelBlock(Gdx.files.internal("instruction/lines_2.txt").readString(StandardCharsets.UTF_8.toString()));
-        initImageBlock(regions.get(2));
-        initLabelBlock(Gdx.files.internal("instruction/lines_3.txt").readString(StandardCharsets.UTF_8.toString()));
-        initImageBlock(regions.get(3));
+        initLabelBlock(table, Gdx.files.internal("instruction/lines_0.txt").readString(StandardCharsets.UTF_8.toString()));
+        initImageBlock(table, regions.get(0));
+        initLabelBlock(table, Gdx.files.internal("instruction/lines_1.txt").readString(StandardCharsets.UTF_8.toString()));
+        initImageBlock(table, regions.get(1));
+        initLabelBlock(table, Gdx.files.internal("instruction/lines_2.txt").readString(StandardCharsets.UTF_8.toString()));
+        initImageBlock(table, regions.get(2));
+        initLabelBlock(table, Gdx.files.internal("instruction/lines_3.txt").readString(StandardCharsets.UTF_8.toString()));
+        initImageBlock(table, regions.get(3));
         initCheckBoxBlock();
 
         table.pad(Core.UI_PADDING);
@@ -46,29 +49,6 @@ public class LinesInstructionActor extends Window {
         add(pane);
         initOk();
         pack();
-    }
-
-    /**
-     * инициализация текстового блока
-     * @param text текст блока
-     */
-    private void initLabelBlock(String text) {
-        Gdx.app.debug(TAG, "initLabelBlock() called with: text = [" + text + "]");
-        table.row();
-        Label developers = new Label(text, Core.core().getUi());
-        table.add(developers).expand().left();
-
-    }
-
-    /**
-     * инициализация блока изображения
-     * @param region изображение блока
-     */
-    private void initImageBlock(TextureRegion region){
-        Gdx.app.debug(TAG, "initImageBlock() called with: region = [" + region + "]");
-        table.row();
-        Image image = new Image(region);
-        table.add(image).width(600).center();
     }
 
     /**

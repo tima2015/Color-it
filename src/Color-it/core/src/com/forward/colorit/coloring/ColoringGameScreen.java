@@ -1,6 +1,7 @@
 package com.forward.colorit.coloring;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.forward.colorit.Core;
 import com.forward.colorit.SubGameGroup;
 import com.forward.colorit.lines.LinesSubGame;
+import com.forward.colorit.ui.MenuScreen;
 import com.forward.colorit.ui.SoundClickListener;
 import com.forward.colorit.ui.StageScreenAdapter;
 
@@ -30,15 +32,51 @@ public class ColoringGameScreen extends StageScreenAdapter {
     private static final int MARGINS = 24;
     private static final int PADDING = 12;
 
+    /**
+     * В случае, если актёр мини игры реализует интерфейс SubGameGroup не равняется нулю.
+     * Служит источником панели информации мини игры и актёра обучения.
+     */
     private final SubGameGroup subGameGroup;
+
+    /**
+     * Актёр мини игры.
+     */
     private final Actor subGame;
+
+    /**
+     * Описание текущего уровня.
+     */
     private final ColoringLevelData data;
+
+    /**
+     * Изображение текущего уровня.
+     */
     private final ColoringImage image;
+
+    /**
+     * Название уровня.
+     */
     private final String levelName;
+
+    /**
+     * Окно с информацией о прогрессе текущего уровня и кнопкой "Пауза".
+     */
     private final Window gameInfo = new Window("", Core.core().getUi());
+
+    /**
+     * ловарь содержащий информацию о незакрашенных фрагментах.
+     */
     private final Hashtable<Color, Integer> uncoloredFragmentsCounts = new Hashtable<>();
+
+    /**
+     * Текстовые метки, для отображения информации о незакрашенных фрагментах.
+     */
     private final ArrayList<Label> uncoloredFragmentsCountLabels = new ArrayList<>();
 
+    /**
+     * @param subGame мини игра
+     * @param data информаци о уровне
+     */
     public ColoringGameScreen(Actor subGame, ColoringLevelData data) {
         super(new Stage(new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)), true);
         this.subGame = subGame;
@@ -62,6 +100,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
         }
     }
 
+    /**
+     * Инициализация данных уровня
+     */
     private void initLevelData() {
         for (ColoringMap map : data.getMap()) {
             Color key = Color.valueOf(map.getColor());
@@ -76,6 +117,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
         }
     }
 
+    /**
+     * Добавление музыки в плеер
+     */
     private void addMusicsToPlayer() {
         if (subGame instanceof LinesSubGame) {
             getMusicPlayer().addMusic(Core.core().getManager().get("music/Hoedown.mp3", Music.class));
@@ -90,6 +134,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
         Gdx.input.setInputProcessor(getStage());
     }
 
+    /**
+     * Настройка размеров и положения мини игры.
+     */
     private void initSubGame() {
         getStage().addActor(subGame);
         float subGameSize = VIEWPORT_HEIGHT - 2 * MARGINS;
@@ -98,6 +145,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
         subGame.addListener(new SubGameEventListener());
     }
 
+    /**
+     * @param title Текст заголовка.
+     */
     private void initGameEndWindow(String title) {
         Window window = new Window(title, Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
         window.setModal(true);
@@ -120,6 +170,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
         window.setPosition((getStage().getWidth() - window.getWidth()) * .5f, (getStage().getHeight() - window.getHeight()) * .5f);
     }
 
+    /**
+     * Инициализация изображения уровня.
+     * Установка размера и позиции.
+     */
     private void initImage() {
         getStage().addActor(image);
         float imageSize = VIEWPORT_WIDTH - (subGame.getX() + subGame.getWidth() + PADDING + MARGINS);
@@ -127,6 +181,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
         image.setPosition(subGame.getX() + subGame.getWidth() + PADDING, VIEWPORT_HEIGHT - imageSize - MARGINS);
     }
 
+    /**
+     * Если мини игра реализует интерфейс SubGameGroup и поле subGameGroup не является null,
+     * Устанавливает размеры окна информации о мини игре.
+     */
     private void initSubGameInfoActor() {
         if (subGameGroup == null) return;
         Actor infoActor = subGameGroup.getSubGameInfoActor();
@@ -135,9 +193,13 @@ public class ColoringGameScreen extends StageScreenAdapter {
         infoActor.setPosition(image.getX(), image.getY() - infoActor.getHeight() - PADDING);
     }
 
+    /**
+     * Инициализация информации о текущем уровне.
+     */
     private void initGameInfo() {
         getStage().addActor(gameInfo);
 
+        gameInfo.setMovable(false);
         gameInfo.setPosition(image.getX(), subGame.getY());
         gameInfo.pad(PADDING);
         gameInfo.add(new Label("Осталось закрасить:", Core.core().getUi())).padBottom(PADDING);
@@ -155,6 +217,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
 
     }
 
+    /**
+     * @param color цвет
+     * @return название цвета в кирилице
+     */
     static String getLocalizedColorName(Color color) {
         if (color.equals(Color.BLUE))
             return "Голубой";
@@ -166,6 +232,41 @@ public class ColoringGameScreen extends StageScreenAdapter {
             return "Зелёный";
         // TODO: 26.11.2021
         return "null";
+    }
+    
+    /**
+     * Активация паузы
+     */
+    private void pauseClicked(){
+        Window window = new Window("Пауза", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
+        window.setModal(true);
+        window.getTitleLabel().setAlignment(Align.center);
+        window.setMovable(false);
+        getStage().addActor(window);
+        TextButton resumeButton = new TextButton("Продолжить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                window.setVisible(false);
+                window.getStage().getActors().removeValue(window, true);
+            }
+        });
+        resumeButton.addListener(SoundClickListener.getInstance());
+        window.row();
+        window.add(resumeButton).padBottom(PADDING);
+        TextButton mainMenuButton = new TextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
+        mainMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.core().setStateToMenuScreen();
+            }
+        });
+        mainMenuButton.addListener(SoundClickListener.getInstance());
+        window.row();
+        window.add(mainMenuButton);
+        window.pad(PADDING);
+        window.pack();
+        window.setPosition((getStage().getWidth() - window.getWidth()) * .5f, (getStage().getHeight() - window.getHeight()) * .5f);
     }
 
     @Override
@@ -188,6 +289,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
         image.dispose();
     }
 
+    /**
+     * Слушатель событий мини игр
+     */
     private class SubGameEventListener implements EventListener {
 
         @Override
@@ -197,6 +301,10 @@ public class ColoringGameScreen extends StageScreenAdapter {
             return false;
         }
 
+        /**
+         * @param event событие закрашивания
+         * @return истина если закрашивание было произведенено
+         */
         private boolean handleColoringEvent(ColoringEvent event) {
             Gdx.app.debug(TAG, "handleColoringEvent() called with: event = [" + event + "]");
             boolean result = false;
@@ -215,11 +323,18 @@ public class ColoringGameScreen extends StageScreenAdapter {
             return result;
         }
 
+        /**
+         * @param event событие завершения игры
+         * @return истина, если проигрыш
+         */
         private boolean handleGameEndEvent(GameEndEvent event) {
             initGameEndWindow("Вы проиграли.");
             return true;
         }
 
+        /**
+         * Обновление информации о уровне
+         */
         private void updateUncoloredFragmentsCountLabels() {
             for (Label label : uncoloredFragmentsCountLabels) {
                 label.setText(getLocalizedColorName((Color) label.getUserObject()) + ": "
@@ -227,6 +342,9 @@ public class ColoringGameScreen extends StageScreenAdapter {
             }
         }
 
+        /**
+         * Проверка выйгрыша
+         */
         private void checkWin() {
             Enumeration<Color> keys = uncoloredFragmentsCounts.keys();
             boolean win = true;
@@ -244,39 +362,13 @@ public class ColoringGameScreen extends StageScreenAdapter {
         }
     }
 
-    private static class PauseButtonClickListener extends ClickListener {
+    /**
+     * Слушатель нажатий кнопки паузы
+     */
+    private class PauseButtonClickListener extends ClickListener {
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            Window window = new Window("Пауза", Core.core().getUi(), Core.WINDOW_STYLE_PAUSE);
-            window.setModal(true);
-            window.getTitleLabel().setAlignment(Align.center);
-            window.setMovable(false);
-            event.getListenerActor().getStage().addActor(window);
-            Stage stage = event.getListenerActor().getStage();
-            TextButton resumeButton = new TextButton("Продолжить", Core.core().getUi(), Core.TEXTBUTTON_STYLE_GREEN);
-            resumeButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    window.setVisible(false);
-                    window.getStage().getActors().removeValue(window, true);
-                }
-            });
-            resumeButton.addListener(SoundClickListener.getInstance());
-            window.row();
-            window.add(resumeButton).padBottom(PADDING);
-            TextButton mainMenuButton = new TextButton("В главное меню", Core.core().getUi(), Core.TEXTBUTTON_STYLE_RED);
-            mainMenuButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    Core.core().setStateToMenuScreen();
-                }
-            });
-            mainMenuButton.addListener(SoundClickListener.getInstance());
-            window.row();
-            window.add(mainMenuButton);
-            window.pad(PADDING);
-            window.pack();
-            window.setPosition((stage.getWidth() - window.getWidth()) * .5f, (stage.getHeight() - window.getHeight()) * .5f);
+            pauseClicked();
         }
     }
 }

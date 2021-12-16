@@ -93,6 +93,7 @@ public class Core extends Game {
         setScreen(LoadingScreen.getInstance());
         if (Gdx.app.getType() == Application.ApplicationType.Desktop)
             initCursor();
+        //Gdx.input.setCatchKey(Input.Keys.BACK, true);
         settings = new Settings();
     }
 

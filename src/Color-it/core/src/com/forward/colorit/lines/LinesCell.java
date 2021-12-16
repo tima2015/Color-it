@@ -76,7 +76,7 @@ class LinesCell extends Group {
      * Изменяет размер изображения сферы, в зависимости от текущего её выделения
      */
     private void resizeOrb(){
-        Gdx.app.debug(TAG, "resizeOrb() called");
+        //Gdx.app.debug(TAG, "resizeOrb() called");
         if (selected)
             orb.setSize(getWidth() * .9f, getHeight() * .9f);
         else

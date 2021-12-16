@@ -18,12 +18,20 @@ public enum Direction {
     public final int direction_x, direction_y;
     public final float degree;
 
+    /**
+     * @param direction_x Направление по x
+     * @param direction_y Направление по y
+     * @param degree градусы направления
+     */
     Direction(int direction_x, int direction_y, float degree) {
         this.direction_x = direction_x;
         this.direction_y = direction_y;
         this.degree = degree;
     }
 
+    /**
+     * @return случайное направление
+     */
     public static Direction getRandomUpDownLeftOrRightDirection(){
         Array<Direction> directions = new Array<>(new Direction[]{UP,DOWN, RIGHT, LEFT});
         directions.shuffle();

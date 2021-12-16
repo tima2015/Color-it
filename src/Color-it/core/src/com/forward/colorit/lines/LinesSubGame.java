@@ -303,7 +303,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если существует путь от current до end.
      */
     private boolean checkingDirection(Direction direction, GridPoint2 current, GridPoint2 end, Queue<LinesCell> queue) {
-        Gdx.app.debug(TAG, "checkingDirection() called with: direction = [" + direction + "], current = [" + current + "], end = [" + end + "], queue = [" + queue + "]");
+        //Gdx.app.debug(TAG, "checkingDirection() called with: direction = [" + direction + "], current = [" + current + "], end = [" + end + "], queue = [" + queue + "]");
         try {
             GridPoint2 next = new GridPoint2(current).add(direction.direction_x, direction.direction_y);
             LinesCell cell = cells[next.x][next.y];
