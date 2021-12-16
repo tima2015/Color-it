@@ -1,5 +1,6 @@
 package com.forward.colorit.lines;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,6 +12,8 @@ import com.forward.colorit.Core;
  */
 class LinesCell extends Group {
 
+    private static final String TAG = "LinesCell";
+
     private boolean selected = false;
     private boolean visited = false;
     private CellTextureState state = CellTextureState.EMPTY;
@@ -19,6 +22,7 @@ class LinesCell extends Group {
     private final Image cellBackground = new Image(Core.core().getTextures().findRegion("lines_cell"));
 
     public LinesCell() {
+        Gdx.app.debug(TAG, "LinesCell() called");
         TextureRegion tmpForSize = CellTextureState.BLUE.getRegion();
         orb.setSize(tmpForSize.getRegionWidth(), tmpForSize.getRegionHeight());
         addActor(cellBackground);
@@ -38,6 +42,7 @@ class LinesCell extends Group {
      * @param state - состояние ячейки.
      */
     public void setState(CellTextureState state) {
+        Gdx.app.debug(TAG, "setState() called with: state = [" + state + "]");
         this.state = state;
         setSelected(selected);
     }
@@ -61,6 +66,7 @@ class LinesCell extends Group {
      * @param selected - является ли данная ячейка выделенной
      */
     public void setSelected(boolean selected) {
+        Gdx.app.debug(TAG, "setSelected() called with: selected = [" + selected + "]");
         this.selected = selected;
         orb.setDrawable(state == CellTextureState.EMPTY ? null : new TextureRegionDrawable(state.getRegion()));
         resizeOrb();
@@ -70,6 +76,7 @@ class LinesCell extends Group {
      * Изменяет размер изображения сферы, в зависимости от текущего её выделения
      */
     private void resizeOrb(){
+        Gdx.app.debug(TAG, "resizeOrb() called");
         if (selected)
             orb.setSize(getWidth() * .9f, getHeight() * .9f);
         else

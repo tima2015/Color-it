@@ -23,6 +23,8 @@ import com.forward.colorit.tool.Direction;
  * Класс реализующий мини игру "Линии".
  */
 public class LinesSubGame extends Table implements SubGameGroup {
+
+    private static final String TAG = "LinesSubGame";
     /**
      * Длина стороны игрового поля в ячейках.
      */
@@ -76,6 +78,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * </p>
      */
     public LinesSubGame() {
+        Gdx.app.debug(TAG, "LinesSubGame() called");
         for (int y = 0; y < FIELD_SIZE; y++) {
             for (int x = 0; x < FIELD_SIZE; x++) {
                 cells[x][y] = new LinesCell();
@@ -95,6 +98,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      */
     @Override
     public void setSize(float width, float height) {
+        Gdx.app.debug(TAG, "setSize() called with: width = [" + width + "], height = [" + height + "]");
         super.setSize(width, height);
         float nCellSizeH = width / (float) FIELD_SIZE;
         float nCellSizeV = height / (float) FIELD_SIZE;
@@ -109,6 +113,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если не совпадают, "ложь" - в противном случае.
      */
     public boolean isNextCellNotEquals() {
+        Gdx.app.debug(TAG, "isNextCellNotEquals() called");
         return !(nextCells[0].equals(nextCells[1])
                 || nextCells[1].equals(nextCells[2])
                 || nextCells[0].equals(nextCells[2]));
@@ -120,6 +125,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если все ячейки NextCells пусты.
      */
     public boolean isNextCellsEmpty() {
+        Gdx.app.debug(TAG, "isNextCellsEmpty() called");
         return nextCells[0].getState() == CellTextureState.EMPTY
                 && nextCells[1].getState() == CellTextureState.EMPTY
                 && nextCells[2].getState() == CellTextureState.EMPTY;
@@ -129,6 +135,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * Назначение NextCells случайных значений.
      */
     private void initWithRandNextCells() {
+        Gdx.app.debug(TAG, "initWithRandNextCells() called");
         for (int i = 0; i < BALL_INSERT_COUNT; i++)
             nextCellTextureState[i] = CellTextureState.getRandomNotEmptyAndNotSelectedState();
         if (linesSubGameInfoActor != null) linesSubGameInfoActor.update();
@@ -138,6 +145,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * Выбор BALL_INSERT_COUNT случайных клеток для вставки шаров.
      */
     private void insertNextCells() {
+        Gdx.app.debug(TAG, "insertNextCells() called");
         do {
             for (int i = 0; i < nextCells.length; i++) {
                 int rand = MathUtils.random(CELL_COUNT - 1);
@@ -157,6 +165,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return Координаты ячейки игрового поля.
      */
     public GridPoint2 getCellPosition(LinesCell cell) {
+        Gdx.app.debug(TAG, "getCellPosition() called with: cell = [" + cell + "]");
         for (int x = 0; x < cells.length; x++)
             for (int y = 0; y < cells[x].length; y++)
                 if (cells[x][y].equals(cell))
@@ -172,6 +181,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return Количество ячеек с аналогичным состоянием.
      */
     private int sameStatesInDirection(GridPoint2 pos, Direction direction) {
+        Gdx.app.debug(TAG, "sameStatesInDirection() called with: pos = [" + pos + "], direction = [" + direction + "]");
         try {
             GridPoint2 next = new GridPoint2(pos.x + direction.direction_x, pos.y + direction.direction_y);
             if (cells[pos.x][pos.y].getState() == cells[next.x][next.y].getState()) {
@@ -189,6 +199,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @param cell - ячейка, от которой начинается поиск.
      */
     private void findLines(LinesCell cell) {
+        Gdx.app.debug(TAG, "findLines() called with: cell = [" + cell + "]");
         GridPoint2 pos = getCellPosition(cell);
         //горизонталь
         int s1 = sameStatesInDirection(pos, Direction.LEFT);
@@ -233,6 +244,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если есть линия для удаления.
      */
     private boolean deleteLines() {
+        Gdx.app.debug(TAG, "deleteLines() called");
         boolean isDelete = false;
         for (LinesCell[] cell : cells)
             for (LinesCell linesCell : cell) {
@@ -251,6 +263,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return состояние игры после хода игрока.
      */
     private LinesState checkGame(LinesCell cell) {
+        Gdx.app.debug(TAG, "checkGame() called with: cell = [" + cell + "]");
         findLines(cell);
 
         if (deleteLines()) {
@@ -290,6 +303,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если существует путь от current до end.
      */
     private boolean checkingDirection(Direction direction, GridPoint2 current, GridPoint2 end, Queue<LinesCell> queue) {
+        Gdx.app.debug(TAG, "checkingDirection() called with: direction = [" + direction + "], current = [" + current + "], end = [" + end + "], queue = [" + queue + "]");
         try {
             GridPoint2 next = new GridPoint2(current).add(direction.direction_x, direction.direction_y);
             LinesCell cell = cells[next.x][next.y];
@@ -315,6 +329,7 @@ public class LinesSubGame extends Table implements SubGameGroup {
      * @return "истина", если путь от "selected" до "to" существует.
      */
     private boolean isMovable(LinesCell to) {
+        Gdx.app.debug(TAG, "isMovable() called with: to = [" + to + "]");
         GridPoint2 end = getCellPosition(to);
         Queue<LinesCell> queue = new Queue<>();
         queue.addLast(selected);
