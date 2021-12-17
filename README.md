@@ -13,7 +13,4 @@
 ## Demo day
 Доступ только для @susu.ru
 1. [Презентация](https://docs.google.com/presentation/d/10_5Tyg33p3aXwnLyL3rQ8CN2KIW3f7dPwY272MZTn8E/edit#slide=id.g105cc13bff2_0_6)
-
-## Протокол тестирования
-Доступ только для @susu.ru
-1. [Документ] (https://docs.google.com/document/d/1AH1hix769tN7glDWbqSXcfaxP5ntamI56bmbSjqe0cc/edit)
+2. [Протокол тестирования](https://docs.google.com/document/d/1AH1hix769tN7glDWbqSXcfaxP5ntamI56bmbSjqe0cc/edit)
