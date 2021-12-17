@@ -26,6 +26,8 @@ public enum CellTextureState {
     private String region;
     public final Color color;
 
+    private static final String TAG = "CellTextureState";
+
     CellTextureState(String region, Color color) {
         this.region = region;
         this.color = color;
@@ -41,8 +43,6 @@ public enum CellTextureState {
     /**
      * @return Случайное невыделеное и не пустое состояние.
      */
-    private static final String TAG = "CellTextureState";
-
     public static CellTextureState getRandomNotEmptyAndNotSelectedState() {
         Gdx.app.debug(TAG, "getRandomNotEmptyAndNotSelectedState() called");
         List<CellTextureState> states = Arrays.asList(RED, BLUE, GREEN, YELLOW);
