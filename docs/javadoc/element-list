@@ -1,5 +1,7 @@
 com.forward.colorit
 com.forward.colorit.coloring
 com.forward.colorit.lines
+com.forward.colorit.snake
+com.forward.colorit.tool
 com.forward.colorit.ui
 com.forward.colorit.ui.action
