@@ -12,5 +12,4 @@
 
 ## Demo day
 Доступ только для @susu.ru
-1. [Презентация]
-2. https://docs.google.com/presentation/d/10_5Tyg33p3aXwnLyL3rQ8CN2KIW3f7dPwY272MZTn8E/edit#slide=id.g105cc13bff2_0_6
+1. [Презентация](https://docs.google.com/presentation/d/10_5Tyg33p3aXwnLyL3rQ8CN2KIW3f7dPwY272MZTn8E/edit#slide=id.g105cc13bff2_0_6)
