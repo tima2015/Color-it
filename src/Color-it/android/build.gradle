@@ -24,8 +24,8 @@ android {
         applicationId "com.forward.colorit"
         minSdkVersion 26
         targetSdkVersion 31
-        versionCode 3
-        versionName "0.751"
+        versionCode 4
+        versionName "0.758"
 
     }
     buildTypes {
@@ -95,6 +95,14 @@ task run(type: Exec) {
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.forward.colorit/com.forward.colorit.AndroidLauncher'
+}
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
 
 eclipse.project.name = appName + "-android"

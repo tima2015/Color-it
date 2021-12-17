@@ -38,4 +38,10 @@ dist.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
 
-javadoc.options.encoding = 'UTF-8'
+tasks.withType(Javadoc) {
+    failOnError false
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}

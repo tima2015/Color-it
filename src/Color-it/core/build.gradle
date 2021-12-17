@@ -7,4 +7,10 @@ sourceSets.test.resources.srcDirs = ["../android/assets"]
 
 eclipse.project.name = appName + "-core"
 
-javadoc.options.encoding = 'UTF-8'
+tasks.withType(Javadoc) {
+    failOnError false
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
